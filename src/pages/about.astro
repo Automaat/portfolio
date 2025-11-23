@@ -1,0 +1,247 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'About Marcin Skalski';
+const description = 'Adventure photographer, videographer, and certified sailing skipper based in Europe.';
+---
+
+<Layout title={title} description={description}>
+  <!-- Hero Section -->
+  <section class="relative h-screen w-full">
+    <div class="absolute inset-0">
+      <img
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2400"
+        alt="Marcin Skalski"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
+    </div>
+    <div class="relative h-full flex items-center justify-center">
+      <div class="text-center text-white px-4">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">About Marcin</h1>
+        <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">
+          Adventure photographer & sailing skipper
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bio Section -->
+  <section class="py-16 md:py-24 px-6 md:px-12 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Hi, I'm Marcin</h2>
+        <div class="prose prose-lg">
+          <p class="text-gray-700 leading-relaxed mb-4">
+            I'm an adventure photographer and videographer with a deep passion for capturing the raw beauty of the natural world. My work focuses on remote landscapes, extreme weather conditions, and the authentic moments that emerge when humans venture into the wild.
+          </p>
+          <p class="text-gray-700 leading-relaxed mb-4">
+            Based in Europe but working worldwide, I combine my love for photography with my experience as a certified sailing skipper. This unique combination allows me to access remote locations and capture perspectives that few others can reach.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            When I'm not behind the camera, you'll find me on the water, exploring new coastlines, or planning the next expedition to chase that perfect light.
+          </p>
+        </div>
+      </div>
+      <div class="relative">
+        <img
+          src="https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?q=80&w=1200"
+          alt="Behind the scenes"
+          class="w-full h-auto rounded-lg shadow-lg"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Photography Experience -->
+  <section class="py-16 md:py-24 px-6 md:px-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">Photography & Videography</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-accent">Experience</h3>
+          <div class="prose">
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Over a decade of experience capturing adventure photography across some of the world's most challenging environments - from the windswept peaks of Patagonia to the glacial landscapes of Iceland.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Specialized in outdoor, adventure, and expedition photography with expertise in extreme weather conditions, low-light situations, and remote location logistics.
+            </p>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-accent">Approach</h3>
+          <div class="prose">
+            <p class="text-gray-700 leading-relaxed mb-4">
+              My approach is rooted in patience and authenticity. I don't just capture images - I immerse myself in the environment, waiting for that perfect convergence of light, weather, and moment.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              Whether shooting stills or video, I focus on telling compelling stories that transport viewers into the raw, unfiltered beauty of the natural world.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sailing Experience -->
+  <section class="py-16 md:py-24 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">Sailing & Skipper Experience</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-accent">Credentials</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <span class="text-accent mr-3">✓</span>
+              <span class="text-gray-700">RYA Yachtmaster Offshore certification</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-3">✓</span>
+              <span class="text-gray-700">Over 10,000 nautical miles logged</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-3">✓</span>
+              <span class="text-gray-700">Experience in Atlantic, North Sea, Baltic, and Mediterranean</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-3">✓</span>
+              <span class="text-gray-700">VHF Radio Operator License</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-3">✓</span>
+              <span class="text-gray-700">First Aid at Sea certification</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-3">✓</span>
+              <span class="text-gray-700">Night sailing and offshore passage experience</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-accent">Background</h3>
+          <div class="prose">
+            <p class="text-gray-700 leading-relaxed mb-4">
+              My sailing journey began over 15 years ago and has taken me across diverse waters and weather conditions. The sea taught me patience, respect for nature, and the value of careful preparation.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              I offer skippered charters, sailing expeditions, and instruction, combining my passion for the ocean with opportunities to capture unique perspectives from the water.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Equipment & Skills -->
+  <section class="py-16 md:py-24 px-6 md:px-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12">Equipment & Skills</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-accent">Photography</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Full-frame mirrorless systems</li>
+            <li>• Wide-angle to telephoto lenses</li>
+            <li>• Drone photography & videography</li>
+            <li>• Time-lapse equipment</li>
+            <li>• Weather-sealed gear</li>
+            <li>• Low-light capabilities</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-accent">Video Production</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>• 4K/6K cinema cameras</li>
+            <li>• Gimbal stabilization</li>
+            <li>• Audio recording equipment</li>
+            <li>• Adobe Premiere Pro</li>
+            <li>• DaVinci Resolve</li>
+            <li>• Color grading expertise</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-accent">Specialized Skills</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Extreme weather shooting</li>
+            <li>• Remote location logistics</li>
+            <li>• Expedition planning</li>
+            <li>• Offshore photography</li>
+            <li>• Night & astro photography</li>
+            <li>• Adventure cinematography</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery -->
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">In Action</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <img
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200"
+          alt="Photography in action"
+          class="w-full h-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=1200"
+          alt="Sailing adventure"
+          class="w-full h-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Links & CTA -->
+  <section class="py-16 md:py-24 px-6 md:px-12 bg-black text-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Let's Work Together</h2>
+      <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+        Whether you're looking for expedition photography, skippered charters, or sailing adventures - I'd love to hear from you.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+        <a
+          href="/contact"
+          class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-medium transition-all duration-200 hover:scale-105"
+        >
+          Get in Touch
+        </a>
+        <a
+          href="/trips"
+          class="border border-white hover:bg-white hover:text-black text-white px-8 py-3 rounded-full font-medium transition-all duration-200"
+        >
+          View My Work
+        </a>
+      </div>
+      <div class="flex gap-6 justify-center">
+        <a
+          href="https://www.instagram.com/marcinskalski_photo/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-accent transition-colors"
+          aria-label="Instagram"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <a
+          href="https://www.youtube.com/@marcinskalski2201"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-accent transition-colors"
+          aria-label="YouTube"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

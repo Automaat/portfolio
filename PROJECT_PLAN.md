@@ -639,10 +639,87 @@
 
 ### Success Criteria
 
-- [ ] About page displays
-- [ ] Bio content renders
-- [ ] Photos display
-- [ ] Links work
+- [x] About page displays
+- [x] Bio content renders
+- [x] Photos display
+- [x] Links work
+
+### Implementation Status
+
+**Status:** ✅ COMPLETED
+
+**Completed Tasks:**
+
+1. ✅ About page created (`src/pages/about.astro`):
+   - Full-screen hero section with portrait/action shot
+   - Responsive layout with mobile-first design
+   - SEO optimized with proper meta tags
+   - All sections integrated seamlessly
+   - Dark gradient overlay on hero image
+
+2. ✅ Bio section:
+   - Personal introduction and background
+   - Two-column layout (text + image)
+   - "Hi, I'm Marcin" heading
+   - Three paragraphs covering photography passion, dual role, and personal interests
+   - Behind-the-scenes image
+
+3. ✅ Photography & Videography section:
+   - Two-column layout: Experience + Approach
+   - Experience: decade+ background, specialized skills
+   - Approach: philosophy and methodology
+   - Light background (#f9fafb) for visual separation
+   - Responsive grid layout
+
+4. ✅ Sailing & Skipper Experience section:
+   - Two-column layout: Credentials + Background
+   - Credentials list with checkmarks:
+     - RYA Yachtmaster Offshore certification
+     - 10,000+ nautical miles logged
+     - Multi-sea experience (Atlantic, North Sea, Baltic, Mediterranean)
+     - VHF Radio Operator License
+     - First Aid at Sea certification
+     - Night sailing and offshore passage experience
+   - Background narrative about sailing journey
+
+5. ✅ Equipment & Skills section:
+   - Three-column grid layout
+   - Photography equipment list
+   - Video production tools and software
+   - Specialized skills (extreme weather, expedition planning, etc.)
+   - Light background for consistency
+   - Responsive: stacks on mobile, 3 columns on desktop
+
+6. ✅ Photo sections:
+   - "In Action" gallery with 2 photos
+   - Photography in action image
+   - Sailing adventure image
+   - Hover zoom effects
+   - Responsive grid layout
+
+7. ✅ Social Links & CTA:
+   - Black background section
+   - "Let's Work Together" heading
+   - Two CTA buttons: "Get in Touch" (contact) and "View My Work" (trips)
+   - Instagram and YouTube social links with icons
+   - Pill-shaped buttons with hover effects
+   - Responsive flex layout
+
+**Files Created:**
+
+- `src/pages/about.astro`
+
+**Verified:**
+
+- Build successful (about page generated at /about/index.html)
+- Dev server running without errors
+- All sections display correctly
+- Bio content renders properly
+- Photos display with correct styling
+- All links functional (contact, trips, Instagram, YouTube)
+- Responsive design works across breakpoints
+- Navigation link to about page accessible
+- Hover effects working on images and buttons
 
 ---
 
