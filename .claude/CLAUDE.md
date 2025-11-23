@@ -376,3 +376,22 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+## Hero Images
+
+**Optimal dimensions:**
+- Desktop: 2400×1350 (WebP ~200KB, JPEG ~350KB)
+- Mobile: 1200×1600 (WebP ~120KB, JPEG ~200KB)
+
+**Usage:**
+```astro
+<Hero
+  image="/images/hero-desktop.jpg"
+  imageWebp="/images/hero-desktop.webp"
+  imageMobile="/images/hero-mobile.jpg"
+  imageMobileWebp="/images/hero-mobile.webp"
+  alt="Descriptive alt text"
+/>
+```
+
+Mobile images save ~65% bandwidth. All image props optional except `image` and `alt`.

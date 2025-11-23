@@ -1,17 +1,59 @@
 ---
 interface Props {
   image: string;
+  imageWebp?: string;
+  imageMobile?: string;
+  imageMobileWebp?: string;
   alt: string;
   title?: string;
   subtitle?: string;
 }
 
-const { image, alt, title, subtitle } = Astro.props;
+const { image, imageWebp, imageMobile, imageMobileWebp, alt, title, subtitle } = Astro.props;
+
+// Determine if we should use responsive picture element
+const useResponsive = imageMobile || imageMobileWebp || imageWebp;
 ---
 
 <section class="hero">
   <div class="hero-image">
-    <img src={image} alt={alt} />
+    {useResponsive ? (
+      <picture>
+        {/* Mobile WebP */}
+        {imageMobileWebp && (
+          <source
+            media="(max-width: 768px)"
+            srcset={imageMobileWebp}
+            type="image/webp"
+          />
+        )}
+
+        {/* Mobile JPEG fallback */}
+        {imageMobile && (
+          <source
+            media="(max-width: 768px)"
+            srcset={imageMobile}
+          />
+        )}
+
+        {/* Desktop WebP */}
+        {imageWebp && (
+          <source
+            srcset={imageWebp}
+            type="image/webp"
+          />
+        )}
+
+        {/* Desktop JPEG fallback */}
+        <img
+          src={image}
+          alt={alt}
+          loading="eager"
+        />
+      </picture>
+    ) : (
+      <img src={image} alt={alt} loading="eager" />
+    )}
   </div>
   {(title || subtitle) && (
     <div class="hero-content">
@@ -36,7 +78,14 @@ const { image, alt, title, subtitle } = Astro.props;
     height: 100%;
   }
 
-  .hero-image img {
+  .hero-image picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-image img,
+  .hero-image picture img {
     width: 100%;
     height: 100%;
     object-fit: cover;
