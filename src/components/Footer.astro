@@ -1,0 +1,33 @@
+---
+const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  { href: 'https://www.instagram.com/marcinskalski_photo/', label: 'Instagram' },
+  { href: 'https://www.youtube.com/@marcinskalski2201', label: 'YouTube' },
+];
+---
+
+<footer class="bg-primary-bg border-t border-gray-200 mt-20">
+  <div class="container-custom py-8">
+    <div class="flex flex-col desktop:flex-row justify-between items-center gap-4 text-xs">
+      <p class="text-gray-600">
+        &copy; {currentYear} Marcin Skalski. All rights reserved.
+      </p>
+
+      <div class="flex gap-6">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-600 hover:text-accent-blue transition-colors"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>

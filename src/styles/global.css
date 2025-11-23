@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-base leading-body text-primary-text bg-primary-bg;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply leading-heading font-medium;
+  }
+
+  h1 {
+    @apply text-4xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-medium;
+  }
+
+  h3 {
+    @apply text-xl font-medium;
+  }
+
+  h4 {
+    @apply text-lg font-normal;
+  }
+
+  a {
+    @apply text-inherit;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  a:hover {
+    opacity: 0.7;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply w-full mx-auto max-w-site;
+    padding-left: 6vw;
+    padding-right: 6vw;
+  }
+
+  @media (min-width: 1025px) {
+    .container-custom {
+      padding-left: 4vw;
+      padding-right: 4vw;
+    }
+  }
+
+  .grid-mobile {
+    @apply grid grid-cols-mobile gap-gutter-mobile;
+  }
+
+  .grid-desktop {
+    @apply desktop:grid desktop:grid-cols-desktop desktop:gap-gutter-desktop;
+  }
+}

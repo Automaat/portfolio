@@ -34,13 +34,27 @@ export default {
         heading: '1.3',
       },
       spacing: {
-        'section': 'clamp(2rem, 6vw, 6rem)',
+        section: 'clamp(2rem, 6vw, 6rem)',
+        'gutter-mobile': '6vw',
+        'gutter-desktop': '4vw',
       },
       maxWidth: {
-        'site': '2400px',
+        site: '2400px',
+      },
+      screens: {
+        tablet: '737px',
+        desktop: '1025px',
+      },
+      gridTemplateColumns: {
+        mobile: 'repeat(8, 1fr)',
+        desktop: 'repeat(24, 1fr)',
+      },
+      fontWeight: {
+        normal: '400',
+        medium: '500',
+        bold: '700',
       },
     },
   },
   plugins: [],
-}
-
+};

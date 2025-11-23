@@ -5,6 +5,7 @@
 **Focus:** Adventure photography/videography + sailing/skipper services
 
 ## Tech Stack
+
 - **Framework:** Astro (static site generator)
 - **Dependency Management:** mise
 - **Hosting:** Netlify (free tier)
@@ -16,21 +17,25 @@
 ## Phase 0: Tooling & Project Setup
 
 ### Tasks
+
 1. Create `.mise.toml` config
    - Node.js (latest LTS)
    - npm/pnpm
 
 2. Install dependencies via mise
+
    ```bash
    mise install
    ```
 
 3. Initialize Astro project
+
    ```bash
    npm create astro@latest . -- --template minimal --typescript strict
    ```
 
 4. Project structure
+
    ```
    src/
    ├── components/     # Reusable components
@@ -44,6 +49,7 @@
    ```
 
 5. Install additional dependencies
+
    ```bash
    npm install @astrojs/netlify
    npm install -D @astrojs/tailwind tailwindcss
@@ -61,6 +67,7 @@
    ```
 
 ### Success Criteria
+
 - [ ] mise manages Node/npm
 - [ ] Astro dev server runs
 - [ ] Git repo initialized
@@ -71,6 +78,7 @@
 ## Phase 1: Core Components & Layout
 
 ### Tasks
+
 1. **Typography setup**
    - Add Sofia Pro/Poppins fonts (or system fallbacks)
    - Create typography scale in CSS/Tailwind config
@@ -107,16 +115,77 @@
    - Header + slot + Footer
 
 ### Success Criteria
-- [ ] Typography renders correctly
-- [ ] Header fixed and responsive
-- [ ] Footer displays
-- [ ] Base layout works
+
+- [x] Typography renders correctly
+- [x] Header fixed and responsive
+- [x] Footer displays
+- [x] Base layout works
+
+### Implementation Status
+
+**Status:** ✅ COMPLETED
+
+**Completed Tasks:**
+
+1. ✅ Tailwind config updated with:
+   - Typography scale (font sizes, weights, line heights)
+   - Color system (primary, accent colors)
+   - Grid system (mobile 8-col, desktop 24-col)
+   - Custom breakpoints (tablet: 737px, desktop: 1025px)
+   - Spacing utilities (gutters: 6vw mobile, 4vw desktop)
+   - Max width: 2400px
+
+2. ✅ Global styles created (`src/styles/global.css`):
+   - Base styles with Tailwind layers
+   - Typography defaults (body, headings)
+   - Custom container and grid classes
+   - Responsive spacing
+
+3. ✅ Header component (`src/components/Header.astro`):
+   - Fixed positioning with backdrop blur
+   - Logo: "marcin•skalski" (18px, 700 weight)
+   - Navigation: Home, Trips, Sailing, Blog, About, Contact
+   - Social links: Instagram, YouTube with SVG icons
+   - Mobile hamburger menu with toggle functionality
+   - Responsive layout
+
+4. ✅ Footer component (`src/components/Footer.astro`):
+   - Minimal design with border separator
+   - Copyright notice (dynamic year)
+   - Social links (Instagram, YouTube)
+   - Responsive flex layout
+
+5. ✅ Base layout (`src/layouts/Layout.astro`):
+   - HTML structure with proper meta tags
+   - SEO optimization (title, description, canonical URL)
+   - Open Graph and Twitter Card meta tags
+   - Header + slot + Footer integration
+   - Global CSS import
+   - Props for customizable title, description, image
+
+6. ✅ Updated `index.astro` with new Layout
+   - Using Layout component
+   - Test content displaying correctly
+   - Dev server verified working
+
+**Files Created:**
+
+- `src/styles/global.css`
+- `src/components/Header.astro`
+- `src/components/Footer.astro`
+- `src/layouts/Layout.astro`
+
+**Files Modified:**
+
+- `tailwind.config.js`
+- `src/pages/index.astro`
 
 ---
 
 ## Phase 2: Home Page with Trip Grid
 
 ### Tasks
+
 1. **Hero component** (`Hero.astro`)
    - Full-screen image background
    - Minimal text overlay
@@ -138,6 +207,7 @@
    - CTA to contact
 
 4. **Content structure for trips**
+
    ```
    src/content/
    └── trips/
@@ -154,6 +224,7 @@
    - Sample hero image
 
 ### Success Criteria
+
 - [ ] Full-screen hero displays
 - [ ] Trip grid shows thumbnails
 - [ ] Links route to trip pages
@@ -164,6 +235,7 @@
 ## Phase 3: Individual Trip Gallery Pages
 
 ### Tasks
+
 1. **Gallery component** (`Gallery.astro`)
    - Full-bleed image display
    - 3:2 aspect ratio optimization
@@ -189,6 +261,7 @@
    - WebP format
 
 ### Success Criteria
+
 - [ ] Trip pages generate dynamically
 - [ ] Galleries display properly
 - [ ] Images optimized
@@ -199,6 +272,7 @@
 ## Phase 4: Sailing/Skipper Page
 
 ### Tasks
+
 1. **Sailing page** (`src/pages/sailing.astro`)
    - Hero: yacht/sailing photo
    - Section: Experience & credentials
@@ -219,6 +293,7 @@
    - Icons (optional)
 
 ### Success Criteria
+
 - [ ] Sailing page displays
 - [ ] Content sections clear
 - [ ] Photos render
@@ -229,6 +304,7 @@
 ## Phase 5: Blog Functionality
 
 ### Tasks
+
 1. **Blog collection** (`src/content/blog/`)
    - config.ts schema (title, date, description, image)
    - Markdown files for posts
@@ -253,6 +329,7 @@
    - 2-3 sample expedition stories
 
 ### Success Criteria
+
 - [ ] Blog listing displays
 - [ ] Individual posts render
 - [ ] Markdown formatting works
@@ -263,6 +340,7 @@
 ## Phase 6: Contact Page
 
 ### Tasks
+
 1. **Contact page** (`src/pages/contact.astro`)
    - Hero section
    - Contact form
@@ -287,6 +365,7 @@
    - Location (optional)
 
 ### Success Criteria
+
 - [ ] Form displays correctly
 - [ ] Netlify Forms integration works
 - [ ] Validation works
@@ -297,6 +376,7 @@
 ## Phase 7: About Page
 
 ### Tasks
+
 1. **About page** (`src/pages/about.astro`)
    - Hero: portrait or action shot
    - Bio section
@@ -316,6 +396,7 @@
    - Action shots
 
 ### Success Criteria
+
 - [ ] About page displays
 - [ ] Bio content renders
 - [ ] Photos display
@@ -326,6 +407,7 @@
 ## Phase 8: Styling & Responsive Polish
 
 ### Tasks
+
 1. **Mobile optimization**
    - Test all pages on mobile viewport
    - Adjust spacing (6vw gutters)
@@ -361,6 +443,7 @@
    - Minimal JavaScript
 
 ### Success Criteria
+
 - [ ] Mobile responsive
 - [ ] Desktop polished
 - [ ] Tablet works
@@ -372,6 +455,7 @@
 ## Phase 9: Deployment
 
 ### Tasks
+
 1. **Netlify setup**
    - Create Netlify account (if needed)
    - Connect GitHub repo
@@ -406,6 +490,7 @@
    - Content guide for adding trips/blog posts
 
 ### Success Criteria
+
 - [ ] Site live at mskalski.netlify.app
 - [ ] All pages accessible
 - [ ] Forms work
@@ -417,12 +502,14 @@
 ## Content TODO (Ongoing)
 
 ### Photography Content
+
 - [ ] Curate best photos from each trip
 - [ ] Organize by trip/expedition
 - [ ] Write trip descriptions
 - [ ] Optimize image sizes (2250×1500px for heroes)
 
 ### Written Content
+
 - [ ] Bio/about text
 - [ ] Sailing experience description
 - [ ] Services offered text
@@ -431,6 +518,7 @@
 - [ ] Blog post 3: [trip/expedition story]
 
 ### Media
+
 - [ ] Profile/portrait photo
 - [ ] Yacht photos
 - [ ] Hero images for each page

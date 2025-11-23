@@ -1,16 +1,19 @@
 ---
-// Welcome to Astro!
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Marcin Skalski - Adventure Photography</title>
-  </head>
-  <body>
-    <h1>Marcin Skalski</h1>
-    <p>Adventure Photography & Videography</p>
-  </body>
-</html>
+<Layout
+  title="Marcin Skalski | Adventure Photography & Sailing"
+  description="Adventure photography and videography portfolio. Explore expeditions, sailing experiences, and capturing moments in the wild."
+>
+  <div class="container-custom min-h-screen py-20">
+    <section class="text-center">
+      <h1 class="mb-6">Marcin Skalski</h1>
+      <p class="text-lg text-accent-lightblue mb-12">Adventure Photography & Videography</p>
+      <p class="max-w-2xl mx-auto leading-body">
+        Welcome to my portfolio. This site showcases my work in adventure photography, expedition
+        documentation, and sailing experiences across the globe.
+      </p>
+    </section>
+  </div>
+</Layout>
