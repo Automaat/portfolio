@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TripGrid from '../../components/TripGrid.astro';
+---
+
+<Layout
+  title="Trips | Marcin Skalski"
+  description="Explore my adventure photography expeditions around the world. From Patagonia to Iceland, documenting wild places and remote landscapes."
+>
+  <section class="trips-header">
+    <div class="container-custom">
+      <h1 class="trips-title">Expeditions</h1>
+      <p class="trips-intro">
+        A collection of journeys to remote corners of the world, capturing the raw beauty of wild places.
+      </p>
+    </div>
+  </section>
+
+  <TripGrid />
+</Layout>
+
+<style>
+  .trips-header {
+    padding: 8rem 6vw 3rem;
+    text-align: center;
+  }
+
+  @media (min-width: 1025px) {
+    .trips-header {
+      padding: 10rem 4vw 3rem;
+    }
+  }
+
+  .trips-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+  }
+
+  .trips-intro {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--color-accent-lightblue);
+  }
+</style>

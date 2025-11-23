@@ -182,7 +182,7 @@
 
 ---
 
-## Phase 2: Home Page with Trip Grid
+## Phase 2: Home Page & Trips Listing
 
 ### Tasks
 
@@ -192,21 +192,25 @@
    - Responsive heights (100vh)
    - Image optimization
 
-2. **Trip grid component** (`TripGrid.astro`)
+2. **Home page** (`src/pages/index.astro`)
+   - Hero section only
+   - Minimal text overlay on hero
+   - Optional: subtle CTA to explore trips/contact
+
+3. **Trip grid component** (`TripGrid.astro`)
    - Square thumbnail layout
    - Trip title overlays
    - Hover effects
    - Links to individual trip pages
    - Responsive grid (1 col mobile, 2-3 col desktop)
 
-3. **Home page** (`src/pages/index.astro`)
-   - Hero section
-   - Brief intro text
-   - Trip grid
-   - Recent blog posts preview (3 latest)
-   - CTA to contact
+4. **Trips listing page** (`src/pages/trips/index.astro`)
+   - Trip grid component
+   - Links to individual trip pages
+   - Minimal intro text
+   - Responsive layout
 
-4. **Content structure for trips**
+5. **Content structure for trips**
 
    ```
    src/content/
@@ -219,16 +223,17 @@
        └── ...
    ```
 
-5. **Placeholder content**
+6. **Placeholder content**
    - 3-5 sample trips with thumbnails
-   - Sample hero image
+   - Sample hero image for home page
 
 ### Success Criteria
 
-- [ ] Full-screen hero displays
-- [ ] Trip grid shows thumbnails
-- [ ] Links route to trip pages
+- [ ] Home page displays full-screen hero only
+- [ ] Trips page displays trip grid
+- [ ] Trip grid links route to individual trip pages
 - [ ] Mobile responsive
+- [ ] Navigation links to trips page
 
 ---
 

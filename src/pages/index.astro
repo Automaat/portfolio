@@ -1,19 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
 ---
 
 <Layout
   title="Marcin Skalski | Adventure Photography & Sailing"
   description="Adventure photography and videography portfolio. Explore expeditions, sailing experiences, and capturing moments in the wild."
 >
-  <div class="container-custom min-h-screen py-20">
-    <section class="text-center">
-      <h1 class="mb-6">Marcin Skalski</h1>
-      <p class="text-lg text-accent-lightblue mb-12">Adventure Photography & Videography</p>
-      <p class="max-w-2xl mx-auto leading-body">
-        Welcome to my portfolio. This site showcases my work in adventure photography, expedition
-        documentation, and sailing experiences across the globe.
-      </p>
-    </section>
-  </div>
+  <Hero
+    image="/images/hero-home.jpg"
+    alt="Adventure photography landscape"
+    title="Marcin Skalski"
+    subtitle="Adventure Photography & Sailing"
+  />
 </Layout>
