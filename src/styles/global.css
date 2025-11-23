@@ -48,11 +48,22 @@
   a {
     @apply text-inherit;
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, color 0.2s ease;
   }
 
   a:hover {
     opacity: 0.7;
+  }
+
+  /* Focus styles for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid #4d6198;
+    outline-offset: 2px;
+  }
+
+  button:focus-visible {
+    outline: 2px solid #4d6198;
+    outline-offset: 2px;
   }
 
   img {

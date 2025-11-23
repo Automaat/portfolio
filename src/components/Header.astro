@@ -20,12 +20,13 @@ const socialLinks = [
 
     <button
       id="mobile-menu-toggle"
-      class="desktop:hidden flex flex-col gap-1 w-6 h-6 justify-center items-center"
+      class="desktop:hidden flex flex-col gap-1 w-11 h-11 justify-center items-center p-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-accent-blue"
       aria-label="Toggle menu"
+      aria-expanded="false"
     >
-      <span class="w-full h-0.5 bg-primary-text transition-all"></span>
-      <span class="w-full h-0.5 bg-primary-text transition-all"></span>
-      <span class="w-full h-0.5 bg-primary-text transition-all"></span>
+      <span class="w-6 h-0.5 bg-primary-text transition-all"></span>
+      <span class="w-6 h-0.5 bg-primary-text transition-all"></span>
+      <span class="w-6 h-0.5 bg-primary-text transition-all"></span>
     </button>
 
     <div
@@ -36,7 +37,7 @@ const socialLinks = [
         {
           navLinks.map((link) => (
             <li>
-              <a href={link.href} class="hover:text-accent-blue transition-colors">
+              <a href={link.href} class="hover:text-accent-blue transition-colors focus:outline-none focus:text-accent-blue focus:underline">
                 {link.label}
               </a>
             </li>
@@ -51,7 +52,7 @@ const socialLinks = [
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-accent-blue transition-colors"
+              class="hover:text-accent-blue transition-colors focus:outline-none focus:ring-2 focus:ring-accent-blue rounded p-1 -m-1"
               aria-label={link.label}
             >
               {link.icon === 'instagram' ? (
@@ -76,6 +77,24 @@ const socialLinks = [
   const menu = document.getElementById('mobile-menu');
 
   toggle?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
+    const isHidden = menu?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!toggle?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
+      menu?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close menu on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu?.classList.contains('hidden')) {
+      menu?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.focus();
+    }
   });
 </script>

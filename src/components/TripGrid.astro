@@ -47,11 +47,22 @@ const sortedTrips = trips.sort((a, b) => {
     aspect-ratio: 1;
     overflow: hidden;
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 4px;
   }
 
   .trip-card:hover {
     transform: translateY(-4px);
+  }
+
+  .trip-card:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #4d6198;
+  }
+
+  .trip-card:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #4d6198;
   }
 
   .trip-image {

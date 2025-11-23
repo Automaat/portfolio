@@ -32,7 +32,7 @@ const formatDate = (dateStr: string) => {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
       {sortedPosts.map((post) => (
         <article class="group">
-          <a href={`/blog/${post.slug}`} class="block">
+          <a href={`/blog/${post.slug}`} class="block focus:outline-none focus:ring-2 focus:ring-accent-blue rounded-lg">
             <!-- Thumbnail -->
             <div class="relative aspect-[3/2] overflow-hidden mb-4">
               <img

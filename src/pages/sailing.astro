@@ -260,12 +260,22 @@ const services = [
     background: #4d6198;
     border-radius: 9999px;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .cta-button:hover {
     background: #3d4f7a;
     transform: translateY(-2px);
+  }
+
+  .cta-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(77, 97, 152, 0.5);
+  }
+
+  .cta-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(77, 97, 152, 0.5);
   }
 
   /* Responsive */
