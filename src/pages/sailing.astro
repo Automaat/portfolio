@@ -1,0 +1,301 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Gallery from '../components/Gallery.astro';
+
+const yachtPhotos = [
+  { src: '/images/yacht-1.jpg', alt: 'Sailing yacht at sea' },
+  { src: '/images/yacht-2.jpg', alt: 'Yacht interior cabin' },
+  { src: '/images/yacht-3.jpg', alt: 'Sunset sailing' },
+  { src: '/images/yacht-4.jpg', alt: 'Yacht deck view' },
+  { src: '/images/yacht-5.jpg', alt: 'Navigation equipment' },
+];
+
+const services = [
+  {
+    title: 'Skippered Charters',
+    description: 'Professional yacht charter services with experienced skipper. Navigate safely through challenging waters while you enjoy the journey.',
+  },
+  {
+    title: 'Sailing Expeditions',
+    description: 'Multi-day sailing adventures to remote destinations. Experience the thrill of offshore sailing with comprehensive planning and support.',
+  },
+  {
+    title: 'Sailing Instruction',
+    description: 'Personalized sailing lessons for all skill levels. From basic navigation to advanced offshore techniques and certification preparation.',
+  },
+];
+---
+
+<Layout
+  title="Sailing & Skipper Services | Marcin Skalski"
+  description="Professional sailing and skippered charter services. Expeditions, instruction, and yacht charters with experienced skipper Marcin Skalski."
+>
+  <Hero
+    image="/images/hero-sailing.jpg"
+    alt="Sailing yacht on open water"
+    title="Sailing & Skipper Services"
+    subtitle="Professional sailing experiences on the open water"
+  />
+
+  <section class="section experience">
+    <div class="container">
+      <div class="content-wrapper">
+        <h2 class="section-heading">Experience & Credentials</h2>
+
+        <div class="experience-content">
+          <div class="experience-text">
+            <p>
+              With years of experience navigating challenging waters across multiple continents,
+              I bring professional expertise and passion for sailing to every voyage. My approach
+              combines technical proficiency with a deep respect for the ocean and commitment to safety.
+            </p>
+            <p>
+              From coastal cruising to offshore expeditions, I've accumulated thousands of nautical
+              miles in diverse conditions, developing the skills and judgment needed to ensure
+              safe, memorable sailing experiences.
+            </p>
+          </div>
+
+          <div class="credentials">
+            <h3 class="credentials-heading">Certifications & Qualifications</h3>
+            <ul class="credentials-list">
+              <li>RYA Yachtmaster Ocean</li>
+              <li>STCW Basic Safety Training</li>
+              <li>Advanced First Aid at Sea</li>
+              <li>VHF Radio Operator License</li>
+              <li>Coastal Navigation & Meteorology</li>
+              <li>10,000+ Nautical Miles Logged</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services">
+    <div class="container">
+      <div class="content-wrapper">
+        <h2 class="section-heading">Services Offered</h2>
+
+        <div class="services-grid">
+          {services.map((service) => (
+            <ServiceCard title={service.title} description={service.description} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section yacht-photos">
+    <div class="container">
+      <div class="content-wrapper">
+        <h2 class="section-heading">The Vessel</h2>
+        <p class="section-intro">
+          Explore the yacht that will be your home on the water. Equipped for comfort,
+          safety, and performance in all conditions.
+        </p>
+      </div>
+    </div>
+
+    <Gallery images={yachtPhotos} />
+  </section>
+
+  <section class="section cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-heading">Ready to Set Sail?</h2>
+        <p class="cta-text">
+          Get in touch to discuss your sailing adventure, charter needs, or to learn more
+          about available services and upcoming expeditions.
+        </p>
+        <a href="/contact" class="cta-button">Book Your Adventure</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .section {
+    padding: 4rem 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 2400px;
+    margin: 0 auto;
+    padding: 0 6vw;
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    font-size: clamp(2rem, 4vw, 2.625rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 2rem 0;
+    color: #000000;
+  }
+
+  .section-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin: 0 0 3rem 0;
+    color: #32373c;
+    max-width: 800px;
+  }
+
+  /* Experience Section */
+  .experience {
+    background: #ffffff;
+  }
+
+  .experience-content {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .experience-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0 0 1.5rem 0;
+    color: #32373c;
+  }
+
+  .experience-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .credentials {
+    background: #f9fafb;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  .credentials-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    color: #000000;
+  }
+
+  .credentials-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .credentials-list li {
+    font-size: 1rem;
+    line-height: 1.7;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    color: #32373c;
+  }
+
+  .credentials-list li:last-child {
+    border-bottom: none;
+  }
+
+  .credentials-list li::before {
+    content: '✓';
+    color: #4d6198;
+    font-weight: 700;
+    margin-right: 1rem;
+  }
+
+  /* Services Section */
+  .services {
+    background: #f9fafb;
+  }
+
+  .services-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  /* Yacht Photos Section */
+  .yacht-photos {
+    background: #ffffff;
+    padding-bottom: 0;
+  }
+
+  /* CTA Section */
+  .cta {
+    background: #000000;
+    padding: 5rem 0;
+    text-align: center;
+  }
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-heading {
+    font-size: clamp(2rem, 4vw, 2.625rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    color: #ffffff;
+  }
+
+  .cta-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin: 0 0 2.5rem 0;
+    color: #a4aec9;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    background: #4d6198;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: #3d4f7a;
+    transform: translateY(-2px);
+  }
+
+  /* Responsive */
+  @media (min-width: 737px) {
+    .section {
+      padding: 6rem 0;
+    }
+
+    .experience-content {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .container {
+      padding: 0 4vw;
+    }
+
+    .section {
+      padding: 8rem 0;
+    }
+
+    .cta {
+      padding: 6rem 0;
+    }
+  }
+</style>

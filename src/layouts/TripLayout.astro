@@ -1,0 +1,175 @@
+---
+import Layout from './Layout.astro';
+import Gallery from '../components/Gallery.astro';
+
+interface Props {
+  title: string;
+  location: string;
+  date: string;
+  description: string;
+  thumbnail: string;
+  images?: string[];
+}
+
+const { title, location, date, description, thumbnail, images = [] } = Astro.props;
+---
+
+<Layout title={`${title} - Marcin Skalski`} description={description} image={thumbnail}>
+  <main class="trip-page">
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src={thumbnail} alt={title} class="hero-image" />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1 class="trip-title">{title}</h1>
+          <div class="trip-meta">
+            <span class="trip-location">{location}</span>
+            <span class="trip-date">{date}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="trip-content">
+      <div class="container">
+        <div class="back-link">
+          <a href="/trips">&larr; Back to Trips</a>
+        </div>
+
+        <div class="trip-story">
+          <slot />
+        </div>
+
+        {images.length > 0 && (
+          <Gallery images={images} alt={title} />
+        )}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .trip-page {
+    min-height: 100vh;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+    display: flex;
+    align-items: flex-end;
+    padding: 6vw;
+  }
+
+  .hero-content {
+    color: white;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .trip-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 1025px) {
+    .trip-title {
+      font-size: 3.5rem;
+    }
+
+    .hero-overlay {
+      padding: 4vw;
+    }
+  }
+
+  .trip-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+
+  .trip-meta span {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Content Section */
+  .trip-content {
+    padding: 4rem 6vw;
+  }
+
+  @media (min-width: 1025px) {
+    .trip-content {
+      padding: 6rem 4vw;
+    }
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    margin-bottom: 3rem;
+  }
+
+  .back-link a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .back-link a:hover {
+    opacity: 0.7;
+  }
+
+  .trip-story {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+  }
+
+  .trip-story :global(h1),
+  .trip-story :global(h2),
+  .trip-story :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .trip-story :global(p) {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  .trip-story :global(img) {
+    width: 100%;
+    height: auto;
+    margin: 2rem 0;
+  }
+</style>

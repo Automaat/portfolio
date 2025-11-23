@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const blogPosts = await getCollection('blog');
+// Sort by date, newest first
+const sortedPosts = blogPosts.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+// Format date for display
+const formatDate = (dateStr: string) => {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
+---
+
+<Layout
+  title="Blog - Marcin Skalski"
+  description="Adventure stories, photography insights, and expedition tales from the field"
+>
+  <!-- Header Section -->
+  <div class="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
+    <p class="text-lg md:text-xl text-gray-600 max-w-2xl">
+      Stories from the field, lessons from the sea, and reflections on the adventures that shape us.
+    </p>
+  </div>
+
+  <!-- Blog Posts Grid -->
+  <div class="max-w-7xl mx-auto px-6 md:px-12 pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      {sortedPosts.map((post) => (
+        <article class="group">
+          <a href={`/blog/${post.slug}`} class="block">
+            <!-- Thumbnail -->
+            <div class="relative aspect-[3/2] overflow-hidden mb-4">
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Content -->
+            <div>
+              <p class="text-sm text-gray-500 mb-2">{formatDate(post.data.date)}</p>
+              <h2 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="text-gray-600 line-clamp-3">
+                {post.data.excerpt || post.data.description}
+              </p>
+              <span class="inline-block mt-3 text-accent group-hover:underline">
+                Read more →
+              </span>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    {sortedPosts.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-gray-500 text-lg">No blog posts yet. Check back soon!</p>
+      </div>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

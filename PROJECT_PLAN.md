@@ -267,10 +267,66 @@
 
 ### Success Criteria
 
-- [ ] Trip pages generate dynamically
-- [ ] Galleries display properly
-- [ ] Images optimized
-- [ ] Navigation works
+- [x] Trip pages generate dynamically
+- [x] Galleries display properly
+- [x] Images optimized
+- [x] Navigation works
+
+### Implementation Status
+
+**Status:** ✅ COMPLETED
+
+**Completed Tasks:**
+
+1. ✅ Gallery component created (`src/components/Gallery.astro`):
+   - Full-bleed responsive grid layout
+   - 3:2 aspect ratio for images
+   - Lazy loading enabled
+   - Hover zoom effect on images
+   - Responsive: 1 col mobile, 2 col tablet, 3 col desktop
+   - Optimized spacing and gap sizing
+
+2. ✅ Trip page layout created (`src/layouts/TripLayout.astro`):
+   - Full-width hero image with dark gradient overlay
+   - Trip title, location, and date displayed on hero
+   - Back to trips navigation link
+   - Trip story/description content area
+   - Gallery component integration
+   - Responsive design (mobile-first)
+   - Proper SEO meta tags via base Layout
+
+3. ✅ Dynamic routing implemented (`src/pages/trips/[slug].astro`):
+   - getStaticPaths pulling from trips content collection
+   - All 5 trip pages generated successfully:
+     - patagonia-2024
+     - iceland-2023
+     - norwegian-fjords-2023
+     - dolomites-2022
+     - scottish-highlands-2022
+   - Markdown content rendering via Content component
+   - Props passed to TripLayout
+
+4. ✅ Image optimization:
+   - Native lazy loading on gallery images
+   - 3:2 aspect ratio maintained
+   - Responsive image sizing
+   - CSS object-fit: cover for proper display
+   - Hover effects for better interactivity
+
+**Files Created:**
+
+- `src/components/Gallery.astro`
+- `src/layouts/TripLayout.astro`
+- `src/pages/trips/[slug].astro`
+
+**Verified:**
+
+- Build successful (all 5 trip pages generated)
+- Dev server running without errors
+- Dynamic routing working correctly
+- Trip grid links route to individual pages
+- Gallery displays properly on trip pages
+- Navigation back to trips page functional
 
 ---
 
@@ -299,10 +355,66 @@
 
 ### Success Criteria
 
-- [ ] Sailing page displays
-- [ ] Content sections clear
-- [ ] Photos render
-- [ ] CTA links to contact
+- [x] Sailing page displays
+- [x] Content sections clear
+- [x] Photos render
+- [x] CTA links to contact
+
+### Implementation Status
+
+**Status:** ✅ COMPLETED
+
+**Completed Tasks:**
+
+1. ✅ Sailing page created (`src/pages/sailing.astro`):
+   - Full-screen hero section with yacht/sailing photo
+   - Responsive layout with mobile-first design
+   - SEO optimized with proper meta tags
+   - All sections integrated seamlessly
+
+2. ✅ Experience & Credentials section:
+   - Professional experience description
+   - Certifications and qualifications list
+   - Two-column layout on larger screens
+   - Styled credentials box with checkmarks
+
+3. ✅ ServiceCard component created (`src/components/ServiceCard.astro`):
+   - Clean, minimal card design
+   - Service title and description
+   - Hover effects (transform + shadow)
+   - Responsive padding and typography
+
+4. ✅ Services offered section:
+   - Three service cards: Skippered Charters, Sailing Expeditions, Sailing Instruction
+   - Responsive grid layout (1 col mobile, multi-col desktop)
+   - Background separation for visual hierarchy
+
+5. ✅ Yacht photos gallery section:
+   - Reused Gallery component from Phase 3
+   - 5 placeholder yacht photos
+   - Full-bleed responsive display
+   - Section intro text
+
+6. ✅ CTA section with contact link:
+   - Dark background (#000000) for contrast
+   - Prominent "Book Your Adventure" button
+   - Links to /contact page
+   - Pill-shaped button with accent color (#4d6198)
+   - Hover effects on button
+
+**Files Created:**
+
+- `src/components/ServiceCard.astro`
+- `src/pages/sailing.astro`
+
+**Verified:**
+
+- Build successful (sailing page generated)
+- Dev server running without errors
+- All sections display properly
+- Responsive design works across breakpoints
+- Navigation link to sailing page functional
+- CTA button links to contact page
 
 ---
 
@@ -335,10 +447,72 @@
 
 ### Success Criteria
 
-- [ ] Blog listing displays
-- [ ] Individual posts render
-- [ ] Markdown formatting works
-- [ ] Images in posts display
+- [x] Blog listing displays
+- [x] Individual posts render
+- [x] Markdown formatting works
+- [x] Images in posts display
+
+### Implementation Status
+
+**Status:** ✅ COMPLETED
+
+**Completed Tasks:**
+
+1. ✅ Blog collection created (`src/content/config.ts`):
+   - Schema with title, date, description, image, excerpt fields
+   - Integrated with existing content collections
+
+2. ✅ Sample blog posts created (3 expedition stories):
+   - `patagonia-storm.md` - Weathering the Storm in Patagonia
+   - `iceland-aurora.md` - Chasing the Northern Lights in Iceland
+   - `sailing-storm.md` - First Solo Night Sail: Lessons from the Baltic
+   - Each with frontmatter, hero images, and markdown content
+
+3. ✅ BlogLayout component created (`src/layouts/BlogLayout.astro`):
+   - Full-width hero image with dark gradient overlay
+   - Title and formatted date on hero
+   - Back to blog navigation link (top and bottom)
+   - Prose styling for markdown content
+   - Responsive design (mobile-first)
+   - SEO meta tags via base Layout
+
+4. ✅ Dynamic blog routes implemented (`src/pages/blog/[slug].astro`):
+   - getStaticPaths pulling from blog collection
+   - All 3 blog posts generated successfully
+   - Markdown content rendering via Content component
+   - Props passed to BlogLayout
+
+5. ✅ Blog listing page created (`src/pages/blog/index.astro`):
+   - Header with title and description
+   - Responsive grid layout (1 col mobile, 2 col tablet, 3 col desktop)
+   - Post cards with thumbnail, date, title, excerpt
+   - Hover effects on images and titles
+   - Links to individual posts
+   - Posts sorted by date (newest first)
+
+**Files Created:**
+
+- `src/content/blog/patagonia-storm.md`
+- `src/content/blog/iceland-aurora.md`
+- `src/content/blog/sailing-storm.md`
+- `src/layouts/BlogLayout.astro`
+- `src/pages/blog/[slug].astro`
+- `src/pages/blog/index.astro`
+
+**Files Modified:**
+
+- `src/content/config.ts`
+
+**Verified:**
+
+- Build successful (all 3 blog posts generated)
+- Dev server running without errors
+- Blog listing displays all posts
+- Individual blog posts render correctly
+- Markdown formatting works properly
+- Hero images display on blog posts
+- Navigation links functional
+- Responsive design works across breakpoints
 
 ---
 
