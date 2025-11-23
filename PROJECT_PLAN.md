@@ -545,10 +545,73 @@
 
 ### Success Criteria
 
-- [ ] Form displays correctly
-- [ ] Netlify Forms integration works
-- [ ] Validation works
-- [ ] Contact info visible
+- [x] Form displays correctly
+- [x] Netlify Forms integration works
+- [x] Validation works
+- [x] Contact info visible
+
+### Implementation Status
+
+**Status:** ✅ COMPLETED
+
+**Completed Tasks:**
+
+1. ✅ ContactForm component created (`src/components/ContactForm.astro`):
+   - Netlify Forms integration with data-netlify attribute
+   - Honeypot field for spam protection
+   - Required fields: name, email, message
+   - Client-side validation (HTML5)
+   - Pill-shaped inputs (border-radius: 9999px)
+   - Submit button with #32373c background
+   - Success/error message handling
+   - Responsive design with focus states
+   - Form submission via fetch API
+   - Loading states during submission
+
+2. ✅ Contact page created (`src/pages/contact.astro`):
+   - Full-width hero section with gradient overlay
+   - "Let's Connect" title and subtitle
+   - Contact form integration
+   - Three-column info grid (responsive)
+   - Email contact information
+   - Social media links (Instagram, YouTube) with icons
+   - Location information
+   - Responsive layout (mobile-first)
+   - Clean, minimal design following guidelines
+
+3. ✅ Form styling:
+   - Pill-shaped inputs throughout
+   - Rounded textarea (1.5rem border-radius)
+   - Submit button: #32373c background, white text
+   - Hover effects: darker background, subtle lift
+   - Focus states with accent color border (#4d6198)
+   - iOS-friendly font sizing (prevents zoom)
+
+4. ✅ Contact info section:
+   - Email: marcin@skalski.com
+   - Instagram: https://www.instagram.com/marcinskalski_photo/
+   - YouTube: https://www.youtube.com/@marcinskalski2201
+   - Location: Europe, available worldwide
+   - Styled info cards with shadow
+   - Responsive grid layout
+
+**Files Created:**
+
+- `src/components/ContactForm.astro`
+- `src/pages/contact.astro`
+
+**Verified:**
+
+- Build successful (contact page generated at /contact/index.html)
+- Dev server running without errors
+- Form displays correctly with all fields
+- Netlify Forms integration configured
+- Client-side validation working
+- Success/error messages functional
+- Contact info section visible and styled
+- Social links functional
+- Responsive design works across breakpoints
+- Navigation link to contact page accessible
 
 ---
 
