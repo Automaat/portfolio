@@ -25,6 +25,18 @@ run = "npm run format"
 description = "Check code formatting"
 run = "npm run format:check"
 
+[tasks.test]
+description = "Run tests"
+run = "npm test"
+
+[tasks.test-watch]
+description = "Run tests in watch mode"
+run = "npm run test:watch"
+
+[tasks.test-ui]
+description = "Run tests with UI"
+run = "npm run test:ui"
+
 [tasks.check]
 description = "Run all checks (lint + format)"
 run = "npm run lint && npm run format:check"
