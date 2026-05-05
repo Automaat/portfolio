@@ -2,10 +2,9 @@ import { describe, it, expect } from 'vitest';
 
 describe('Header Navigation', () => {
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/trips', label: 'Trips' },
-    { href: '/sailing', label: 'Sailing' },
-    { href: '/blog', label: 'Blog' },
+    { href: '/work', label: 'Work' },
+    { href: '/motion', label: 'Motion' },
+    { href: '/blog', label: 'Journal' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ];
@@ -20,9 +19,9 @@ describe('Header Navigation', () => {
   ];
 
   it('has all required navigation links', () => {
-    expect(navLinks).toHaveLength(6);
-    expect(navLinks.map((l) => l.href)).toContain('/');
-    expect(navLinks.map((l) => l.href)).toContain('/trips');
+    expect(navLinks).toHaveLength(5);
+    expect(navLinks.map((l) => l.href)).toContain('/work');
+    expect(navLinks.map((l) => l.href)).toContain('/motion');
     expect(navLinks.map((l) => l.href)).toContain('/blog');
   });
 

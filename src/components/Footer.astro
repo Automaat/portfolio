@@ -1,4 +1,12 @@
 ---
+const navLinks = [
+  { href: '/work', label: 'Work' },
+  { href: '/motion', label: 'Motion' },
+  { href: '/blog', label: 'Journal' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+
 const currentYear = new Date().getFullYear();
 
 const socialLinks = [
@@ -9,10 +17,35 @@ const socialLinks = [
 
 <footer class="bg-primary-bg border-t border-gray-200 mt-20">
   <div class="container-custom py-8">
-    <div class="flex flex-col desktop:flex-row justify-between items-center gap-4 text-xs">
-      <p class="text-gray-600">
-        &copy; {currentYear} Marcin Skalski. All rights reserved.
-      </p>
+    <div
+      class="flex flex-col desktop:flex-row justify-between items-start desktop:items-center gap-6 text-xs"
+    >
+      <div class="space-y-2">
+        <p class="text-gray-900 font-medium tracking-[0.14em] uppercase">Marcin Skalski</p>
+        <a
+          href="mailto:marcin@skalski.com"
+          class="block text-gray-600 hover:text-accent-blue transition-colors"
+        >
+          marcin@skalski.com
+        </a>
+        <p class="text-gray-600">Europe-based. Available worldwide.</p>
+        <p class="text-gray-600">
+          &copy; {currentYear} Marcin Skalski. All rights reserved.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-x-6 gap-y-3">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-gray-600 hover:text-accent-blue transition-colors focus:outline-none focus:ring-2 focus:ring-accent-blue rounded px-2 py-1 -mx-2 -my-1"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
 
       <div class="flex gap-6">
         {

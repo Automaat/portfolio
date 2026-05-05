@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const trips = await getCollection('trips');
+const selectedProjects = trips
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 4);
+
+const projectMeta: Record<
+  string,
+  {
+    format: string;
+    deliverables: string;
+  }
+> = {
+  'patagonia-2024': {
+    format: 'Adventure campaign',
+    deliverables: 'Hero stills, location library, short-form motion',
+  },
+  'iceland-2023': {
+    format: 'Tourism story',
+    deliverables: 'Destination stills, weather coverage, editorial selects',
+  },
+  'norwegian-fjords-2023': {
+    format: 'Marine feature',
+    deliverables: 'On-water imagery, landscape coverage, social edits',
+  },
+  'scottish-highlands-2022': {
+    format: 'Outdoor commission',
+    deliverables: 'Brand stills, route atmosphere, campaign cutdowns',
+  },
+};
+---
+
+<Layout
+  title="Work | Marcin Skalski"
+  description="Adventure, travel, and marine work built for commercial buyers, tourism brands, and expedition operators."
+>
+  <section class="border-b border-gray-200 bg-[#f6f5f1]">
+    <div class="container-custom py-16 desktop:py-24">
+      <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Work</p>
+      <h1 class="mt-3 max-w-4xl text-4xl font-bold leading-[1.05] desktop:text-[4.2rem]">
+        Commercial-facing stills from expedition, destination, and marine environments.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-gray-700">
+        Current work samples come from field projects already on the site. Next pass converts the
+        strongest ones into full case studies with client, brief, deliverables, and outcome.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-custom py-16 desktop:py-24">
+    <div class="grid gap-6 desktop:grid-cols-2">
+      {
+        selectedProjects.map((trip) => {
+          const meta = projectMeta[trip.id] ?? {
+            format: 'Field project',
+            deliverables: 'Stills, motion, and social-ready selects',
+          };
+
+          return (
+            <a
+              href={`/trips/${trip.id}`}
+              class="group overflow-hidden rounded-[2rem] border border-gray-200 bg-white transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.08)]"
+            >
+              <div class="aspect-[4/3] overflow-hidden">
+                <img
+                  src={trip.data.thumbnail}
+                  alt={trip.data.title}
+                  class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="space-y-4 p-7">
+                <p class="text-xs font-medium uppercase tracking-[0.16em] text-accent-blue">
+                  {meta.format}
+                </p>
+                <h2 class="text-3xl font-bold">{trip.data.title}</h2>
+                <p class="text-sm uppercase tracking-[0.16em] text-gray-500">
+                  {trip.data.location}
+                </p>
+                <p class="text-gray-600">{trip.data.description}</p>
+                <div class="border-t border-gray-200 pt-4 text-sm text-gray-700">
+                  <span class="font-medium text-primary-text">Deliverables:</span>{' '}
+                  {meta.deliverables}
+                </div>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section class="bg-primary-text py-16 text-white desktop:py-24">
+    <div class="container-custom grid gap-10 desktop:grid-cols-[0.9fr_1.1fr]">
+      <div>
+        <p class="text-xs font-medium uppercase tracking-[0.22em] text-white/60">Fit</p>
+        <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">
+          Best aligned for buyers needing access and pace.
+        </h2>
+      </div>
+      <div class="grid gap-4 tablet:grid-cols-2">
+        <div class="rounded-3xl border border-white/10 p-6 text-white/80">
+          Tourism boards and destination brands needing campaign stills with real weather and place.
+        </div>
+        <div class="rounded-3xl border border-white/10 p-6 text-white/80">
+          Marine and sailing brands needing on-water coverage without stock-feeling visuals.
+        </div>
+        <div class="rounded-3xl border border-white/10 p-6 text-white/80">
+          Expedition operators needing photo, motion, and social deliverables from remote terrain.
+        </div>
+        <div class="rounded-3xl border border-white/10 p-6 text-white/80">
+          Outdoor companies needing tight crews and practical field logistics.
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
