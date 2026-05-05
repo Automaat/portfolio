@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @config "../../tailwind.config.js";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   * {
     margin: 0;
@@ -8,15 +10,42 @@
     box-sizing: border-box;
   }
 
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f6f3;
+    --bg-elevated: #ecebe6;
+    --text: #0a0a0a;
+    --text-muted: #6d6a60;
+    --text-subtle: #a9a69a;
+    --rule: #d8d6cd;
+    --accent: #4d6198;
+  }
+
+  .dark {
+    --bg: #0a0a0a;
+    --bg-soft: #141413;
+    --bg-elevated: #1d1c1a;
+    --text: #f7f6f3;
+    --text-muted: #a9a69a;
+    --text-subtle: #6d6a60;
+    --rule: #26241f;
+    --accent: #a4aec9;
+  }
+
   html {
     font-size: 16px;
     scroll-behavior: smooth;
+    background: var(--bg);
+    color: var(--text);
   }
 
   body {
-    @apply font-sans text-base leading-body text-primary-text bg-primary-bg;
+    @apply font-sans text-base leading-body;
+    background: var(--bg);
+    color: var(--text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01', 'cv11';
   }
 
   h1,
@@ -25,27 +54,28 @@
   h4,
   h5,
   h6 {
-    @apply leading-heading font-medium;
+    @apply font-display font-medium leading-heading;
+    letter-spacing: -0.015em;
   }
 
   h1 {
-    @apply text-4xl font-bold;
+    @apply text-4xl;
   }
 
   h2 {
-    @apply text-2xl font-medium;
+    @apply text-3xl;
   }
 
   h3 {
-    @apply text-xl font-medium;
+    @apply text-2xl;
   }
 
   h4 {
-    @apply text-lg font-normal;
+    @apply text-xl;
   }
 
   a {
-    @apply text-inherit;
+    color: inherit;
     text-decoration: none;
     transition:
       opacity 0.2s ease,
@@ -53,24 +83,29 @@
   }
 
   a:hover {
-    opacity: 0.7;
+    opacity: 0.78;
   }
 
-  /* Focus styles for keyboard navigation */
   *:focus-visible {
-    outline: 2px solid #4d6198;
-    outline-offset: 2px;
-  }
-
-  button:focus-visible {
-    outline: 2px solid #4d6198;
-    outline-offset: 2px;
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   img {
     max-width: 100%;
     height: auto;
     display: block;
+  }
+
+  ::selection {
+    background: #0a0a0a;
+    color: #f7f6f3;
+  }
+
+  .dark ::selection {
+    background: #f7f6f3;
+    color: #0a0a0a;
   }
 }
 
@@ -94,5 +129,63 @@
 
   .grid-desktop {
     @apply desktop:grid desktop:grid-cols-desktop desktop:gap-gutter-desktop;
+  }
+
+  .eyebrow {
+    @apply font-sans text-[11px] font-medium uppercase tracking-eyebrow text-[color:var(--text-muted)];
+  }
+
+  .surface {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .surface-soft {
+    background: var(--bg-soft);
+    color: var(--text);
+  }
+
+  .surface-elevated {
+    background: var(--bg-elevated);
+    color: var(--text);
+  }
+
+  .rule-line {
+    border-color: var(--rule);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .text-subtle {
+    color: var(--text-subtle);
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)),
+      transform 0.9s var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1));
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

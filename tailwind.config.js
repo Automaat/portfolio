@@ -1,12 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         primary: {
           bg: '#ffffff',
-          text: '#000000',
+          text: '#0a0a0a',
+        },
+        ink: {
+          50: '#f7f6f3',
+          100: '#ecebe6',
+          200: '#d8d6cd',
+          300: '#a9a69a',
+          400: '#6d6a60',
+          500: '#3f3d37',
+          600: '#26241f',
+          900: '#0a0a0a',
         },
         accent: {
           blue: '#4d6198',
@@ -17,21 +28,38 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Sofia Pro', 'Poppins', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: [
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'Segoe UI',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+        ],
+        display: ['Fraunces', 'ui-serif', 'Georgia', 'Cambria', 'Times', 'serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
-        xs: '13px',
-        sm: '14px',
-        base: '15px',
-        lg: '20px',
-        xl: '28px',
-        '2xl': '36px',
-        '3xl': '40px',
-        '4xl': '42px',
+        xs: ['12px', { lineHeight: '1.4' }],
+        sm: ['14px', { lineHeight: '1.5' }],
+        base: ['16px', { lineHeight: '1.7' }],
+        lg: ['19px', { lineHeight: '1.6' }],
+        xl: ['24px', { lineHeight: '1.35' }],
+        '2xl': ['32px', { lineHeight: '1.2' }],
+        '3xl': ['48px', { lineHeight: '1.1' }],
+        '4xl': ['64px', { lineHeight: '1.05' }],
+        '5xl': ['80px', { lineHeight: '1' }],
+        '6xl': ['112px', { lineHeight: '0.95' }],
       },
       lineHeight: {
         body: '1.7',
-        heading: '1.3',
+        heading: '1.1',
+      },
+      letterSpacing: {
+        eyebrow: '0.32em',
+        display: '-0.02em',
       },
       spacing: {
         section: 'clamp(2rem, 6vw, 6rem)',
@@ -40,6 +68,7 @@ export default {
       },
       maxWidth: {
         site: '2400px',
+        prose: '68ch',
       },
       screens: {
         tablet: '737px',
@@ -52,7 +81,11 @@ export default {
       fontWeight: {
         normal: '400',
         medium: '500',
+        semibold: '600',
         bold: '700',
+      },
+      transitionTimingFunction: {
+        editorial: 'cubic-bezier(0.22, 0.61, 0.36, 1)',
       },
     },
   },

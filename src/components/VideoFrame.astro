@@ -1,0 +1,130 @@
+---
+interface Props {
+  videoId?: string;
+  channelUrl?: string;
+  poster: string;
+  title: string;
+  caption?: string;
+  aspect?: '16/9' | '21/9' | '4/5';
+}
+
+const {
+  videoId,
+  channelUrl = 'https://www.youtube.com/@marcinskalski2201',
+  poster,
+  title,
+  caption,
+  aspect = '16/9',
+} = Astro.props;
+
+const aspectClass = {
+  '16/9': 'aspect-video',
+  '21/9': 'aspect-[21/9]',
+  '4/5': 'aspect-[4/5]',
+}[aspect];
+
+const fallbackHref = videoId ? `https://www.youtube.com/watch?v=${videoId}` : channelUrl;
+---
+
+<figure class="video-frame">
+  <div
+    class:list={['video-frame__media', aspectClass]}
+    data-video-id={videoId ?? ''}
+    data-fallback={fallbackHref}
+  >
+    <img src={poster} alt={title} loading="lazy" decoding="async" class="video-frame__poster" />
+    <button
+      type="button"
+      class="video-frame__play"
+      aria-label={videoId ? `Play ${title}` : `Open ${title} on YouTube`}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="w-7 h-7">
+        <path fill="currentColor" d="M8 5v14l11-7z"></path>
+      </svg>
+    </button>
+  </div>
+  {
+    (title || caption) && (
+      <figcaption class="mt-4">
+        <p class="font-display text-xl desktop:text-2xl leading-[1.15]">{title}</p>
+        {caption && <p class="mt-1 text-sm text-muted">{caption}</p>}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .video-frame__media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+  }
+
+  .video-frame__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.3s ease;
+  }
+
+  .video-frame:hover .video-frame__poster {
+    transform: scale(1.03);
+    opacity: 0.85;
+  }
+
+  .video-frame__play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #0a0a0a;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .video-frame:hover .video-frame__play {
+    transform: scale(1.08);
+  }
+</style>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const media = target.closest('.video-frame__media') as HTMLElement | null;
+    if (!media) return;
+    const videoId = media.dataset.videoId;
+    const fallback = media.dataset.fallback;
+    if (videoId && videoId.length > 0) {
+      e.preventDefault();
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute(
+        'src',
+        `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`
+      );
+      iframe.setAttribute('title', 'Embedded video');
+      iframe.setAttribute(
+        'allow',
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+      );
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+      media.innerHTML = '';
+      media.appendChild(iframe);
+    } else if (fallback) {
+      window.open(fallback, '_blank', 'noopener,noreferrer');
+    }
+  });
+</script>

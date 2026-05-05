@@ -1,22 +1,44 @@
 ---
 import { getCollection } from 'astro:content';
 
+interface Props {
+  limit?: number;
+  showMeta?: boolean;
+}
+
+const { limit, showMeta = true } = Astro.props;
+
 const trips = await getCollection('trips');
 const sortedTrips = trips.sort((a, b) => {
   return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 });
+
+const displayTrips = limit ? sortedTrips.slice(0, limit) : sortedTrips;
 ---
 
-<div class="trip-grid">
+<div class="trip-grid container-custom py-12 desktop:py-16">
   {
-    sortedTrips.map((trip) => (
-      <a href={`/trips/${trip.id}`} class="trip-card">
+    displayTrips.map((trip, i) => (
+      <a
+        href={`/trips/${trip.id}`}
+        class:list={['trip-card group', i % 5 === 0 && 'trip-card--lead']}
+        data-reveal
+        data-reveal-delay={`${i * 60}`}
+      >
         <div class="trip-image">
-          <img src={trip.data.thumbnail} alt={trip.data.title} />
+          <img
+            src={trip.data.thumbnail}
+            alt={trip.data.title}
+            loading={i < 2 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
         </div>
-        <div class="trip-overlay">
+        <div class="trip-meta">
+          {showMeta && trip.data.format && <p class="eyebrow trip-format">{trip.data.format}</p>}
           <h3 class="trip-title">{trip.data.title}</h3>
-          <p class="trip-location">{trip.data.location}</p>
+          <p class="trip-location">
+            {trip.data.location} · {trip.data.date}
+          </p>
         </div>
       </a>
     ))
@@ -27,91 +49,100 @@ const sortedTrips = trips.sort((a, b) => {
   .trip-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 30px;
-    padding: 6vw;
+    gap: 3rem;
   }
 
   @media (min-width: 737px) {
     .trip-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3rem 2rem;
+    }
+
+    .trip-card {
+      grid-column: span 3;
+    }
+
+    .trip-card--lead {
+      grid-column: span 6;
     }
   }
 
   @media (min-width: 1025px) {
     .trip-grid {
-      grid-template-columns: repeat(3, 1fr);
-      padding: 4vw;
+      gap: 5rem 2.5rem;
+    }
+    .trip-card {
+      grid-column: span 2;
+    }
+    .trip-card--lead {
+      grid-column: span 6;
+    }
+    .trip-card:nth-child(5n + 2) {
+      grid-column: span 4;
+    }
+    .trip-card:nth-child(5n + 3) {
+      grid-column: span 2;
+    }
+    .trip-card:nth-child(5n + 4) {
+      grid-column: span 3;
+    }
+    .trip-card:nth-child(5n + 5) {
+      grid-column: span 3;
     }
   }
 
   .trip-card {
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
+    display: block;
     text-decoration: none;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-    border-radius: 4px;
-  }
-
-  .trip-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .trip-card:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px #4d6198;
-  }
-
-  .trip-card:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px #4d6198;
+    color: var(--text);
   }
 
   .trip-image {
-    width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    margin-bottom: 1.25rem;
+  }
+
+  .trip-card--lead .trip-image {
+    aspect-ratio: 16 / 9;
   }
 
   .trip-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .trip-card:hover .trip-image img {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
-  .trip-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4) 50%, transparent);
-    color: white;
-    transition: background 0.3s ease;
-  }
-
-  .trip-card:hover .trip-overlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 50%, transparent);
+  .trip-format {
+    margin-bottom: 0.75rem;
   }
 
   .trip-title {
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 0 0 0.5rem 0;
+    font-family: var(--font-display, 'Fraunces'), serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+    color: var(--text);
+  }
+
+  .trip-card--lead .trip-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
   }
 
   .trip-location {
-    font-size: clamp(0.875rem, 1.5vw, 1rem);
-    font-weight: 400;
+    font-family: var(--font-sans, 'Inter'), sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
     margin: 0;
-    opacity: 0.9;
   }
 </style>

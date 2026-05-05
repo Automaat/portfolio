@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import Hero from '../components/Hero.astro';
 import Gallery from '../components/Gallery.astro';
 
 interface Props {
@@ -9,165 +10,234 @@ interface Props {
   description: string;
   thumbnail: string;
   images?: string[];
+  client?: string;
+  format?: string;
+  role?: string;
+  brief?: string;
+  deliverables?: string[];
+  outcome?: string;
 }
 
-const { title, location, date, description, thumbnail, images = [] } = Astro.props;
+const {
+  title,
+  location,
+  date,
+  description,
+  thumbnail,
+  images = [],
+  client,
+  format,
+  role,
+  brief,
+  deliverables,
+  outcome,
+} = Astro.props;
+
+const meta = [
+  client && { label: 'Client', value: client },
+  format && { label: 'Format', value: format },
+  role && { label: 'Role', value: role },
+  { label: 'Location', value: location },
+  { label: 'Year', value: date },
+].filter(Boolean) as { label: string; value: string }[];
+
+// Split gallery to interleave a hero frame mid-story
+const lead = images[0];
+const rest = images.slice(1);
 ---
 
-<Layout title={`${title} - Marcin Skalski`} description={description} image={thumbnail}>
-  <main class="trip-page">
-    <!-- Hero Section -->
-    <section class="hero">
-      <img src={thumbnail} alt={title} class="hero-image" />
-      <div class="hero-overlay">
-        <div class="hero-content">
-          <h1 class="trip-title">{title}</h1>
-          <div class="trip-meta">
-            <span class="trip-location">{location}</span>
-            <span class="trip-date">{date}</span>
+<Layout title={`${title} — Marcin Skalski`} description={description} image={thumbnail}>
+  <div class="-mt-16 desktop:-mt-20">
+    <Hero
+      image={thumbnail}
+      alt={title}
+      eyebrow={`${format ?? 'Field project'} · ${date}`}
+      title={title}
+      subtitle={description}
+      align="bottom-left"
+      minHeight="min-h-[78vh]"
+    />
+  </div>
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-28">
+      <div class="mb-10">
+        <a
+          href="/work"
+          class="eyebrow inline-flex items-center gap-2 hover:opacity-70 transition-opacity"
+        >
+          <span aria-hidden="true">←</span> Back to work
+        </a>
+      </div>
+
+      <div
+        class="grid gap-12 desktop:grid-cols-[0.9fr_1.1fr] desktop:gap-20 border-t border-b rule-line py-12 desktop:py-16"
+      >
+        <div data-reveal>
+          <p class="eyebrow mb-6">Project</p>
+          <h2 class="font-display text-3xl desktop:text-4xl leading-[1.05]">
+            {brief ?? description}
+          </h2>
+        </div>
+
+        <dl class="grid grid-cols-2 gap-x-8 gap-y-8 text-sm" data-reveal data-reveal-delay="80">
+          {
+            meta.map((item) => (
+              <div>
+                <dt class="eyebrow mb-2">{item.label}</dt>
+                <dd class="text-[color:var(--text)]">{item.value}</dd>
+              </div>
+            ))
+          }
+          {
+            deliverables && deliverables.length > 0 && (
+              <div class="col-span-2">
+                <dt class="eyebrow mb-2">Deliverables</dt>
+                <dd>
+                  <ul class="space-y-1.5">
+                    {deliverables.map((d) => (
+                      <li class="text-[color:var(--text)]">{d}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            )
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  {
+    lead && (
+      <section class="surface">
+        <div class="container-custom" data-reveal>
+          <figure class="overflow-hidden">
+            <img
+              src={lead}
+              alt={`${title} — featured frame`}
+              class="w-full h-auto aspect-[16/9] object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-28">
+      <article class="trip-prose mx-auto max-w-prose" data-reveal>
+        <slot />
+      </article>
+    </div>
+  </section>
+
+  {
+    rest.length > 0 && (
+      <section class="surface-soft">
+        <div class="container-custom py-20 desktop:py-28">
+          <div class="mb-10 flex items-end justify-between">
+            <div>
+              <p class="eyebrow">Selected frames</p>
+              <h2 class="mt-3 font-display text-2xl desktop:text-3xl">From the field</h2>
+            </div>
+          </div>
+          <Gallery images={rest} alt={title} />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    outcome && (
+      <section class="surface">
+        <div class="container-custom py-20 desktop:py-28" data-reveal>
+          <div class="grid gap-10 desktop:grid-cols-[0.9fr_1.1fr] desktop:gap-20 border-t rule-line pt-12 desktop:pt-16">
+            <p class="eyebrow">Outcome</p>
+            <p class="font-display text-2xl desktop:text-3xl leading-[1.2] text-[color:var(--text)]">
+              {outcome}
+            </p>
           </div>
         </div>
+      </section>
+    )
+  }
+
+  <section class="surface-elevated">
+    <div
+      class="container-custom py-16 desktop:py-24 flex flex-col gap-6 desktop:flex-row desktop:items-end desktop:justify-between"
+    >
+      <div class="max-w-2xl">
+        <p class="eyebrow">Next step</p>
+        <h2 class="mt-3 font-display text-3xl desktop:text-4xl">
+          Have a similar route, brief, or destination in mind?
+        </h2>
       </div>
-    </section>
-
-    <!-- Content Section -->
-    <section class="trip-content">
-      <div class="container">
-        <div class="back-link">
-          <a href="/trips">&larr; Back to Trips</a>
-        </div>
-
-        <div class="trip-story">
-          <slot />
-        </div>
-
-        {images.length > 0 && <Gallery images={images} alt={title} />}
+      <div class="flex flex-col gap-4 tablet:flex-row">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3 text-[11px] font-medium uppercase tracking-[0.24em] hover:opacity-85 transition-opacity"
+        >
+          Start a project
+        </a>
+        <a
+          href="/work"
+          class="inline-flex items-center justify-center border border-[color:var(--text)] text-[color:var(--text)] px-7 py-3 text-[11px] font-medium uppercase tracking-[0.24em] hover:bg-[color:var(--text)] hover:text-[color:var(--bg)] transition-colors"
+        >
+          See more work
+        </a>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 </Layout>
 
 <style>
-  .trip-page {
-    min-height: 100vh;
-  }
-
-  /* Hero Section */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 70vh;
-    min-height: 500px;
-    overflow: hidden;
-  }
-
-  .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
-    display: flex;
-    align-items: flex-end;
-    padding: 6vw;
-  }
-
-  .hero-content {
-    color: white;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .trip-title {
-    font-size: 2.5rem;
-    font-weight: 700;
+  .trip-prose :global(h1),
+  .trip-prose :global(h2),
+  .trip-prose :global(h3) {
+    margin-top: 2.5rem;
     margin-bottom: 1rem;
-    line-height: 1.2;
+    font-family: var(--font-display, 'Fraunces'), serif;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
   }
 
-  @media (min-width: 1025px) {
-    .trip-title {
-      font-size: 3.5rem;
-    }
-
-    .hero-overlay {
-      padding: 4vw;
-    }
+  .trip-prose :global(h1) {
+    font-size: clamp(2rem, 4vw, 3rem);
   }
 
-  .trip-meta {
-    display: flex;
-    gap: 1.5rem;
-    font-size: 1rem;
-    opacity: 0.9;
+  .trip-prose :global(h2) {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
   }
 
-  .trip-meta span {
-    display: flex;
-    align-items: center;
-  }
-
-  /* Content Section */
-  .trip-content {
-    padding: 4rem 6vw;
-  }
-
-  @media (min-width: 1025px) {
-    .trip-content {
-      padding: 6rem 4vw;
-    }
-  }
-
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .back-link {
-    margin-bottom: 3rem;
-  }
-
-  .back-link a {
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: opacity 0.2s ease;
-  }
-
-  .back-link a:hover {
-    opacity: 0.7;
-  }
-
-  .trip-story {
-    max-width: 800px;
-    margin: 0 auto 4rem;
-  }
-
-  .trip-story :global(h1),
-  .trip-story :global(h2),
-  .trip-story :global(h3) {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-  }
-
-  .trip-story :global(p) {
+  .trip-prose :global(p) {
     margin-bottom: 1.5rem;
-    line-height: 1.7;
-    font-size: 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text);
   }
 
-  .trip-story :global(img) {
+  .trip-prose :global(p:first-of-type) {
+    font-size: 1.25rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .trip-prose :global(img) {
     width: 100%;
     height: auto;
+    margin: 2.5rem 0;
+  }
+
+  .trip-prose :global(blockquote) {
+    border-left: 2px solid var(--text);
+    padding-left: 1.5rem;
     margin: 2rem 0;
+    font-family: var(--font-display, 'Fraunces'), serif;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: var(--text);
   }
 </style>

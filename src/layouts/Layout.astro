@@ -45,12 +45,60 @@ const imageURL = Astro.site ? new URL(image, Astro.site) : undefined;
     {imageURL && <meta name="twitter:image" content={imageURL} />}
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch {
+          /* ignore storage errors */
+        }
+      })();
+    </script>
   </head>
   <body class={fullScreen ? 'overflow-hidden h-screen' : ''}>
     <Header />
-    <main class={fullScreen ? '' : 'pt-16'}>
+    <main class={fullScreen ? '' : 'pt-16 desktop:pt-20'}>
       <slot />
     </main>
     {!fullScreen && <Footer />}
+
+    <script>
+      // Reveal-on-scroll for [data-reveal] elements
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (items.length && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement;
+                const delay = el.dataset.revealDelay;
+                if (delay) el.style.transitionDelay = `${delay}ms`;
+                el.classList.add('is-visible');
+                io.unobserve(el);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        );
+        items.forEach((el) => {
+          el.classList.add('reveal');
+          io.observe(el);
+        });
+      } else {
+        items.forEach((el) => el.classList.add('reveal', 'is-visible'));
+      }
+    </script>
   </body>
 </html>
