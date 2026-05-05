@@ -1,7 +1,6 @@
 import eslintPluginAstro from 'eslint-plugin-astro';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default [
   {
@@ -15,7 +14,6 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      'jsx-a11y': jsxA11y,
     },
     rules: {
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
