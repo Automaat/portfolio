@@ -20,11 +20,7 @@ const formatDate = (dateStr: string) => {
 <Layout title={title} description={description} image={image}>
   <!-- Hero Section -->
   <div class="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
-    <img
-      src={image}
-      alt={title}
-      class="w-full h-full object-cover"
-    />
+    <img src={image} alt={title} class="w-full h-full object-cover" />
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
 
     <div class="absolute bottom-0 left-0 right-0 p-6 md:p-12 text-white">
@@ -50,10 +46,7 @@ const formatDate = (dateStr: string) => {
 
   <!-- Back to Blog Link -->
   <div class="max-w-3xl mx-auto px-6 md:px-12 pb-16">
-    <a
-      href="/blog"
-      class="inline-block text-accent hover:underline transition-colors"
-    >
+    <a href="/blog" class="inline-block text-accent hover:underline transition-colors">
       ← Back to Blog
     </a>
   </div>
@@ -86,7 +79,8 @@ const formatDate = (dateStr: string) => {
     font-size: 1.0625rem;
   }
 
-  .prose ul, .prose ol {
+  .prose ul,
+  .prose ol {
     margin-bottom: 1.25rem;
     padding-left: 1.5rem;
   }

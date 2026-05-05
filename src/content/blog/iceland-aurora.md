@@ -1,8 +1,8 @@
 ---
-title: "Chasing the Northern Lights in Iceland"
-date: "2023-11-20"
+title: 'Chasing the Northern Lights in Iceland'
+date: '2023-11-20'
 description: "Three nights of patience rewarded with the most spectacular aurora display I've ever witnessed"
-image: "https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=2250&h=1500&fit=crop"
+image: 'https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=2250&h=1500&fit=crop'
 excerpt: "After two cloudy nights, the skies cleared to reveal nature's greatest light show over Jökulsárlón glacier lagoon"
 ---
 

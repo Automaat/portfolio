@@ -1,14 +1,14 @@
 ---
-title: "Dolomites Alpine Trek"
-location: "Dolomites, Italy"
-date: "September 2022"
-description: "Hiking the Alta Via 1 through the heart of the Dolomites, capturing the iconic limestone peaks in autumn light."
-thumbnail: "/images/trips/dolomites-thumb.jpg"
+title: 'Dolomites Alpine Trek'
+location: 'Dolomites, Italy'
+date: 'September 2022'
+description: 'Hiking the Alta Via 1 through the heart of the Dolomites, capturing the iconic limestone peaks in autumn light.'
+thumbnail: '/images/trips/dolomites-thumb.jpg'
 featured: false
 images:
-  - "/images/trips/dolomites-1.jpg"
-  - "/images/trips/dolomites-2.jpg"
-  - "/images/trips/dolomites-3.jpg"
+  - '/images/trips/dolomites-1.jpg'
+  - '/images/trips/dolomites-2.jpg'
+  - '/images/trips/dolomites-3.jpg'
 ---
 
 # Dolomites Alpine Trek

@@ -13,7 +13,7 @@ describe('Route Structure', () => {
   });
 
   it('all routes start with slash', () => {
-    staticRoutes.forEach(route => {
+    staticRoutes.forEach((route) => {
       expect(route).toMatch(/^\//);
     });
   });
@@ -25,13 +25,9 @@ describe('Route Structure', () => {
 
 describe('Image Paths', () => {
   it('validates image path format', () => {
-    const validPaths = [
-      '/images/hero.jpg',
-      '/images/trip-thumb.webp',
-      '/images/blog/post.jpg',
-    ];
+    const validPaths = ['/images/hero.jpg', '/images/trip-thumb.webp', '/images/blog/post.jpg'];
 
-    validPaths.forEach(path => {
+    validPaths.forEach((path) => {
       expect(path).toMatch(/^\/images\//);
       expect(path).toMatch(/\.(jpg|jpeg|png|webp)$/);
     });

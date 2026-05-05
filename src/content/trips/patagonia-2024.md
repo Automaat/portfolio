@@ -1,14 +1,14 @@
 ---
-title: "Patagonia Expedition"
-location: "Patagonia, Argentina & Chile"
-date: "March 2024"
-description: "Three weeks trekking through Torres del Paine and Fitz Roy, capturing the raw beauty of Patagonian peaks and glaciers."
-thumbnail: "/images/trips/patagonia-thumb.jpg"
+title: 'Patagonia Expedition'
+location: 'Patagonia, Argentina & Chile'
+date: 'March 2024'
+description: 'Three weeks trekking through Torres del Paine and Fitz Roy, capturing the raw beauty of Patagonian peaks and glaciers.'
+thumbnail: '/images/trips/patagonia-thumb.jpg'
 featured: true
 images:
-  - "/images/trips/patagonia-1.jpg"
-  - "/images/trips/patagonia-2.jpg"
-  - "/images/trips/patagonia-3.jpg"
+  - '/images/trips/patagonia-1.jpg'
+  - '/images/trips/patagonia-2.jpg'
+  - '/images/trips/patagonia-3.jpg'
 ---
 
 # Patagonia Expedition

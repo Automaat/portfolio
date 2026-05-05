@@ -1,14 +1,14 @@
 ---
-title: "Norwegian Fjords Sailing"
-location: "Norway"
-date: "July 2023"
+title: 'Norwegian Fjords Sailing'
+location: 'Norway'
+date: 'July 2023'
 description: "Sailing through Norway's magnificent fjords, from Bergen to the Lofoten Islands, documenting coastal villages and dramatic mountain scenery."
-thumbnail: "/images/trips/norway-thumb.jpg"
+thumbnail: '/images/trips/norway-thumb.jpg'
 featured: false
 images:
-  - "/images/trips/norway-1.jpg"
-  - "/images/trips/norway-2.jpg"
-  - "/images/trips/norway-3.jpg"
+  - '/images/trips/norway-1.jpg'
+  - '/images/trips/norway-2.jpg'
+  - '/images/trips/norway-3.jpg'
 ---
 
 # Norwegian Fjords Sailing

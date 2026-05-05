@@ -1,14 +1,14 @@
 ---
-title: "Scottish Highlands"
-location: "Scotland, UK"
-date: "November 2022"
-description: "Exploring the moody landscapes of the Scottish Highlands, from the Isle of Skye to Glen Coe, in autumn storm conditions."
-thumbnail: "/images/trips/scotland-thumb.jpg"
+title: 'Scottish Highlands'
+location: 'Scotland, UK'
+date: 'November 2022'
+description: 'Exploring the moody landscapes of the Scottish Highlands, from the Isle of Skye to Glen Coe, in autumn storm conditions.'
+thumbnail: '/images/trips/scotland-thumb.jpg'
 featured: false
 images:
-  - "/images/trips/scotland-1.jpg"
-  - "/images/trips/scotland-2.jpg"
-  - "/images/trips/scotland-3.jpg"
+  - '/images/trips/scotland-1.jpg'
+  - '/images/trips/scotland-2.jpg'
+  - '/images/trips/scotland-3.jpg'
 ---
 
 # Scottish Highlands
