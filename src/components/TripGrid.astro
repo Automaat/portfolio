@@ -10,7 +10,7 @@ const sortedTrips = trips.sort((a, b) => {
 <div class="trip-grid">
   {
     sortedTrips.map((trip) => (
-      <a href={`/trips/${trip.slug}`} class="trip-card">
+      <a href={`/trips/${trip.id}`} class="trip-card">
         <div class="trip-image">
           <img src={trip.data.thumbnail} alt={trip.data.title} />
         </div>
