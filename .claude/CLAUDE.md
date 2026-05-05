@@ -203,15 +203,15 @@ npm install
 
 ### Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server at http://localhost:4321 |
-| `npm run build` | Build for production (outputs to dist/) |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint on codebase |
-| `npm run lint:fix` | Run ESLint with auto-fix |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check formatting without changes |
+| Command                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `npm run dev`          | Start dev server at http://localhost:4321 |
+| `npm run build`        | Build for production (outputs to dist/)   |
+| `npm run preview`      | Preview production build locally          |
+| `npm run lint`         | Run ESLint on codebase                    |
+| `npm run lint:fix`     | Run ESLint with auto-fix                  |
+| `npm run format`       | Format code with Prettier                 |
+| `npm run format:check` | Check formatting without changes          |
 
 ### Mise Task Shortcuts
 
@@ -251,11 +251,11 @@ Schema defined in `src/content/config.ts`:
 
 ```typescript
 {
-  title: string        // Post title (required)
-  date: string        // Publication date (required)
-  description: string // Meta description (required)
-  image: string       // Hero image path (required)
-  excerpt: string     // Short excerpt (optional)
+  title: string; // Post title (required)
+  date: string; // Publication date (required)
+  description: string; // Meta description (required)
+  image: string; // Hero image path (required)
+  excerpt: string; // Short excerpt (optional)
 }
 ```
 
@@ -270,6 +270,7 @@ npm run build
 ```
 
 Generates:
+
 - 14 static pages (1 home, 1 about, 1 contact, 1 sailing, 1 trips index, 5 trip pages, 1 blog index, 3 blog posts)
 - Optimized assets in `dist/`
 - Build time: ~1.5s
@@ -285,17 +286,20 @@ Generates:
 ## Verification Checklist
 
 ### Build Verification
+
 - [ ] `npm run build` completes successfully
 - [ ] All 14 pages generated without errors
 - [ ] No TypeScript errors
 - [ ] No linting errors (`npm run lint`)
 
 ### Responsive Design
+
 - [ ] Mobile: 320px-736px (6vw gutters, 8-column grid)
 - [ ] Tablet: 737px-1024px (transition breakpoint)
 - [ ] Desktop: 1025px+ (4vw gutters, 24-column grid, max-width 2400px)
 
 ### Accessibility
+
 - [ ] All images have descriptive alt text
 - [ ] Keyboard navigation works (Tab, Escape)
 - [ ] Focus states visible on all interactive elements
@@ -306,6 +310,7 @@ Generates:
 - [ ] Color contrast meets WCAG 2.1 standards
 
 ### Performance
+
 - [ ] Lazy loading on non-hero images
 - [ ] Images use proper aspect ratios (3:2 for galleries)
 - [ ] Minimal JavaScript (mobile menu + form only)
@@ -313,6 +318,7 @@ Generates:
 - [ ] No render-blocking resources
 
 ### Content
+
 - [ ] All navigation links functional
 - [ ] Trip cards link to detail pages
 - [ ] Blog posts render correctly
@@ -327,15 +333,15 @@ Generates:
 2. Add `index.md` with frontmatter:
    ```yaml
    ---
-   title: "Trip Name"
-   location: "Location"
-   date: "2024-01-01"
-   description: "Trip description"
-   thumbnail: "/images/trip-thumb.jpg"
+   title: 'Trip Name'
+   location: 'Location'
+   date: '2024-01-01'
+   description: 'Trip description'
+   thumbnail: '/images/trip-thumb.jpg'
    featured: false
    images:
-     - "/images/trip-1.jpg"
-     - "/images/trip-2.jpg"
+     - '/images/trip-1.jpg'
+     - '/images/trip-2.jpg'
    ---
    Trip story content here...
    ```
@@ -348,11 +354,11 @@ Generates:
 2. Add frontmatter:
    ```yaml
    ---
-   title: "Post Title"
-   date: "2024-01-01"
-   description: "Meta description"
-   image: "/images/blog-hero.jpg"
-   excerpt: "Short excerpt"
+   title: 'Post Title'
+   date: '2024-01-01'
+   description: 'Meta description'
+   image: '/images/blog-hero.jpg'
+   excerpt: 'Short excerpt'
    ---
    Post content here...
    ```
@@ -380,10 +386,12 @@ npm run preview
 ## Hero Images
 
 **Optimal dimensions:**
+
 - Desktop: 2400×1350 (WebP ~200KB, JPEG ~350KB)
 - Mobile: 1200×1600 (WebP ~120KB, JPEG ~200KB)
 
 **Usage:**
+
 ```astro
 <Hero
   image="/images/hero-desktop.jpg"
