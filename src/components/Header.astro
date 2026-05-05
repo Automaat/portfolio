@@ -1,9 +1,8 @@
 ---
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/trips', label: 'Trips' },
-  { href: '/sailing', label: 'Sailing' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/work', label: 'Work' },
+  { href: '/motion', label: 'Motion' },
+  { href: '/blog', label: 'Journal' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -15,8 +14,8 @@ const socialLinks = [
 ---
 
 <header class="fixed top-0 left-0 w-full z-50 bg-primary-bg/95 backdrop-blur-sm">
-  <nav class="container-custom py-4 flex items-center justify-between">
-    <a href="/" class="logo text-xs font-bold tracking-wider"> marcin•skalski </a>
+  <nav class="container-custom py-4 flex items-center justify-between gap-6">
+    <a href="/" class="logo text-xs font-bold tracking-[0.24em] uppercase"> marcin skalski </a>
 
     <button
       id="mobile-menu-toggle"
@@ -47,6 +46,15 @@ const socialLinks = [
           ))
         }
       </ul>
+
+      <div class="mt-6 desktop:mt-0 desktop:ml-8">
+        <a
+          href="mailto:marcin@skalski.com"
+          class="inline-flex items-center rounded-full border border-primary-text px-4 py-2 text-xs font-medium tracking-[0.16em] uppercase transition-colors hover:bg-primary-text hover:text-white focus:outline-none focus:ring-2 focus:ring-accent-blue"
+        >
+          Start Project
+        </a>
+      </div>
 
       <div class="flex gap-4 mt-6 desktop:mt-0">
         {

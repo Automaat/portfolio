@@ -1,10 +1,21 @@
 import { describe, it, expect } from 'vitest';
 
 describe('Route Structure', () => {
-  const staticRoutes = ['/', '/about', '/contact', '/trips', '/sailing', '/blog'];
+  const staticRoutes = [
+    '/',
+    '/work',
+    '/motion',
+    '/about',
+    '/contact',
+    '/trips',
+    '/sailing',
+    '/blog',
+  ];
 
   it('has all required static routes defined', () => {
     expect(staticRoutes).toContain('/');
+    expect(staticRoutes).toContain('/work');
+    expect(staticRoutes).toContain('/motion');
     expect(staticRoutes).toContain('/trips');
     expect(staticRoutes).toContain('/blog');
     expect(staticRoutes).toContain('/about');
@@ -19,7 +30,7 @@ describe('Route Structure', () => {
   });
 
   it('has minimum expected route count', () => {
-    expect(staticRoutes.length).toBeGreaterThanOrEqual(6);
+    expect(staticRoutes.length).toBeGreaterThanOrEqual(8);
   });
 });
 

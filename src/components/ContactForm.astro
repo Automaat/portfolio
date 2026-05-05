@@ -35,6 +35,70 @@
     />
   </div>
 
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="project-type" class="form-label">Project Type</label>
+      <select id="project-type" name="projectType" required class="form-input form-select">
+        <option value="">Select project type</option>
+        <option value="adventure-campaign">Adventure campaign</option>
+        <option value="destination-tourism">Destination / tourism</option>
+        <option value="marine-sailing">Marine / sailing</option>
+        <option value="motion-only">Motion only</option>
+        <option value="hybrid-photo-video">Hybrid photo + video</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="budget" class="form-label">Budget Range</label>
+      <select id="budget" name="budget" required class="form-input form-select">
+        <option value="">Select budget range</option>
+        <option value="under-3k">Under EUR 3k</option>
+        <option value="3k-7k">EUR 3k to 7k</option>
+        <option value="7k-15k">EUR 7k to 15k</option>
+        <option value="15k-plus">EUR 15k+</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="location" class="form-label">Location</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        required
+        class="form-input"
+        placeholder="Country, region, or route"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="timeline" class="form-label">Timeline</label>
+      <input
+        type="text"
+        id="timeline"
+        name="timeline"
+        required
+        class="form-input"
+        placeholder="Shoot window or delivery deadline"
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="deliverables" class="form-label">Deliverables</label>
+    <textarea
+      id="deliverables"
+      name="deliverables"
+      required
+      rows="4"
+      class="form-input form-textarea"
+      placeholder="Stills, reel, drone, social cutdowns, content library, usage needs..."
+    ></textarea>
+  </div>
+
   <div class="form-group">
     <label for="message" class="form-label">Message</label>
     <textarea
@@ -43,7 +107,7 @@
       required
       rows="6"
       class="form-input form-textarea"
-      placeholder="Tell me about your project or inquiry..."></textarea>
+      placeholder="Context, goals, references, crew size, or anything else useful..."></textarea>
   </div>
 
   <button type="submit" class="form-submit"> Send Message </button>
@@ -63,6 +127,12 @@
 
   .form-group {
     margin-bottom: 1.5rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .form-label {
@@ -94,7 +164,11 @@
   .form-textarea {
     border-radius: 1.5rem;
     resize: vertical;
-    min-height: 150px;
+    min-height: 120px;
+  }
+
+  .form-select {
+    appearance: none;
   }
 
   .form-submit {
@@ -149,6 +223,12 @@
       font-size: 1rem; /* Prevent zoom on iOS */
     }
   }
+
+  @media (min-width: 737px) {
+    .form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
 </style>
 
 <script>
@@ -170,10 +250,14 @@
       }
 
       try {
+        const encodedData = new URLSearchParams(
+          Array.from(formData.entries()).map(([key, value]) => [key, String(value)])
+        ).toString();
+
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as any).toString(),
+          body: encodedData,
         });
 
         if (response.ok) {
@@ -183,7 +267,7 @@
         } else {
           throw new Error('Form submission failed');
         }
-      } catch (error) {
+      } catch {
         messageDiv.textContent =
           'Sorry, there was an error sending your message. Please try again.';
         messageDiv.className = 'form-message error';

@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const motionOffers = [
+  {
+    title: 'Brand films',
+    description: 'Short pieces built around place, movement, and product use in the field.',
+  },
+  {
+    title: 'Destination films',
+    description: 'Tourism-led edits for regions, operators, and travel campaigns.',
+  },
+  {
+    title: 'Social cutdowns',
+    description:
+      'Vertical and short-form edits shaped for launch windows and ongoing distribution.',
+  },
+  {
+    title: 'Hybrid coverage',
+    description: 'Stills and motion captured in one production window to reduce crew overhead.',
+  },
+];
+
+const productionNotes = [
+  'Remote location planning',
+  'On-water camera work',
+  'Drone support when conditions allow',
+  'Lean capture built for stills + motion handoff',
+];
+---
+
+<Layout
+  title="Motion | Marcin Skalski"
+  description="Motion direction and field-ready production for adventure, travel, and marine campaigns."
+>
+  <section class="bg-primary-text py-16 text-white desktop:py-24">
+    <div class="container-custom grid gap-10 desktop:grid-cols-[1.2fr_0.8fr]">
+      <div>
+        <p class="text-xs font-medium uppercase tracking-[0.22em] text-white/60">Motion</p>
+        <h1 class="mt-3 max-w-4xl text-4xl font-bold leading-[1.05] desktop:text-[4.2rem]">
+          Short-form motion built for outdoor brands, tourism, and expedition stories.
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg text-white/75">
+          This route is now live as the motion offer page. Next content pass adds a reel and
+          individual film embeds. Current inquiries can review existing motion work on YouTube.
+        </p>
+        <div class="mt-8 flex flex-col gap-4 tablet:flex-row">
+          <a
+            href="https://www.youtube.com/@marcinskalski2201"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-black transition hover:bg-white/90"
+          >
+            Watch on YouTube
+          </a>
+          <a
+            href="mailto:marcin@skalski.com"
+            class="inline-flex items-center justify-center rounded-full border border-white/50 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:border-white hover:bg-white/10"
+          >
+            Discuss Motion Project
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-[2rem] bg-white/6 p-8 backdrop-blur-sm">
+        <p class="text-xs font-medium uppercase tracking-[0.22em] text-white/60">Production</p>
+        <ul class="mt-6 space-y-4 text-white/80">
+          {
+            productionNotes.map((note) => (
+              <li class="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">{note}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-custom py-16 desktop:py-24">
+    <div class="max-w-2xl">
+      <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Deliverables</p>
+      <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">
+        Motion structured around buyer output, not a side reel.
+      </h2>
+    </div>
+
+    <div class="mt-10 grid gap-6 desktop:grid-cols-2">
+      {
+        motionOffers.map((offer) => (
+          <div class="rounded-[2rem] border border-gray-200 bg-[#f8f8f5] p-8">
+            <h3 class="text-2xl font-bold">{offer.title}</h3>
+            <p class="mt-4 text-gray-600">{offer.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-[#f6f5f1] py-16 desktop:py-24">
+    <div
+      class="container-custom flex flex-col gap-6 desktop:flex-row desktop:items-end desktop:justify-between"
+    >
+      <div class="max-w-2xl">
+        <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Next step</p>
+        <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">
+          Need reels, cutdowns, or hybrid coverage for one field shoot?
+        </h2>
+        <p class="mt-4 text-gray-700">
+          Send the route, location, timing, and required outputs. I’ll respond with approach and
+          fit.
+        </p>
+      </div>
+      <a
+        href="/contact"
+        class="inline-flex items-center justify-center rounded-full bg-primary-text px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:bg-black"
+      >
+        Contact
+      </a>
+    </div>
+  </section>
+</Layout>
