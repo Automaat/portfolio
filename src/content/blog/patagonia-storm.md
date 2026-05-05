@@ -1,9 +1,9 @@
 ---
-title: "Weathering the Storm in Patagonia"
-date: "2024-03-15"
-description: "A harrowing encounter with Patagonian winds and what it taught me about respect for nature"
-image: "https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?w=2250&h=1500&fit=crop"
-excerpt: "When 120 km/h winds hit our camp at Torres del Paine, we learned the true meaning of Patagonian weather"
+title: 'Weathering the Storm in Patagonia'
+date: '2024-03-15'
+description: 'A harrowing encounter with Patagonian winds and what it taught me about respect for nature'
+image: 'https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?w=2250&h=1500&fit=crop'
+excerpt: 'When 120 km/h winds hit our camp at Torres del Paine, we learned the true meaning of Patagonian weather'
 ---
 
 The morning started deceptively calm. We'd camped at the base of Torres del Paine, planning to summit for sunrise. By 4 AM, we were already halfway up when the wind hit.
@@ -24,4 +24,4 @@ This expedition taught me:
 
 The next day, we returned to clear skies and successfully reached the summit. The torres were worth the wait, and the lesson was invaluable.
 
-*Shot on Sony A7IV with 16-35mm f/2.8*
+_Shot on Sony A7IV with 16-35mm f/2.8_

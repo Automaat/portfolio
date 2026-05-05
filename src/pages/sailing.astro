@@ -15,15 +15,18 @@ const yachtPhotos = [
 const services = [
   {
     title: 'Skippered Charters',
-    description: 'Professional yacht charter services with experienced skipper. Navigate safely through challenging waters while you enjoy the journey.',
+    description:
+      'Professional yacht charter services with experienced skipper. Navigate safely through challenging waters while you enjoy the journey.',
   },
   {
     title: 'Sailing Expeditions',
-    description: 'Multi-day sailing adventures to remote destinations. Experience the thrill of offshore sailing with comprehensive planning and support.',
+    description:
+      'Multi-day sailing adventures to remote destinations. Experience the thrill of offshore sailing with comprehensive planning and support.',
   },
   {
     title: 'Sailing Instruction',
-    description: 'Personalized sailing lessons for all skill levels. From basic navigation to advanced offshore techniques and certification preparation.',
+    description:
+      'Personalized sailing lessons for all skill levels. From basic navigation to advanced offshore techniques and certification preparation.',
   },
 ];
 ---
@@ -47,14 +50,15 @@ const services = [
         <div class="experience-content">
           <div class="experience-text">
             <p>
-              With years of experience navigating challenging waters across multiple continents,
-              I bring professional expertise and passion for sailing to every voyage. My approach
-              combines technical proficiency with a deep respect for the ocean and commitment to safety.
+              With years of experience navigating challenging waters across multiple continents, I
+              bring professional expertise and passion for sailing to every voyage. My approach
+              combines technical proficiency with a deep respect for the ocean and commitment to
+              safety.
             </p>
             <p>
               From coastal cruising to offshore expeditions, I've accumulated thousands of nautical
-              miles in diverse conditions, developing the skills and judgment needed to ensure
-              safe, memorable sailing experiences.
+              miles in diverse conditions, developing the skills and judgment needed to ensure safe,
+              memorable sailing experiences.
             </p>
           </div>
 
@@ -80,9 +84,11 @@ const services = [
         <h2 class="section-heading">Services Offered</h2>
 
         <div class="services-grid">
-          {services.map((service) => (
-            <ServiceCard title={service.title} description={service.description} />
-          ))}
+          {
+            services.map((service) => (
+              <ServiceCard title={service.title} description={service.description} />
+            ))
+          }
         </div>
       </div>
     </div>
@@ -93,8 +99,8 @@ const services = [
       <div class="content-wrapper">
         <h2 class="section-heading">The Vessel</h2>
         <p class="section-intro">
-          Explore the yacht that will be your home on the water. Equipped for comfort,
-          safety, and performance in all conditions.
+          Explore the yacht that will be your home on the water. Equipped for comfort, safety, and
+          performance in all conditions.
         </p>
       </div>
     </div>
@@ -107,8 +113,8 @@ const services = [
       <div class="cta-content">
         <h2 class="cta-heading">Ready to Set Sail?</h2>
         <p class="cta-text">
-          Get in touch to discuss your sailing adventure, charter needs, or to learn more
-          about available services and upcoming expeditions.
+          Get in touch to discuss your sailing adventure, charter needs, or to learn more about
+          available services and upcoming expeditions.
         </p>
         <a href="/contact" class="cta-button">Book Your Adventure</a>
       </div>
@@ -260,7 +266,10 @@ const services = [
     background: #4d6198;
     border-radius: 9999px;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .cta-button:hover {

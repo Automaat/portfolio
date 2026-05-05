@@ -8,17 +8,19 @@ const sortedTrips = trips.sort((a, b) => {
 ---
 
 <div class="trip-grid">
-  {sortedTrips.map((trip) => (
-    <a href={`/trips/${trip.slug}`} class="trip-card">
-      <div class="trip-image">
-        <img src={trip.data.thumbnail} alt={trip.data.title} />
-      </div>
-      <div class="trip-overlay">
-        <h3 class="trip-title">{trip.data.title}</h3>
-        <p class="trip-location">{trip.data.location}</p>
-      </div>
-    </a>
-  ))}
+  {
+    sortedTrips.map((trip) => (
+      <a href={`/trips/${trip.slug}`} class="trip-card">
+        <div class="trip-image">
+          <img src={trip.data.thumbnail} alt={trip.data.title} />
+        </div>
+        <div class="trip-overlay">
+          <h3 class="trip-title">{trip.data.title}</h3>
+          <p class="trip-location">{trip.data.location}</p>
+        </div>
+      </a>
+    ))
+  }
 </div>
 
 <style>
@@ -47,7 +49,9 @@ const sortedTrips = trips.sort((a, b) => {
     aspect-ratio: 1;
     overflow: hidden;
     text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
     border-radius: 4px;
   }
 
@@ -88,23 +92,13 @@ const sortedTrips = trips.sort((a, b) => {
     flex-direction: column;
     justify-content: flex-end;
     padding: 2rem;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.8),
-      rgba(0, 0, 0, 0.4) 50%,
-      transparent
-    );
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4) 50%, transparent);
     color: white;
     transition: background 0.3s ease;
   }
 
   .trip-card:hover .trip-overlay {
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.9),
-      rgba(0, 0, 0, 0.5) 50%,
-      transparent
-    );
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 50%, transparent);
   }
 
   .trip-title {

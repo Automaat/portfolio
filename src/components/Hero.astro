@@ -17,50 +17,36 @@ const useResponsive = imageMobile || imageMobileWebp || imageWebp;
 
 <section class="hero">
   <div class="hero-image">
-    {useResponsive ? (
-      <picture>
-        {/* Mobile WebP */}
-        {imageMobileWebp && (
-          <source
-            media="(max-width: 768px)"
-            srcset={imageMobileWebp}
-            type="image/webp"
-          />
-        )}
+    {
+      useResponsive ? (
+        <picture>
+          {/* Mobile WebP */}
+          {imageMobileWebp && (
+            <source media="(max-width: 768px)" srcset={imageMobileWebp} type="image/webp" />
+          )}
 
-        {/* Mobile JPEG fallback */}
-        {imageMobile && (
-          <source
-            media="(max-width: 768px)"
-            srcset={imageMobile}
-          />
-        )}
+          {/* Mobile JPEG fallback */}
+          {imageMobile && <source media="(max-width: 768px)" srcset={imageMobile} />}
 
-        {/* Desktop WebP */}
-        {imageWebp && (
-          <source
-            srcset={imageWebp}
-            type="image/webp"
-          />
-        )}
+          {/* Desktop WebP */}
+          {imageWebp && <source srcset={imageWebp} type="image/webp" />}
 
-        {/* Desktop JPEG fallback */}
-        <img
-          src={image}
-          alt={alt}
-          loading="eager"
-        />
-      </picture>
-    ) : (
-      <img src={image} alt={alt} loading="eager" />
-    )}
+          {/* Desktop JPEG fallback */}
+          <img src={image} alt={alt} loading="eager" />
+        </picture>
+      ) : (
+        <img src={image} alt={alt} loading="eager" />
+      )
+    }
   </div>
-  {(title || subtitle) && (
-    <div class="hero-content">
-      {title && <h1 class="hero-title">{title}</h1>}
-      {subtitle && <p class="hero-subtitle">{subtitle}</p>}
-    </div>
-  )}
+  {
+    (title || subtitle) && (
+      <div class="hero-content">
+        {title && <h1 class="hero-title">{title}</h1>}
+        {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+      </div>
+    )
+  }
 </section>
 
 <style>
@@ -102,11 +88,7 @@ const useResponsive = imageMobile || imageMobileWebp || imageWebp;
     padding: 6vw;
     text-align: center;
     color: white;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.2),
-      rgba(0, 0, 0, 0.4)
-    );
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
   }
 
   .hero-title {

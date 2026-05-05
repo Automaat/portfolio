@@ -10,16 +10,13 @@ const { images, alt = 'Gallery image' } = Astro.props;
 ---
 
 <div class="gallery">
-  {images.map((image, index) => (
-    <div class="gallery-item">
-      <img
-        src={image}
-        alt={`${alt} ${index + 1}`}
-        loading="lazy"
-        class="gallery-image"
-      />
-    </div>
-  ))}
+  {
+    images.map((image, index) => (
+      <div class="gallery-item">
+        <img src={image} alt={`${alt} ${index + 1}`} loading="lazy" class="gallery-image" />
+      </div>
+    ))
+  }
 </div>
 
 <style>

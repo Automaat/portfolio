@@ -1,14 +1,14 @@
 ---
-title: "Iceland Winter Journey"
-location: "Iceland"
-date: "February 2023"
-description: "Chasing northern lights and exploring ice caves in the land of fire and ice during the depths of winter."
-thumbnail: "/images/trips/iceland-thumb.jpg"
+title: 'Iceland Winter Journey'
+location: 'Iceland'
+date: 'February 2023'
+description: 'Chasing northern lights and exploring ice caves in the land of fire and ice during the depths of winter.'
+thumbnail: '/images/trips/iceland-thumb.jpg'
 featured: true
 images:
-  - "/images/trips/iceland-1.jpg"
-  - "/images/trips/iceland-2.jpg"
-  - "/images/trips/iceland-3.jpg"
+  - '/images/trips/iceland-1.jpg'
+  - '/images/trips/iceland-2.jpg'
+  - '/images/trips/iceland-3.jpg'
 ---
 
 # Iceland Winter Journey

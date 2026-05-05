@@ -1,9 +1,9 @@
 ---
-title: "First Solo Night Sail: Lessons from the Baltic"
-date: "2023-08-05"
-description: "My first overnight solo passage and why preparation matters more than confidence"
-image: "https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=2250&h=1500&fit=crop"
-excerpt: "A routine passage from Gdańsk to Hel turned into a masterclass in respecting the sea"
+title: 'First Solo Night Sail: Lessons from the Baltic'
+date: '2023-08-05'
+description: 'My first overnight solo passage and why preparation matters more than confidence'
+image: 'https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=2250&h=1500&fit=crop'
+excerpt: 'A routine passage from Gdańsk to Hel turned into a masterclass in respecting the sea'
 ---
 
 Every sailor remembers their first solo night passage. Mine was supposed to be a straightforward 40-nautical-mile cruise along the Polish coast. The forecast: light winds, calm seas.

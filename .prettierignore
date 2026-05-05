@@ -2,5 +2,6 @@ dist/
 node_modules/
 .astro/
 .netlify/
+.claude/
 package-lock.json
 pnpm-lock.yaml
