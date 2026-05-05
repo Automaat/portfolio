@@ -5,114 +5,99 @@ interface Props {
   imageMobile?: string;
   imageMobileWebp?: string;
   alt: string;
+  eyebrow?: string;
   title?: string;
   subtitle?: string;
+  align?: 'center' | 'bottom-left' | 'bottom-center';
+  minHeight?: string;
+  overlay?: 'soft' | 'dark' | 'none';
 }
 
-const { image, imageWebp, imageMobile, imageMobileWebp, alt, title, subtitle } = Astro.props;
+const {
+  image,
+  imageWebp,
+  imageMobile,
+  imageMobileWebp,
+  alt,
+  eyebrow,
+  title,
+  subtitle,
+  align = 'center',
+  minHeight = 'min-h-screen',
+  overlay = 'soft',
+} = Astro.props;
 
-// Determine if we should use responsive picture element
-const useResponsive = imageMobile || imageMobileWebp || imageWebp;
+const hasResponsive = imageMobile || imageMobileWebp || imageWebp;
+const hasContent = eyebrow || title || subtitle || Astro.slots.has('cta');
+
+const overlayClass = {
+  soft: 'bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.55)_60%,rgba(0,0,0,0.82)_100%)]',
+  dark: 'bg-[linear-gradient(180deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.7)_100%)]',
+  none: '',
+}[overlay];
+
+const layoutClass = {
+  center: 'items-center justify-center text-center',
+  'bottom-left': 'items-end justify-start text-left',
+  'bottom-center': 'items-end justify-center text-center',
+}[align];
+
+const contentMaxWidth = align === 'center' ? 'max-w-3xl' : 'max-w-5xl';
 ---
 
-<section class="hero">
-  <div class="hero-image">
+<section class:list={['relative isolate overflow-hidden bg-black text-white', minHeight]}>
+  <picture class="absolute inset-0">
     {
-      useResponsive ? (
-        <picture>
-          {/* Mobile WebP */}
-          {imageMobileWebp && (
-            <source media="(max-width: 768px)" srcset={imageMobileWebp} type="image/webp" />
-          )}
-
-          {/* Mobile JPEG fallback */}
-          {imageMobile && <source media="(max-width: 768px)" srcset={imageMobile} />}
-
-          {/* Desktop WebP */}
-          {imageWebp && <source srcset={imageWebp} type="image/webp" />}
-
-          {/* Desktop JPEG fallback */}
-          <img src={image} alt={alt} loading="eager" />
-        </picture>
-      ) : (
-        <img src={image} alt={alt} loading="eager" />
+      imageMobileWebp && (
+        <source media="(max-width: 768px)" srcset={imageMobileWebp} type="image/webp" />
       )
     }
-  </div>
+    {imageMobile && <source media="(max-width: 768px)" srcset={imageMobile} />}
+    {imageWebp && <source srcset={imageWebp} type="image/webp" />}
+    <img
+      src={image}
+      alt={alt}
+      width="2400"
+      height="1350"
+      class="h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+
+  {overlay !== 'none' && <div class:list={['absolute inset-0', overlayClass]} />}
+
   {
-    (title || subtitle) && (
-      <div class="hero-content">
-        {title && <h1 class="hero-title">{title}</h1>}
-        {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    hasContent && (
+      <div
+        class:list={[
+          'container-custom relative flex',
+          minHeight,
+          layoutClass,
+          'py-24 desktop:py-32',
+        ]}
+      >
+        <div class={contentMaxWidth}>
+          {eyebrow && (
+            <p class="mb-5 text-[11px] font-medium uppercase tracking-[0.32em] text-white/70">
+              {eyebrow}
+            </p>
+          )}
+          {title && (
+            <h1 class="font-display font-medium leading-[0.95] text-white text-[clamp(2.75rem,8vw,7rem)]">
+              {title}
+            </h1>
+          )}
+          {subtitle && (
+            <p class="mt-6 max-w-2xl text-base leading-7 text-white/85 desktop:text-lg">
+              {subtitle}
+            </p>
+          )}
+          <slot name="cta" />
+        </div>
       </div>
     )
   }
+  {!hasResponsive && null}
 </section>
-
-<style>
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .hero-image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-image picture {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-image img,
-  .hero-image picture img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .hero-content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 6vw;
-    text-align: center;
-    color: white;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    font-weight: 400;
-    line-height: 1.4;
-    margin-top: 1rem;
-    max-width: 600px;
-    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-  }
-
-  @media (min-width: 1025px) {
-    .hero-content {
-      padding: 4vw;
-    }
-  }
-</style>

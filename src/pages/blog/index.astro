@@ -3,12 +3,10 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 const blogPosts = await getCollection('blog');
-// Sort by date, newest first
 const sortedPosts = blogPosts.sort((a, b) => {
   return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 });
 
-// Format date for display
 const formatDate = (dateStr: string) => {
   const d = new Date(dateStr);
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -16,67 +14,81 @@ const formatDate = (dateStr: string) => {
 ---
 
 <Layout
-  title="Blog - Marcin Skalski"
-  description="Adventure stories, photography insights, and expedition tales from the field"
+  title="Journal | Marcin Skalski"
+  description="Stories from the field, lessons from the sea, and reflections on the adventures that shape the work."
 >
-  <!-- Header Section -->
-  <div class="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
-    <p class="text-lg md:text-xl text-gray-600 max-w-2xl">
-      Stories from the field, lessons from the sea, and reflections on the adventures that shape us.
-    </p>
-  </div>
+  <section class="surface">
+    <div class="container-custom pt-20 pb-12 desktop:pt-28 desktop:pb-16 border-b rule-line">
+      <p class="eyebrow">Journal</p>
+      <h1 class="mt-4 font-display text-[clamp(2.5rem,7vw,6rem)] leading-[1] max-w-5xl" data-reveal>
+        Stories from the field.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
+        Notes from expeditions, lessons from the sea, and short writing on photography and route
+        decisions.
+      </p>
+    </div>
+  </section>
 
-  <!-- Blog Posts Grid -->
-  <div class="max-w-7xl mx-auto px-6 md:px-12 pb-24">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+  <section class="surface">
+    <div class="container-custom py-12 desktop:py-20">
       {
-        sortedPosts.map((post) => (
-          <article class="group">
-            <a
-              href={`/blog/${post.id}`}
-              class="block focus:outline-none focus:ring-2 focus:ring-accent-blue rounded-lg"
-            >
-              <div class="relative aspect-[3/2] overflow-hidden mb-4">
-                <img
-                  src={post.data.image}
-                  alt={post.data.title}
-                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-
-              <div>
-                <p class="text-sm text-gray-500 mb-2">{formatDate(post.data.date)}</p>
-                <h2 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">
-                  {post.data.title}
-                </h2>
-                <p class="text-gray-600 line-clamp-3">
-                  {post.data.excerpt || post.data.description}
-                </p>
-                <span class="inline-block mt-3 text-accent group-hover:underline">Read more →</span>
-              </div>
-            </a>
-          </article>
-        ))
+        sortedPosts.length === 0 ? (
+          <p class="text-muted text-lg">No journal posts yet — check back soon.</p>
+        ) : (
+          <div class="grid gap-0 border-t rule-line">
+            {sortedPosts.map((post, i) => (
+              <a
+                href={`/blog/${post.id}`}
+                class="post-row group"
+                data-reveal
+                data-reveal-delay={`${i * 60}`}
+              >
+                <article class="border-b rule-line py-10 grid gap-6 desktop:grid-cols-[0.45fr_0.55fr] desktop:gap-16 items-start">
+                  <div class="post-image overflow-hidden">
+                    <img
+                      src={post.data.image}
+                      alt={post.data.title}
+                      loading={i < 2 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  </div>
+                  <div>
+                    <p class="eyebrow">{formatDate(post.data.date)}</p>
+                    <h2 class="mt-3 font-display text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.1]">
+                      {post.data.title}
+                    </h2>
+                    <p class="mt-4 text-muted text-base leading-relaxed max-w-prose">
+                      {post.data.excerpt || post.data.description}
+                    </p>
+                    <span class="mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] underline underline-offset-8 group-hover:opacity-70 transition-opacity">
+                      Read piece <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
+                </article>
+              </a>
+            ))}
+          </div>
+        )
       }
     </div>
-
-    {
-      sortedPosts.length === 0 && (
-        <div class="text-center py-16">
-          <p class="text-gray-500 text-lg">No blog posts yet. Check back soon!</p>
-        </div>
-      )
-    }
-  </div>
+  </section>
 </Layout>
 
 <style>
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .post-image {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elevated);
+  }
+
+  .post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .post-row:hover .post-image img {
+    transform: scale(1.04);
   }
 </style>

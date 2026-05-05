@@ -15,53 +15,64 @@ const socialLinks = [
 ];
 ---
 
-<footer class="bg-primary-bg border-t border-gray-200 mt-20">
-  <div class="container-custom py-8">
-    <div
-      class="flex flex-col desktop:flex-row justify-between items-start desktop:items-center gap-6 text-xs"
-    >
-      <div class="space-y-2">
-        <p class="text-gray-900 font-medium tracking-[0.14em] uppercase">Marcin Skalski</p>
+<footer class="surface border-t rule-line mt-0">
+  <div class="container-custom py-16 desktop:py-20">
+    <div class="grid gap-10 desktop:grid-cols-[1.4fr_1fr_1fr] desktop:gap-16">
+      <div>
+        <p class="font-display text-3xl leading-tight">Marcin Skalski</p>
+        <p class="mt-3 text-sm text-muted max-w-xs">
+          Adventure, travel, and marine photographer. Europe-based, available worldwide.
+        </p>
         <a
           href="mailto:marcin@skalski.com"
-          class="block text-gray-600 hover:text-accent-blue transition-colors"
+          class="mt-6 inline-block text-sm underline underline-offset-8 hover:opacity-70 transition-opacity"
         >
           marcin@skalski.com
         </a>
-        <p class="text-gray-600">Europe-based. Available worldwide.</p>
-        <p class="text-gray-600">
-          &copy; {currentYear} Marcin Skalski. All rights reserved.
-        </p>
       </div>
 
-      <div class="flex flex-wrap gap-x-6 gap-y-3">
-        {
-          navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="text-gray-600 hover:text-accent-blue transition-colors focus:outline-none focus:ring-2 focus:ring-accent-blue rounded px-2 py-1 -mx-2 -my-1"
-            >
-              {link.label}
-            </a>
-          ))
-        }
+      <div>
+        <p class="eyebrow mb-5">Site</p>
+        <ul class="space-y-3 text-sm">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a href={link.href} class="hover:opacity-70 transition-opacity">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
 
-      <div class="flex gap-6">
-        {
-          socialLinks.map((link) => (
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-gray-600 hover:text-accent-blue transition-colors focus:outline-none focus:ring-2 focus:ring-accent-blue rounded px-2 py-1 -mx-2 -my-1"
-              aria-label={link.label}
-            >
-              {link.label}
-            </a>
-          ))
-        }
+      <div>
+        <p class="eyebrow mb-5">Social</p>
+        <ul class="space-y-3 text-sm">
+          {
+            socialLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:opacity-70 transition-opacity"
+                  aria-label={link.label}
+                >
+                  {link.label} ↗
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
+    </div>
+
+    <div
+      class="mt-16 pt-6 border-t rule-line flex flex-col tablet:flex-row gap-3 tablet:items-center tablet:justify-between text-xs text-subtle"
+    >
+      <p>&copy; {currentYear} Marcin Skalski. All rights reserved.</p>
+      <p>Europe-based · Available worldwide</p>
     </div>
   </div>
 </footer>

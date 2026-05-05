@@ -8,62 +8,67 @@ const pageDescription =
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <section class="border-b border-gray-200 bg-[#f6f5f1]">
-    <div class="container-custom py-16 desktop:py-24">
-      <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Contact</p>
-      <h1 class="mt-3 max-w-4xl text-4xl font-bold leading-[1.05] desktop:text-[4.2rem]">
-        Start with the brief: location, timing, deliverables, and budget range.
+  <section class="surface">
+    <div class="container-custom pt-20 pb-12 desktop:pt-28 desktop:pb-16 border-b rule-line">
+      <p class="eyebrow">Contact</p>
+      <h1 class="mt-4 font-display text-[clamp(2.5rem,7vw,6rem)] leading-[1] max-w-5xl" data-reveal>
+        Start with the brief.
       </h1>
-      <p class="mt-6 max-w-2xl text-lg text-gray-700">
+      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
         Best fit for adventure, travel, and marine projects needing stills, motion, or hybrid
-        coverage.
+        coverage. Send location, timing, deliverables, and a budget range.
       </p>
     </div>
   </section>
 
-  <section class="container-custom py-16 desktop:py-24">
-    <div class="grid gap-10 desktop:grid-cols-[0.7fr_1.3fr]">
-      <div class="space-y-6">
-        <div class="overflow-hidden rounded-[2rem]">
-          <img
-            src="/images/trips/norway-thumb.jpg"
-            alt="Norwegian fjord from Marcin Skalski portfolio"
-            class="aspect-[4/5] h-full w-full object-cover"
-            loading="lazy"
-          />
-        </div>
+  <section class="surface">
+    <div class="container-custom py-16 desktop:py-24">
+      <div class="grid gap-12 desktop:grid-cols-[0.7fr_1.3fr] desktop:gap-20">
+        <aside class="space-y-8" data-reveal>
+          <div class="overflow-hidden">
+            <img
+              src="/images/trips/norway-thumb.jpg"
+              alt="Norwegian fjord"
+              class="aspect-[4/5] w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
 
-        <div class="rounded-[2rem] bg-primary-text p-8 text-white">
-          <p class="text-xs font-medium uppercase tracking-[0.22em] text-white/60">Direct</p>
-          <a href="mailto:marcin@skalski.com" class="mt-4 block text-2xl font-bold">
-            marcin@skalski.com
-          </a>
-          <p class="mt-4 text-white/75">Europe-based. Available worldwide.</p>
-          <div class="mt-8 space-y-3 text-white/75">
-            <p>Useful detail to include:</p>
-            <ul class="space-y-2">
+          <div class="border-t rule-line pt-8">
+            <p class="eyebrow">Direct</p>
+            <a
+              href="mailto:marcin@skalski.com"
+              class="mt-4 block font-display text-2xl desktop:text-3xl leading-tight underline underline-offset-8 hover:opacity-70 transition-opacity"
+            >
+              marcin@skalski.com
+            </a>
+            <p class="mt-4 text-sm text-muted">Europe-based. Available worldwide.</p>
+          </div>
+
+          <div class="border-t rule-line pt-8">
+            <p class="eyebrow mb-4">Useful detail</p>
+            <ul class="space-y-2 text-sm">
               <li>Project type</li>
               <li>Location and dates</li>
               <li>Needed outputs</li>
               <li>Budget range</li>
             </ul>
           </div>
-        </div>
-      </div>
+        </aside>
 
-      <div>
-        <div class="max-w-2xl">
-          <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">
-            Inquiry form
-          </p>
-          <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">Enough detail to judge fit fast.</h2>
-          <p class="mt-4 text-gray-700">
+        <div data-reveal data-reveal-delay="120">
+          <p class="eyebrow">Inquiry form</p>
+          <h2 class="mt-3 font-display text-[clamp(2rem,4vw,3rem)] leading-[1.1] max-w-2xl">
+            Enough detail to judge fit fast.
+          </h2>
+          <p class="mt-4 text-muted max-w-xl">
             The more specific the brief, the faster I can respond with approach and next step.
           </p>
-        </div>
 
-        <div class="mt-10">
-          <ContactForm />
+          <div class="mt-12">
+            <ContactForm />
+          </div>
         </div>
       </div>
     </div>

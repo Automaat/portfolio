@@ -10,6 +10,12 @@ const tripsSchema = z.object({
   thumbnail: z.string(),
   featured: z.boolean().default(false),
   images: z.array(z.string()).optional(),
+  client: z.string().optional(),
+  role: z.string().optional(),
+  deliverables: z.array(z.string()).optional(),
+  outcome: z.string().optional(),
+  brief: z.string().optional(),
+  format: z.string().optional(),
 });
 
 const blogSchema = z.object({

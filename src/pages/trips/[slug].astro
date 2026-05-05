@@ -21,6 +21,12 @@ const { Content } = await render(trip);
   description={trip.data.description}
   thumbnail={trip.data.thumbnail}
   images={trip.data.images}
+  client={trip.data.client}
+  format={trip.data.format}
+  role={trip.data.role}
+  brief={trip.data.brief}
+  deliverables={trip.data.deliverables}
+  outcome={trip.data.outcome}
 >
   <Content />
 </TripLayout>

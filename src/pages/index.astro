@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
 import { getCollection } from 'astro:content';
 
 const trips = await getCollection('trips');
@@ -7,31 +8,37 @@ const featuredTrips = trips
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 3);
 
-const workBuckets = [
+const lead = featuredTrips[0];
+const seconds = featuredTrips.slice(1, 3);
+
+const gateways = [
   {
-    title: 'Adventure campaigns',
-    description: 'Stills and motion for destinations, expeditions, and outdoor launches.',
+    title: 'Adventure',
+    description: 'Expedition stills and motion. Routes, weather, movement.',
     href: '/work',
+    image: '/images/trips/patagonia-thumb.jpg',
   },
   {
-    title: 'Marine stories',
-    description: 'Offshore access, life onboard, weather, and movement from the water.',
+    title: 'Marine',
+    description: 'On-water access. Coastlines, sailing, offshore.',
     href: '/work',
+    image: '/images/trips/norway-thumb.jpg',
   },
   {
-    title: 'Motion coverage',
-    description: 'Reels, short films, drone, and social cutdowns for multi-format delivery.',
+    title: 'Motion',
+    description: 'Reels, short films, drone, vertical cutdowns.',
     href: '/motion',
+    image: '/images/trips/iceland-thumb.jpg',
   },
 ];
 
-const services = [
-  'Campaign stills',
-  'Short films',
-  'Drone capture',
-  'Vertical cutdowns',
-  'Destination libraries',
-  'Photo + video coverage',
+const proof = [
+  'Adventure',
+  'Tourism',
+  'Marine',
+  'Outdoor brands',
+  'Editorial',
+  'Expedition operators',
 ];
 
 const differentiators = [
@@ -46,132 +53,87 @@ const differentiators = [
   title="Marcin Skalski | Adventure, Travel & Marine Photographer"
   description="Adventure, travel, and marine photographer plus filmmaker for tourism brands, expeditions, and outdoor companies."
 >
-  <section class="relative isolate min-h-[88vh] overflow-hidden bg-black text-white">
-    <picture class="absolute inset-0">
-      <source media="(max-width: 768px)" srcset="/images/hero-home-mobile.webp" type="image/webp" />
-      <source media="(max-width: 768px)" srcset="/images/hero-home-mobile.jpg" />
-      <source srcset="/images/hero-home-desktop.webp" type="image/webp" />
-      <img
-        src="/images/hero-home-desktop.jpg"
-        alt="View from inside a sailboat showing rigging and equipment"
-        class="h-full w-full object-cover"
-        loading="eager"
-      />
-    </picture>
-
-    <div
-      class="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.58)_62%,rgba(0,0,0,0.82)_100%)]"
+  <div class="-mt-16 desktop:-mt-20">
+    <Hero
+      image="/images/hero-home-desktop.jpg"
+      imageWebp="/images/hero-home-desktop.webp"
+      imageMobile="/images/hero-home-mobile.jpg"
+      imageMobileWebp="/images/hero-home-mobile.webp"
+      alt="View from inside a sailboat showing rigging and equipment"
+      eyebrow="Adventure · Travel · Marine"
+      title="Photo and motion from the field, not the studio."
+      subtitle="Europe-based photographer and filmmaker building stills, reels, and campaign visuals in remote landscapes and offshore environments."
+      align="bottom-left"
+      minHeight="min-h-[92vh]"
     >
-    </div>
-
-    <div class="container-custom relative flex min-h-[88vh] items-end py-20 desktop:py-24">
-      <div class="max-w-4xl">
-        <p class="mb-5 text-xs font-medium uppercase tracking-[0.24em] text-white/75">
-          Adventure • Travel • Marine
-        </p>
-        <h1 class="max-w-3xl text-4xl font-bold leading-[1.05] text-white desktop:text-[4.6rem]">
-          Photo and motion for tourism brands, expeditions, and outdoor companies.
-        </h1>
-        <p class="mt-6 max-w-2xl text-base leading-7 text-white/82 desktop:text-lg">
-          Europe-based photographer and filmmaker building stills, reels, and campaign visuals in
-          remote landscapes and offshore environments.
-        </p>
-        <div class="mt-8 flex flex-col gap-4 tablet:flex-row">
-          <a
-            href="/work"
-            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-black transition hover:bg-white/90"
-          >
-            View Work
-          </a>
-          <a
-            href="mailto:marcin@skalski.com"
-            class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:border-white hover:bg-white/10"
-          >
-            Start Project
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-b border-gray-200 bg-[#f6f5f1]">
-    <div
-      class="container-custom grid gap-6 py-6 text-xs font-medium uppercase tracking-[0.16em] text-gray-700 tablet:grid-cols-2 desktop:grid-cols-4"
-    >
-      <p>Europe-based, worldwide</p>
-      <p>Adventure + marine access</p>
-      <p>Stills + motion delivery</p>
-      <p>Remote logistics ready</p>
-    </div>
-  </section>
-
-  <section class="container-custom py-16 desktop:py-24">
-    <div class="max-w-2xl">
-      <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Focus</p>
-      <h2 class="mt-3 max-w-3xl text-3xl font-bold desktop:text-4xl">
-        Built for buyers who need sharp visuals, real access, and clean delivery.
-      </h2>
-    </div>
-
-    <div class="mt-10 grid gap-6 desktop:grid-cols-3">
-      {
-        workBuckets.map((bucket) => (
-          <a
-            href={bucket.href}
-            class="group rounded-3xl border border-gray-200 bg-white p-8 transition hover:-translate-y-1 hover:border-gray-300 hover:shadow-[0_18px_60px_rgba(0,0,0,0.06)]"
-          >
-            <p class="text-xs font-medium uppercase tracking-[0.18em] text-accent-blue">Bucket</p>
-            <h3 class="mt-4 text-2xl font-bold">{bucket.title}</h3>
-            <p class="mt-4 text-gray-600">{bucket.description}</p>
-            <span class="mt-8 inline-flex text-sm font-medium text-primary-text transition group-hover:text-accent-blue">
-              Explore
-            </span>
-          </a>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="bg-[#f8f8f5] py-16 desktop:py-24">
-    <div class="container-custom">
-      <div class="flex flex-col gap-4 desktop:flex-row desktop:items-end desktop:justify-between">
-        <div class="max-w-2xl">
-          <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">
-            Selected Work
-          </p>
-          <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">
-            Expedition stories with commercial range.
-          </h2>
-        </div>
-        <a href="/work" class="text-sm font-medium text-primary-text underline underline-offset-4">
-          See all work
+      <div slot="cta" class="mt-10 flex flex-col gap-3 tablet:flex-row">
+        <a
+          href="/work"
+          class="inline-flex items-center justify-center bg-white px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-black hover:bg-white/90 transition"
+        >
+          View Work
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center border border-white/50 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white hover:border-white hover:bg-white/10 transition"
+        >
+          Start a Project
         </a>
       </div>
+    </Hero>
+  </div>
 
-      <div class="mt-10 grid gap-6 desktop:grid-cols-3">
+  <section class="surface border-y rule-line overflow-hidden">
+    <div class="container-custom py-6">
+      <div
+        class="flex flex-wrap justify-center gap-x-10 gap-y-3 text-[11px] uppercase tracking-[0.32em] text-muted"
+      >
         {
-          featuredTrips.map((trip) => (
-            <a
-              href={`/trips/${trip.id}`}
-              class="group overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_80px_rgba(0,0,0,0.06)]"
-            >
-              <div class="aspect-square overflow-hidden">
-                <img
-                  src={trip.data.thumbnail}
-                  alt={trip.data.title}
-                  class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
+          proof.map((item, i) => (
+            <span class="flex items-center gap-10">
+              <span>{item}</span>
+              {i < proof.length - 1 && (
+                <span class="opacity-40" aria-hidden="true">
+                  ·
+                </span>
+              )}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="flex flex-col desktop:flex-row desktop:items-end justify-between gap-6 mb-14">
+        <div class="max-w-2xl" data-reveal>
+          <p class="eyebrow">Where I work</p>
+          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
+            Three lanes. One field-ready production.
+          </h2>
+        </div>
+        <p class="max-w-md text-muted" data-reveal data-reveal-delay="120">
+          Built for buyers who need real access, sharp visuals, and clean delivery — from remote
+          terrain to the water.
+        </p>
+      </div>
+
+      <div class="grid gap-3 desktop:grid-cols-3">
+        {
+          gateways.map((gw, i) => (
+            <a href={gw.href} class="gateway group" data-reveal data-reveal-delay={`${i * 100}`}>
+              <div class="gateway-image">
+                <img src={gw.image} alt={gw.title} loading="lazy" decoding="async" />
               </div>
-              <div class="space-y-3 p-6">
-                <p class="text-xs font-medium uppercase tracking-[0.16em] text-accent-blue">
-                  Case study seed
-                </p>
-                <h3 class="text-2xl font-bold">{trip.data.title}</h3>
-                <p class="text-sm uppercase tracking-[0.16em] text-gray-500">
-                  {trip.data.location}
-                </p>
-                <p class="text-gray-600">{trip.data.description}</p>
+              <div class="gateway-overlay" />
+              <div class="gateway-content">
+                <p class="text-[11px] uppercase tracking-[0.32em] text-white/70">0{i + 1}</p>
+                <h3 class="mt-3 font-display text-3xl text-white leading-tight">{gw.title}</h3>
+                <p class="mt-3 text-sm text-white/85 max-w-[28ch]">{gw.description}</p>
+                <span class="mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-white">
+                  Explore <span aria-hidden="true">→</span>
+                </span>
               </div>
             </a>
           ))
@@ -180,33 +142,107 @@ const differentiators = [
     </div>
   </section>
 
-  <section class="container-custom py-16 desktop:py-24">
-    <div class="grid gap-12 desktop:grid-cols-[1.1fr_0.9fr]">
-      <div>
-        <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Services</p>
-        <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">
-          Deliverables shaped for campaigns, launches, and content libraries.
-        </h2>
-        <div class="mt-8 grid gap-4 tablet:grid-cols-2">
-          {
-            services.map((service) => (
-              <div class="rounded-2xl border border-gray-200 px-5 py-4 text-sm font-medium text-gray-700">
-                {service}
-              </div>
-            ))
-          }
+  <section class="surface-soft">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="flex flex-col desktop:flex-row desktop:items-end justify-between gap-6 mb-14">
+        <div class="max-w-2xl" data-reveal>
+          <p class="eyebrow">Selected work</p>
+          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
+            Expedition stories with commercial range.
+          </h2>
         </div>
+        <a
+          href="/work"
+          class="self-start desktop:self-end text-[11px] uppercase tracking-[0.24em] underline underline-offset-8 hover:opacity-70"
+        >
+          See all work →
+        </a>
       </div>
 
-      <div class="rounded-[2rem] bg-primary-text p-8 text-white">
-        <p class="text-xs font-medium uppercase tracking-[0.22em] text-white/65">Why me</p>
-        <h3 class="mt-4 text-2xl font-bold">
-          Field-ready production without bloated crew overhead.
-        </h3>
-        <ul class="mt-8 space-y-4 text-white/80">
+      {
+        lead && (
+          <a
+            href={`/trips/${lead.id}`}
+            class="featured-lead group block mb-3 desktop:mb-6"
+            data-reveal
+          >
+            <div class="featured-lead-image">
+              <img
+                src={lead.data.thumbnail}
+                alt={lead.data.title}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="grid gap-4 desktop:grid-cols-[1fr_1fr] desktop:gap-12 mt-6">
+              <div>
+                <p class="eyebrow">
+                  {lead.data.format ?? 'Field project'} · {lead.data.date}
+                </p>
+                <h3 class="mt-3 font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.05]">
+                  {lead.data.title}
+                </h3>
+              </div>
+              <p class="text-muted text-lg leading-relaxed self-end">{lead.data.description}</p>
+            </div>
+          </a>
+        )
+      }
+
+      <div class="grid gap-3 desktop:grid-cols-2 desktop:gap-6">
+        {
+          seconds.map((trip, i) => (
+            <a
+              href={`/trips/${trip.id}`}
+              class="featured-secondary group"
+              data-reveal
+              data-reveal-delay={`${(i + 1) * 100}`}
+            >
+              <div class="featured-secondary-image">
+                <img
+                  src={trip.data.thumbnail}
+                  alt={trip.data.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="mt-5">
+                <p class="eyebrow">
+                  {trip.data.format ?? 'Field project'} · {trip.data.date}
+                </p>
+                <h3 class="mt-2 font-display text-2xl desktop:text-3xl leading-[1.1]">
+                  {trip.data.title}
+                </h3>
+                <p class="mt-2 text-sm text-muted">{trip.data.location}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="grid gap-12 desktop:grid-cols-[1.1fr_0.9fr] desktop:gap-20">
+        <div data-reveal>
+          <p class="eyebrow">Why me</p>
+          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.02]">
+            Field-ready production without bloated crew overhead.
+          </h2>
+          <p class="mt-6 text-lg text-muted max-w-xl">
+            One production window, lean kit, real access. Stills, reels, social cutdowns, and
+            destination libraries delivered without dragging a film crew across the country.
+          </p>
+        </div>
+
+        <ul class="border-t rule-line" data-reveal data-reveal-delay="100">
           {
-            differentiators.map((item) => (
-              <li class="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">{item}</li>
+            differentiators.map((item, i) => (
+              <li class="border-b rule-line py-5 flex gap-6 items-baseline">
+                <span class="eyebrow w-10 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                <span class="text-lg leading-snug">{item}</span>
+              </li>
             ))
           }
         </ul>
@@ -214,30 +250,31 @@ const differentiators = [
     </div>
   </section>
 
-  <section class="bg-[#e9ece4] py-16 desktop:py-24">
+  <section class="surface-elevated">
     <div
-      class="container-custom flex flex-col gap-6 desktop:flex-row desktop:items-end desktop:justify-between"
+      class="container-custom py-20 desktop:py-32 flex flex-col gap-8 desktop:flex-row desktop:items-end desktop:justify-between"
     >
-      <div class="max-w-2xl">
-        <p class="text-xs font-medium uppercase tracking-[0.22em] text-accent-blue">Contact</p>
-        <h2 class="mt-3 text-3xl font-bold desktop:text-4xl">
-          Need stills, motion, or both for a remote project?
+      <div class="max-w-2xl" data-reveal>
+        <p class="eyebrow">Contact</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
+          Stills, motion, or both — for one remote project.
         </h2>
-        <p class="mt-4 text-gray-700">
-          Share location, timing, and deliverables. I’ll respond with fit, approach, and next step.
+        <p class="mt-6 text-lg text-muted">
+          Send location, timing, deliverables, and a budget range. I’ll respond with fit, approach,
+          and next step.
         </p>
       </div>
 
-      <div class="flex flex-col gap-4 tablet:flex-row">
+      <div class="flex flex-col gap-3 tablet:flex-row" data-reveal data-reveal-delay="120">
         <a
           href="/contact"
-          class="inline-flex items-center justify-center rounded-full bg-primary-text px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:bg-black"
+          class="inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.24em] hover:opacity-85 transition-opacity"
         >
-          Contact
+          Inquiry form
         </a>
         <a
           href="mailto:marcin@skalski.com"
-          class="inline-flex items-center justify-center rounded-full border border-primary-text px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-primary-text transition hover:bg-primary-text hover:text-white"
+          class="inline-flex items-center justify-center border border-[color:var(--text)] px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.24em] hover:bg-[color:var(--text)] hover:text-[color:var(--bg)] transition-colors"
         >
           marcin@skalski.com
         </a>
@@ -245,3 +282,96 @@ const differentiators = [
     </div>
   </section>
 </Layout>
+
+<style>
+  .gateway {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    color: white;
+  }
+
+  @media (min-width: 1025px) {
+    .gateway {
+      aspect-ratio: 3 / 4;
+    }
+  }
+
+  .gateway-image {
+    position: absolute;
+    inset: 0;
+  }
+
+  .gateway-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .gateway:hover .gateway-image img {
+    transform: scale(1.05);
+  }
+
+  .gateway-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.55) 60%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+  }
+
+  .gateway-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+  }
+
+  @media (min-width: 1025px) {
+    .gateway-content {
+      padding: 2.5rem;
+    }
+  }
+
+  .featured-lead-image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+
+  .featured-lead-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .featured-lead:hover .featured-lead-image img {
+    transform: scale(1.03);
+  }
+
+  .featured-secondary-image {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+
+  .featured-secondary-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .featured-secondary:hover .featured-secondary-image img {
+    transform: scale(1.03);
+  }
+</style>

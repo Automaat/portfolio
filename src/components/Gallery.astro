@@ -1,62 +1,322 @@
 ---
-import { Image } from 'astro:assets';
-
-interface Props {
-  images: string[];
+interface ImageItem {
+  src: string;
   alt?: string;
+  ratio?: 'portrait' | 'landscape' | 'square' | 'wide' | 'tall';
+  span?: 1 | 2;
 }
 
-const { images, alt = 'Gallery image' } = Astro.props;
+interface Props {
+  images: (string | ImageItem)[];
+  alt?: string;
+  layout?: 'masonry' | 'rhythm';
+}
+
+const { images, alt = 'Gallery image', layout = 'rhythm' } = Astro.props;
+
+const ratioToAspect: Record<NonNullable<ImageItem['ratio']>, string> = {
+  portrait: '4 / 5',
+  landscape: '3 / 2',
+  square: '1 / 1',
+  wide: '16 / 9',
+  tall: '2 / 3',
+};
+
+const items = images.map((img, i) => {
+  const item: ImageItem = typeof img === 'string' ? { src: img } : img;
+  // Auto-rhythm: rotate aspect ratios for visual variety when none specified
+  const fallbackRatio: NonNullable<ImageItem['ratio']>[] = [
+    'landscape',
+    'portrait',
+    'wide',
+    'square',
+    'tall',
+  ];
+  const ratio = item.ratio ?? fallbackRatio[i % fallbackRatio.length];
+  const span = item.span ?? (i % 7 === 3 ? 2 : 1);
+  return {
+    src: item.src,
+    alt: item.alt ?? `${alt} ${i + 1}`,
+    aspect: ratioToAspect[ratio],
+    span,
+  };
+});
 ---
 
-<div class="gallery">
+<div class:list={['gallery', layout === 'masonry' && 'gallery--masonry']}>
   {
-    images.map((image, index) => (
-      <div class="gallery-item">
-        <img src={image} alt={`${alt} ${index + 1}`} loading="lazy" class="gallery-image" />
-      </div>
+    items.map((item, i) => (
+      <button
+        type="button"
+        class:list={['gallery-item group', item.span === 2 && 'gallery-item--wide']}
+        style={`aspect-ratio: ${item.aspect};`}
+        data-lightbox-trigger
+        data-index={i}
+        aria-label={`Open ${item.alt} in lightbox`}
+      >
+        <img src={item.src} alt={item.alt} loading="lazy" decoding="async" class="gallery-image" />
+      </button>
     ))
   }
 </div>
+
+<div
+  id="lightbox"
+  class="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image viewer"
+  hidden
+>
+  <button class="lightbox-close" type="button" aria-label="Close">×</button>
+  <button class="lightbox-prev" type="button" aria-label="Previous image">‹</button>
+  <button class="lightbox-next" type="button" aria-label="Next image">›</button>
+  <figure class="lightbox-figure">
+    <img class="lightbox-image" alt="" />
+    <figcaption class="lightbox-caption" aria-live="polite"></figcaption>
+  </figure>
+</div>
+
+<script is:inline define:vars={{ items: items.map((i) => ({ src: i.src, alt: i.alt })) }}>
+  (() => {
+    if (window.__galleryLightbox) {
+      window.__galleryLightbox.add(items);
+      return;
+    }
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    const img = lightbox.querySelector('.lightbox-image');
+    const caption = lightbox.querySelector('.lightbox-caption');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const prevBtn = lightbox.querySelector('.lightbox-prev');
+    const nextBtn = lightbox.querySelector('.lightbox-next');
+    let store = [...items];
+    let current = 0;
+    let lastFocus = null;
+
+    const render = () => {
+      const item = store[current];
+      if (!item || !img) return;
+      img.src = item.src;
+      img.alt = item.alt;
+      if (caption) caption.textContent = item.alt;
+    };
+
+    const open = (index) => {
+      current = index;
+      lastFocus = document.activeElement;
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      render();
+      closeBtn?.focus();
+    };
+
+    const close = () => {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+
+    const next = () => {
+      current = (current + 1) % store.length;
+      render();
+    };
+    const prev = () => {
+      current = (current - 1 + store.length) % store.length;
+      render();
+    };
+
+    closeBtn?.addEventListener('click', close);
+    nextBtn?.addEventListener('click', next);
+    prevBtn?.addEventListener('click', prev);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
+    });
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-lightbox-trigger]');
+      if (!trigger) return;
+      const all = Array.from(document.querySelectorAll('[data-lightbox-trigger]'));
+      const sources = all.map((el) => {
+        const im = el.querySelector('img');
+        return { src: im?.src || '', alt: im?.alt || '' };
+      });
+      store = sources;
+      const index = all.indexOf(trigger);
+      open(index >= 0 ? index : 0);
+    });
+
+    window.__galleryLightbox = {
+      add: (more) => {
+        store = [...store, ...more];
+      },
+    };
+  })();
+</script>
 
 <style>
   .gallery {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.25rem;
     margin: 4rem 0;
   }
 
   @media (min-width: 737px) {
     .gallery {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.5rem;
+    }
+    .gallery-item {
+      grid-column: span 3;
+    }
+    .gallery-item--wide {
+      grid-column: span 6;
     }
   }
 
   @media (min-width: 1025px) {
     .gallery {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2rem;
+    }
+    .gallery-item {
+      grid-column: span 6;
+    }
+    .gallery-item:nth-child(7n + 1) {
+      grid-column: span 8;
+    }
+    .gallery-item:nth-child(7n + 2) {
+      grid-column: span 4;
+    }
+    .gallery-item:nth-child(7n + 3) {
+      grid-column: span 4;
+    }
+    .gallery-item:nth-child(7n + 4) {
+      grid-column: span 8;
+    }
+    .gallery-item:nth-child(7n + 5) {
+      grid-column: span 6;
+    }
+    .gallery-item:nth-child(7n + 6) {
+      grid-column: span 6;
+    }
+    .gallery-item--wide {
+      grid-column: span 12 !important;
     }
   }
 
   .gallery-item {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 2;
     overflow: hidden;
-    background: #f5f5f5;
+    background: var(--bg-elevated);
+    border: 0;
+    padding: 0;
+    cursor: zoom-in;
   }
 
   .gallery-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .gallery-item:hover .gallery-image {
-    transform: scale(1.05);
+    transform: scale(1.04);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.96);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vw;
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox-figure {
+    max-width: min(1600px, 92vw);
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lightbox-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    background: #111;
+  }
+
+  .lightbox-caption {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .lightbox-close,
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    background: transparent;
+    border: 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 1rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .lightbox-close:hover,
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    opacity: 0.65;
+  }
+
+  .lightbox-close {
+    top: 1rem;
+    right: 1rem;
+    font-size: 32px;
+  }
+
+  .lightbox-prev {
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 56px;
+  }
+
+  .lightbox-next {
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 56px;
+  }
+
+  @media (max-width: 736px) {
+    .lightbox-prev,
+    .lightbox-next {
+      font-size: 40px;
+    }
   }
 </style>
