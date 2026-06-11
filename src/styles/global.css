@@ -132,7 +132,7 @@
   }
 
   .eyebrow {
-    @apply font-sans text-[11px] font-medium uppercase tracking-eyebrow text-[color:var(--text-muted)];
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[color:var(--text-muted)];
   }
 
   .surface {

@@ -39,7 +39,7 @@ export default {
           'sans-serif',
         ],
         display: ['Fraunces', 'ui-serif', 'Georgia', 'Cambria', 'Times', 'serif'],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
         xs: ['12px', { lineHeight: '1.4' }],
