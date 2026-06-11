@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Hero from '../Hero.astro';
 import Gallery from '../Gallery.astro';
-import type { Locale } from '../../i18n';
+import { localePath, type Locale } from '../../i18n';
 
 interface Props {
   locale: Locale;
@@ -228,7 +228,7 @@ const yachtPhotos = ratios.map((ratio, i) => ({
         </p>
       </div>
       <a
-        href={locale === 'pl' ? '/pl/contact' : '/contact'}
+        href={localePath(locale, '/contact')}
         class="self-start inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:opacity-85 transition-opacity"
       >
         {copy.ctaButton}

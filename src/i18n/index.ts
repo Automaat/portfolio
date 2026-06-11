@@ -4,7 +4,7 @@ export const defaultLocale: Locale = 'en';
 
 // Path prefix for a locale: '' for en, '/pl' for pl
 export function localePath(locale: Locale, path: string): string {
-  return locale === defaultLocale ? path : `/pl${path === '/' ? '' : path}` || '/pl';
+  return locale === defaultLocale ? path : `/pl${path === '/' ? '' : path}`;
 }
 
 // Equivalent URL of the same page in the other locale
@@ -57,7 +57,13 @@ export function tripTime(dateStr: string): number {
 }
 
 export function formatDate(locale: Locale, dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString(dateLocales[locale], {
+  // Parse YYYY-MM-DD as a local calendar date; new Date(dateStr) would treat
+  // it as UTC midnight and render the previous day in western timezones.
+  const ymd = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const date = ymd
+    ? new Date(Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3]))
+    : new Date(dateStr);
+  return date.toLocaleDateString(dateLocales[locale], {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
