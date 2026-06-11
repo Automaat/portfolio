@@ -1,4 +1,10 @@
 ---
+interface Props {
+  showLogo?: boolean;
+}
+
+const { showLogo = true } = Astro.props;
+
 const navLinks = [
   { href: '/work', label: 'Work' },
   { href: '/blog', label: 'Journal' },
@@ -13,12 +19,18 @@ const navLinks = [
 >
   <div class="bg-[color:var(--bg)]/85 backdrop-blur-md border-b rule-line">
     <nav class="container-custom py-4 flex items-center justify-between gap-6">
-      <a
-        href="/"
-        class="logo font-mono text-[11px] font-semibold tracking-[0.18em] uppercase text-[color:var(--text)]"
-      >
-        marcin skalski
-      </a>
+      {
+        showLogo ? (
+          <a
+            href="/"
+            class="logo font-mono text-[11px] font-semibold tracking-[0.18em] uppercase text-[color:var(--text)]"
+          >
+            marcin skalski
+          </a>
+        ) : (
+          <span aria-hidden="true" />
+        )
+      }
 
       <button
         id="mobile-menu-toggle"

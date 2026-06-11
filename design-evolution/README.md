@@ -55,3 +55,24 @@ row. Work page drops the "best fit" panel and per-case deliverable lists;
 motion drops the stills and deliverables sections; about drops the "best fit"
 list. All heavy end-of-page CTA banners replaced by one shared quiet contact
 line (ContactBand).
+
+## 07-experiments
+
+Three throwaway prototype routes, each a different identity (user feedback:
+"looks the same, experiment, don't tweak"):
+
+- **A "Atelier"** — warm paper, giant Fraunces masthead (italic second line,
+  terracotta full stop), work as a typographic index list with cursor-following
+  image previews, full-bleed image break, giant email. **Winner.**
+- **B "Cinema"** — full-screen scroll-snap panels, image-only storytelling.
+  Dramatic but same dark+serif language as before — rejected for that reason.
+- **C "Split rail"** — fixed left column (name, statement, nav), scrolling
+  image stream right. Elegant but quieter than A — rejected.
+
+## 08-atelier
+
+Variant A adopted as the site identity. Whole site flips from dark-first to
+warm paper (`#f1ede4` / ink `#161310`, terracotta accent `#b4502e`); dark stays
+available via toggle. Home rebuilt as masthead + index list + image break +
+email sign-off. All other pages inherit the paper palette through the token
+system — the dark artwork pops on paper far better than dark-on-dark.
