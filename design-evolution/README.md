@@ -56,6 +56,16 @@ motion drops the stills and deliverables sections; about drops the "best fit"
 list. All heavy end-of-page CTA banners replaced by one shared quiet contact
 line (ContactBand).
 
+## 09-pastel-experiments
+
+User request: pastel pink and blue. Three token-level palette prototypes
+(injected live, no code changes): P1 rose paper + plum ink + blue accent,
+P2 powder blue + navy ink + rose accent, P3 duo — pastel pink paper with deep
+indigo ink, cornflower accent, and pale-blue soft surfaces. **P3 adopted**: it
+uses both hues in one scheme (pink paper / blue typography) and the slate-toned
+artwork harmonizes with both. Dark mode redone in the same family — indigo
+night with a pastel pink accent. `adopted-*` captures show the final palette.
+
 ## 07-experiments
 
 Three throwaway prototype routes, each a different identity (user feedback:

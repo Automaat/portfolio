@@ -11,25 +11,25 @@
   }
 
   :root {
-    --bg: #f1ede4;
-    --bg-soft: #eae5d8;
-    --bg-elevated: #e2dccc;
-    --text: #161310;
-    --text-muted: #6e675a;
-    --text-subtle: #9b9381;
-    --rule: #d8d2c2;
-    --accent: #b4502e;
+    --bg: #f6e7ea;
+    --bg-soft: #eef0f7;
+    --bg-elevated: #e3e7f2;
+    --text: #232c44;
+    --text-muted: #6a7393;
+    --text-subtle: #9aa2bd;
+    --rule: #e2cfd6;
+    --accent: #4f6fae;
   }
 
   .dark {
-    --bg: #0a0a0a;
-    --bg-soft: #141413;
-    --bg-elevated: #1d1c1a;
-    --text: #f7f6f3;
-    --text-muted: #a9a69a;
-    --text-subtle: #6d6a60;
-    --rule: #26241f;
-    --accent: #a4aec9;
+    --bg: #14161f;
+    --bg-soft: #191c27;
+    --bg-elevated: #20242f;
+    --text: #eef0f7;
+    --text-muted: #a4abc4;
+    --text-subtle: #6a7393;
+    --rule: #2a2e3d;
+    --accent: #e8aebc;
   }
 
   html {
@@ -99,13 +99,13 @@
   }
 
   ::selection {
-    background: #161310;
-    color: #f1ede4;
+    background: #232c44;
+    color: #f6e7ea;
   }
 
   .dark ::selection {
-    background: #f1ede4;
-    color: #161310;
+    background: #f6e7ea;
+    color: #232c44;
   }
 }
 
