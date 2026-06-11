@@ -30,20 +30,23 @@ const showreel = {
   description="Adventure, travel, and marine photographer plus filmmaker for tourism brands, expeditions, and outdoor companies."
   headerLogo={false}
 >
-  <section class="container-custom pt-10 desktop:pt-16 pb-8">
+  <section
+    class="container-custom pt-10 desktop:pt-16 pb-8 flex flex-col justify-center desktop:justify-between min-h-[calc(100svh-4rem)] desktop:min-h-[calc(100svh-5rem)]"
+  >
     <h1 class="masthead font-display uppercase">
       <span class="masthead-l1 block">Marcin</span>
       <span class="masthead-l2 block italic"
         >Skalski<span class="masthead-dot text-[color:var(--accent)]">.</span></span
       >
     </h1>
-    <div class="mt-10 desktop:mt-14 flex flex-wrap justify-between gap-3">
+    <div class="mt-10 flex flex-wrap justify-between gap-3">
       <p class="eyebrow">Adventure · Travel · Marine</p>
+      <p class="eyebrow hidden tablet:block">Selected work ↓</p>
       <p class="eyebrow">Europe — Worldwide</p>
     </div>
   </section>
 
-  <section class="container-custom mt-10 desktop:mt-16">
+  <section class="container-custom mt-6 desktop:mt-10">
     <div class="border-t border-[color:var(--text)]">
       {
         [...rows, showreel].map((row) => (
