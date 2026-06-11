@@ -44,3 +44,14 @@ IBM Plex Mono (labels).
 ## 05-final
 
 Full-page captures of every route after all changes, desktop + mobile.
+
+## 06-minimal
+
+Radical simplification — "too much happening" feedback. Home rebuilt from six
+sections to three: full-screen hero (one line, one quiet link), a single
+staggered work grid (all five expeditions + showreel, mono captions), and a
+giant email sign-off. Nav loses Motion + social icons; footer collapses to one
+row. Work page drops the "best fit" panel and per-case deliverable lists;
+motion drops the stills and deliverables sections; about drops the "best fit"
+list. All heavy end-of-page CTA banners replaced by one shared quiet contact
+line (ContactBand).

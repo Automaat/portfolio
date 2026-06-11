@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import ContactBand from '../components/ContactBand.astro';
 
 const title = 'About | Marcin Skalski';
 const description =
@@ -22,13 +23,6 @@ const strengths = [
     description:
       'One production window can feed campaign selects, social assets, and short-form video.',
   },
-];
-
-const fit = [
-  'Tourism and destination campaigns',
-  'Marine and sailing brands',
-  'Expedition and charter operators',
-  'Outdoor launches and content libraries',
 ];
 ---
 
@@ -114,56 +108,5 @@ const fit = [
     </div>
   </section>
 
-  <section class="surface">
-    <div class="container-custom py-20 desktop:py-32 grid gap-12 desktop:grid-cols-[0.9fr_1.1fr]">
-      <div data-reveal>
-        <p class="eyebrow">Best fit</p>
-        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
-          Brands and operators needing access, pace, and place.
-        </h2>
-      </div>
-
-      <ul class="border-t rule-line" data-reveal data-reveal-delay="120">
-        {
-          fit.map((item, i) => (
-            <li class="border-b rule-line py-5 flex gap-6 items-baseline">
-              <span class="eyebrow w-10 shrink-0">{String(i + 1).padStart(2, '0')}</span>
-              <span class="text-lg">{item}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
-  <section class="surface-elevated">
-    <div
-      class="container-custom py-20 desktop:py-32 flex flex-col gap-8 desktop:flex-row desktop:items-end desktop:justify-between"
-    >
-      <div class="max-w-2xl" data-reveal>
-        <p class="eyebrow">Contact</p>
-        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
-          Have a destination, expedition, or marine brief?
-        </h2>
-        <p class="mt-6 text-lg text-muted">
-          Send timing, location, and required outputs. I’ll reply with fit and next step.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-3 tablet:flex-row">
-        <a
-          href="/contact"
-          class="inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:opacity-85 transition-opacity"
-        >
-          Contact
-        </a>
-        <a
-          href="mailto:marcin@skalski.com"
-          class="inline-flex items-center justify-center border border-[color:var(--text)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:bg-[color:var(--text)] hover:text-[color:var(--bg)] transition-colors"
-        >
-          marcin@skalski.com
-        </a>
-      </div>
-    </div>
-  </section>
+  <ContactBand label="Have a destination, expedition, or marine brief?" />
 </Layout>

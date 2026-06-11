@@ -1,0 +1,21 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = 'Have a project in mind?' } = Astro.props;
+---
+
+<section class="surface border-t rule-line">
+  <div
+    class="container-custom py-16 desktop:py-24 flex flex-col tablet:flex-row tablet:items-baseline tablet:justify-between gap-5"
+  >
+    <p class="font-display text-2xl desktop:text-3xl leading-tight">{label}</p>
+    <a
+      href="/contact"
+      class="font-mono text-[11px] uppercase tracking-[0.14em] underline underline-offset-8 hover:opacity-70 transition-opacity shrink-0"
+    >
+      Start a project →
+    </a>
+  </div>
+</section>

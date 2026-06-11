@@ -3,50 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import { getCollection } from 'astro:content';
 
-const trips = await getCollection('trips');
-const featuredTrips = trips
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 3);
+const trips = (await getCollection('trips')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 
-const lead = featuredTrips[0];
-const seconds = featuredTrips.slice(1, 3);
+const tiles = trips.map((trip, i) => ({
+  href: `/trips/${trip.id}`,
+  image: trip.data.thumbnail,
+  title: trip.data.title,
+  meta: `${trip.data.location} · ${trip.data.date}`,
+  index: String(i + 1).padStart(2, '0'),
+}));
 
-const gateways = [
-  {
-    title: 'Adventure',
-    description: 'Expedition stills and motion. Routes, weather, movement.',
-    href: '/work',
-    image: '/images/trips/patagonia-thumb.jpg',
-  },
-  {
-    title: 'Marine',
-    description: 'On-water access. Coastlines, sailing, offshore.',
-    href: '/work',
-    image: '/images/trips/norway-thumb.jpg',
-  },
-  {
-    title: 'Motion',
-    description: 'Reels, short films, drone, vertical cutdowns.',
-    href: '/motion',
-    image: '/images/trips/iceland-thumb.jpg',
-  },
-];
-
-const proof = [
-  'Adventure',
-  'Tourism',
-  'Marine',
-  'Outdoor brands',
-  'Editorial',
-  'Expedition operators',
-];
-
-const differentiators = [
-  'Europe-based, worldwide projects',
-  'Offshore and expedition environments',
-  'Remote-shoot planning and logistics',
-  'Lean production for stills and motion',
-];
+const motionTile = {
+  href: '/motion',
+  image: '/images/hero-sailing.jpg',
+  title: 'Showreel — Motion',
+  meta: 'Selected motion work · 2022–2024',
+  index: String(tiles.length + 1).padStart(2, '0'),
+};
 ---
 
 <Layout
@@ -60,320 +35,189 @@ const differentiators = [
       imageMobile="/images/hero-home-mobile.jpg"
       imageMobileWebp="/images/hero-home-mobile.webp"
       alt="View from inside a sailboat showing rigging and equipment"
-      eyebrow="Adventure · Travel · Marine"
-      title="Photo and motion from the field, not the studio."
-      subtitle="Europe-based photographer and filmmaker building stills, reels, and campaign visuals in remote landscapes and offshore environments."
+      title="From the field, not the studio."
+      subtitle="Adventure, travel, and marine — stills and motion for remote projects."
       align="bottom-left"
       minHeight="min-h-[92vh]"
     >
-      <div slot="cta" class="mt-10 flex flex-col gap-3 tablet:flex-row">
-        <a
-          href="/work"
-          class="inline-flex items-center justify-center bg-white px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] text-black hover:bg-white/90 transition"
-        >
-          View Work
-        </a>
-        <a
-          href="/contact"
-          class="inline-flex items-center justify-center border border-white/50 px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] text-white hover:border-white hover:bg-white/10 transition"
-        >
-          Start a Project
-        </a>
-      </div>
+      <a
+        slot="cta"
+        href="/contact"
+        class="mt-9 inline-flex font-mono text-[11px] uppercase tracking-[0.14em] text-white underline underline-offset-8 hover:opacity-70 transition-opacity"
+      >
+        Start a project →
+      </a>
     </Hero>
   </div>
 
-  <section class="surface border-y rule-line overflow-hidden">
-    <div class="container-custom py-6">
-      <div
-        class="flex flex-wrap justify-center gap-x-10 gap-y-3 text-[11px] uppercase font-mono tracking-[0.18em] text-muted"
-      >
-        {
-          proof.map((item, i) => (
-            <span class="flex items-center gap-10">
-              <span>{item}</span>
-              {i < proof.length - 1 && (
-                <span class="opacity-40" aria-hidden="true">
-                  ·
-                </span>
-              )}
-            </span>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   <section class="surface">
     <div class="container-custom py-20 desktop:py-32">
-      <div class="flex flex-col desktop:flex-row desktop:items-end justify-between gap-6 mb-14">
-        <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">Where I work</p>
-          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
-            Three lanes. One field-ready production.
-          </h2>
-        </div>
-        <p class="max-w-md text-muted" data-reveal data-reveal-delay="120">
-          Built for buyers who need real access, sharp visuals, and clean delivery — from remote
-          terrain to the water.
-        </p>
+      <div class="mb-14 desktop:mb-20 flex items-baseline justify-between">
+        <p class="eyebrow">Selected work</p>
+        <p class="eyebrow">2022–2024</p>
       </div>
 
-      <div class="grid gap-3 desktop:grid-cols-3">
+      <div class="grid gap-y-16 desktop:gap-y-28">
         {
-          gateways.map((gw, i) => (
-            <a href={gw.href} class="gateway group" data-reveal data-reveal-delay={`${i * 100}`}>
-              <div class="gateway-image">
-                <img src={gw.image} alt={gw.title} loading="lazy" decoding="async" />
+          tiles[0] && (
+            <a href={tiles[0].href} class="tile group" data-reveal>
+              <div class="tile-image aspect-[3/2] desktop:aspect-[21/10]">
+                <img src={tiles[0].image} alt={tiles[0].title} loading="eager" decoding="async" />
               </div>
-              <div class="gateway-overlay" />
-              <div class="gateway-content">
-                <p class="text-[11px] uppercase font-mono tracking-[0.18em] text-white/70">
-                  0{i + 1}
-                </p>
-                <h3 class="mt-3 font-display text-3xl text-white leading-tight">{gw.title}</h3>
-                <p class="mt-3 text-sm text-white/85 max-w-[28ch]">{gw.description}</p>
-                <span class="mt-6 inline-flex items-center gap-2 text-[11px] uppercase font-mono tracking-[0.14em] text-white">
-                  Explore <span aria-hidden="true">→</span>
+              <div class="tile-caption">
+                <span>
+                  {tiles[0].index} — {tiles[0].title}
                 </span>
+                <span class="text-subtle">{tiles[0].meta}</span>
               </div>
             </a>
-          ))
+          )
         }
-      </div>
-    </div>
-  </section>
 
-  <section class="surface-soft">
-    <div class="container-custom py-20 desktop:py-32">
-      <div class="flex flex-col desktop:flex-row desktop:items-end justify-between gap-6 mb-14">
-        <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">Selected work</p>
-          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
-            Expedition stories with commercial range.
-          </h2>
-        </div>
-        <a
-          href="/work"
-          class="self-start desktop:self-end text-[11px] uppercase font-mono tracking-[0.14em] underline underline-offset-8 hover:opacity-70"
-        >
-          See all work →
-        </a>
-      </div>
-
-      {
-        lead && (
-          <a
-            href={`/trips/${lead.id}`}
-            class="featured-lead group block mb-3 desktop:mb-6"
-            data-reveal
-          >
-            <div class="featured-lead-image">
-              <img
-                src={lead.data.thumbnail}
-                alt={lead.data.title}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div class="grid gap-4 desktop:grid-cols-[1fr_1fr] desktop:gap-12 mt-6">
-              <div>
-                <p class="eyebrow">
-                  {lead.data.format ?? 'Field project'} · {lead.data.date}
-                </p>
-                <h3 class="mt-3 font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.05]">
-                  {lead.data.title}
-                </h3>
-              </div>
-              <p class="text-muted text-lg leading-relaxed self-end">{lead.data.description}</p>
-            </div>
-          </a>
-        )
-      }
-
-      <div class="grid gap-3 desktop:grid-cols-2 desktop:gap-6">
-        {
-          seconds.map((trip, i) => (
-            <a
-              href={`/trips/${trip.id}`}
-              class="featured-secondary group"
-              data-reveal
-              data-reveal-delay={`${(i + 1) * 100}`}
-            >
-              <div class="featured-secondary-image">
-                <img
-                  src={trip.data.thumbnail}
-                  alt={trip.data.title}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div class="mt-5">
-                <p class="eyebrow">
-                  {trip.data.format ?? 'Field project'} · {trip.data.date}
-                </p>
-                <h3 class="mt-2 font-display text-2xl desktop:text-3xl leading-[1.1]">
-                  {trip.data.title}
-                </h3>
-                <p class="mt-2 text-sm text-muted">{trip.data.location}</p>
-              </div>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="surface">
-    <div class="container-custom py-20 desktop:py-32">
-      <div class="grid gap-12 desktop:grid-cols-[1.1fr_0.9fr] desktop:gap-20">
-        <div data-reveal>
-          <p class="eyebrow">Why me</p>
-          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.02]">
-            Field-ready production without bloated crew overhead.
-          </h2>
-          <p class="mt-6 text-lg text-muted max-w-xl">
-            One production window, lean kit, real access. Stills, reels, social cutdowns, and
-            destination libraries delivered without dragging a film crew across the country.
-          </p>
-        </div>
-
-        <ul class="border-t rule-line" data-reveal data-reveal-delay="100">
+        <div class="grid gap-y-16 desktop:grid-cols-12 desktop:gap-x-6">
           {
-            differentiators.map((item, i) => (
-              <li class="border-b rule-line py-5 flex gap-6 items-baseline">
-                <span class="eyebrow w-10 shrink-0">{String(i + 1).padStart(2, '0')}</span>
-                <span class="text-lg leading-snug">{item}</span>
-              </li>
-            ))
+            tiles[1] && (
+              <a href={tiles[1].href} class="tile group desktop:col-span-7" data-reveal>
+                <div class="tile-image aspect-[4/3]">
+                  <img src={tiles[1].image} alt={tiles[1].title} loading="lazy" decoding="async" />
+                </div>
+                <div class="tile-caption">
+                  <span>
+                    {tiles[1].index} — {tiles[1].title}
+                  </span>
+                  <span class="text-subtle">{tiles[1].meta}</span>
+                </div>
+              </a>
+            )
           }
-        </ul>
+          {
+            tiles[2] && (
+              <a
+                href={tiles[2].href}
+                class="tile group desktop:col-span-5 desktop:mt-24"
+                data-reveal
+                data-reveal-delay="100"
+              >
+                <div class="tile-image aspect-[3/4]">
+                  <img src={tiles[2].image} alt={tiles[2].title} loading="lazy" decoding="async" />
+                </div>
+                <div class="tile-caption">
+                  <span>
+                    {tiles[2].index} — {tiles[2].title}
+                  </span>
+                  <span class="text-subtle">{tiles[2].meta}</span>
+                </div>
+              </a>
+            )
+          }
+        </div>
+
+        <div class="grid gap-y-16 desktop:grid-cols-12 desktop:gap-x-6">
+          {
+            tiles[3] && (
+              <a
+                href={tiles[3].href}
+                class="tile group desktop:col-span-5 desktop:mt-24"
+                data-reveal
+              >
+                <div class="tile-image aspect-[3/4]">
+                  <img src={tiles[3].image} alt={tiles[3].title} loading="lazy" decoding="async" />
+                </div>
+                <div class="tile-caption">
+                  <span>
+                    {tiles[3].index} — {tiles[3].title}
+                  </span>
+                  <span class="text-subtle">{tiles[3].meta}</span>
+                </div>
+              </a>
+            )
+          }
+          {
+            tiles[4] && (
+              <a
+                href={tiles[4].href}
+                class="tile group desktop:col-span-7"
+                data-reveal
+                data-reveal-delay="100"
+              >
+                <div class="tile-image aspect-[4/3]">
+                  <img src={tiles[4].image} alt={tiles[4].title} loading="lazy" decoding="async" />
+                </div>
+                <div class="tile-caption">
+                  <span>
+                    {tiles[4].index} — {tiles[4].title}
+                  </span>
+                  <span class="text-subtle">{tiles[4].meta}</span>
+                </div>
+              </a>
+            )
+          }
+        </div>
+
+        <a href={motionTile.href} class="tile group" data-reveal>
+          <div class="tile-image aspect-[3/2] desktop:aspect-[21/9]">
+            <img src={motionTile.image} alt={motionTile.title} loading="lazy" decoding="async" />
+          </div>
+          <div class="tile-caption">
+            <span>
+              {motionTile.index} — {motionTile.title}
+            </span>
+            <span class="text-subtle">{motionTile.meta}</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="surface-elevated">
-    <div
-      class="container-custom py-20 desktop:py-32 flex flex-col gap-8 desktop:flex-row desktop:items-end desktop:justify-between"
-    >
-      <div class="max-w-2xl" data-reveal>
-        <p class="eyebrow">Contact</p>
-        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
-          Stills, motion, or both — for one remote project.
-        </h2>
-        <p class="mt-6 text-lg text-muted">
-          Send location, timing, deliverables, and a budget range. I’ll respond with fit, approach,
-          and next step.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-3 tablet:flex-row" data-reveal data-reveal-delay="120">
-        <a
-          href="/contact"
-          class="inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:opacity-85 transition-opacity"
-        >
-          Inquiry form
-        </a>
-        <a
-          href="mailto:marcin@skalski.com"
-          class="inline-flex items-center justify-center border border-[color:var(--text)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:bg-[color:var(--text)] hover:text-[color:var(--bg)] transition-colors"
-        >
-          marcin@skalski.com
-        </a>
-      </div>
+  <section class="surface border-t rule-line">
+    <div class="container-custom py-24 desktop:py-40">
+      <p class="eyebrow" data-reveal>Contact</p>
+      <a
+        href="mailto:marcin@skalski.com"
+        class="mt-6 inline-block font-display text-[clamp(2rem,6vw,5.5rem)] leading-[1.05] hover:opacity-70 transition-opacity"
+        data-reveal
+        data-reveal-delay="80"
+      >
+        marcin@skalski.com
+      </a>
+      <p class="mt-8 max-w-md text-muted" data-reveal data-reveal-delay="140">
+        Europe-based, available worldwide. Send location, timing, and deliverables — I’ll reply with
+        fit and next step.
+      </p>
     </div>
   </section>
 </Layout>
 
 <style>
-  .gateway {
-    position: relative;
+  .tile {
     display: block;
-    aspect-ratio: 4 / 5;
+  }
+
+  .tile-image {
     overflow: hidden;
     background: var(--bg-elevated);
-    color: white;
   }
 
-  @media (min-width: 1025px) {
-    .gateway {
-      aspect-ratio: 3 / 4;
-    }
-  }
-
-  .gateway-image {
-    position: absolute;
-    inset: 0;
-  }
-
-  .gateway-image img {
+  .tile-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: transform 1.1s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  .gateway:hover .gateway-image img {
-    transform: scale(1.05);
+  .tile:hover .tile-image img {
+    transform: scale(1.03);
   }
 
-  .gateway-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.15) 0%,
-      rgba(0, 0, 0, 0.55) 60%,
-      rgba(0, 0, 0, 0.85) 100%
-    );
-  }
-
-  .gateway-content {
-    position: absolute;
-    inset: 0;
+  .tile-caption {
+    margin-top: 1rem;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem;
-  }
-
-  @media (min-width: 1025px) {
-    .gateway-content {
-      padding: 2.5rem;
-    }
-  }
-
-  .featured-lead-image {
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: var(--bg-elevated);
-  }
-
-  .featured-lead-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-
-  .featured-lead:hover .featured-lead-image img {
-    transform: scale(1.03);
-  }
-
-  .featured-secondary-image {
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    background: var(--bg-elevated);
-  }
-
-  .featured-secondary-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-
-  .featured-secondary:hover .featured-secondary-image img {
-    transform: scale(1.03);
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: theme('fontFamily.mono');
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
   }
 </style>

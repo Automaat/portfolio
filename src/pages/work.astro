@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import ContactBand from '../components/ContactBand.astro';
 
 const trips = await getCollection('trips');
 const projects = trips.sort(
@@ -69,14 +70,6 @@ const projects = trips.sort(
                       {trip.data.description}
                     </p>
 
-                    {trip.data.deliverables && trip.data.deliverables.length > 0 && (
-                      <ul class="mt-6 border-t rule-line">
-                        {trip.data.deliverables.slice(0, 4).map((d) => (
-                          <li class="border-b rule-line py-2.5 text-sm">{d}</li>
-                        ))}
-                      </ul>
-                    )}
-
                     <span class="mt-7 inline-flex items-center gap-2 text-[11px] uppercase font-mono tracking-[0.14em] underline underline-offset-8 group-hover:opacity-70 transition-opacity">
                       Open case <span aria-hidden="true">→</span>
                     </span>
@@ -90,26 +83,7 @@ const projects = trips.sort(
     </div>
   </section>
 
-  <section class="surface-elevated">
-    <div class="container-custom py-20 desktop:py-32 grid gap-10 desktop:grid-cols-[0.9fr_1.1fr]">
-      <div data-reveal>
-        <p class="eyebrow">Best fit</p>
-        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.02]">
-          Built for buyers needing real access and pace.
-        </h2>
-      </div>
-      <div class="grid gap-0 border-t rule-line" data-reveal data-reveal-delay="120">
-        {
-          [
-            'Tourism boards and destination brands needing campaign stills with real weather and place.',
-            'Marine and sailing brands needing on-water coverage without stock-feeling visuals.',
-            'Expedition operators needing photo, motion, and social deliverables from remote terrain.',
-            'Outdoor companies needing tight crews and practical field logistics.',
-          ].map((line) => <p class="border-b rule-line py-5 text-lg leading-snug">{line}</p>)
-        }
-      </div>
-    </div>
-  </section>
+  <ContactBand label="Have a brief that fits this work?" />
 </Layout>
 
 <style>

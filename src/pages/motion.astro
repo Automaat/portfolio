@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import VideoFrame from '../components/VideoFrame.astro';
+import ContactBand from '../components/ContactBand.astro';
 
 // videoId is optional. When set, the play button loads the YouTube embed inline.
 // When unset, the play button opens the YouTube channel in a new tab.
@@ -35,34 +36,6 @@ const films = [
     caption: 'Outdoor commission seed · 2022',
     poster: '/images/trips/scotland-thumb.jpg',
     videoId: '',
-  },
-];
-
-const stills = [
-  '/images/trips/patagonia-thumb.jpg',
-  '/images/trips/dolomites-thumb.jpg',
-  '/images/trips/iceland-thumb.jpg',
-  '/images/trips/norway-thumb.jpg',
-  '/images/trips/scotland-thumb.jpg',
-];
-
-const motionOffers = [
-  {
-    title: 'Brand films',
-    description: 'Short pieces built around place, movement, and product use in the field.',
-  },
-  {
-    title: 'Destination films',
-    description: 'Tourism-led edits for regions, operators, and travel campaigns.',
-  },
-  {
-    title: 'Social cutdowns',
-    description:
-      'Vertical and short-form edits shaped for launch windows and ongoing distribution.',
-  },
-  {
-    title: 'Hybrid coverage',
-    description: 'Stills and motion captured in one production window to reduce crew overhead.',
   },
 ];
 ---
@@ -141,143 +114,5 @@ const motionOffers = [
     </div>
   </section>
 
-  <section class="surface">
-    <div class="container-custom py-20 desktop:py-32">
-      <div class="max-w-2xl mb-12" data-reveal>
-        <p class="eyebrow">Stills from motion projects</p>
-        <h2 class="mt-3 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
-          The frame still does the work.
-        </h2>
-      </div>
-
-      <div class="motion-stills" data-reveal data-reveal-delay="80">
-        {
-          stills.map((src, i) => (
-            <div class:list={['motion-still', i === 0 && 'motion-still--lead']}>
-              <img src={src} alt={`Motion still ${i + 1}`} loading="lazy" decoding="async" />
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="surface-soft">
-    <div class="container-custom py-20 desktop:py-32">
-      <div class="grid gap-12 desktop:grid-cols-[0.9fr_1.1fr] desktop:gap-20">
-        <div data-reveal>
-          <p class="eyebrow">Deliverables</p>
-          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.02]">
-            Motion structured around buyer output.
-          </h2>
-          <p class="mt-6 text-muted text-lg max-w-md leading-relaxed">
-            One field window can output a hero film, a vertical for social, and stills for campaign
-            use — sized for the brief, not for a side reel.
-          </p>
-        </div>
-        <ul class="border-t rule-line" data-reveal data-reveal-delay="120">
-          {
-            motionOffers.map((offer, i) => (
-              <li class="border-b rule-line py-6 grid gap-3 desktop:grid-cols-[0.4fr_0.6fr] desktop:gap-12">
-                <p class="font-display text-2xl leading-tight">
-                  {String(i + 1).padStart(2, '0')} — {offer.title}
-                </p>
-                <p class="text-muted leading-relaxed">{offer.description}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="surface-elevated">
-    <div
-      class="container-custom py-20 desktop:py-32 flex flex-col gap-8 desktop:flex-row desktop:items-end desktop:justify-between"
-    >
-      <div class="max-w-2xl" data-reveal>
-        <p class="eyebrow">Next step</p>
-        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
-          Reels, cutdowns, or hybrid coverage for one field shoot?
-        </h2>
-        <p class="mt-6 text-lg text-muted">
-          Send the route, location, timing, and required outputs. I’ll respond with approach and
-          fit.
-        </p>
-      </div>
-      <a
-        href="/contact"
-        class="self-start inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:opacity-85 transition-opacity"
-      >
-        Contact
-      </a>
-    </div>
-  </section>
+  <ContactBand label="Reels, cutdowns, or hybrid coverage in mind?" />
 </Layout>
-
-<style>
-  .motion-stills {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 737px) {
-    .motion-stills {
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1.25rem;
-    }
-    .motion-still {
-      grid-column: span 3;
-    }
-    .motion-still--lead {
-      grid-column: span 6;
-    }
-  }
-
-  @media (min-width: 1025px) {
-    .motion-stills {
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1.5rem;
-    }
-    .motion-still {
-      grid-column: span 4;
-    }
-    .motion-still--lead {
-      grid-column: span 12;
-    }
-    .motion-still:nth-child(2) {
-      grid-column: span 5;
-    }
-    .motion-still:nth-child(3) {
-      grid-column: span 7;
-    }
-    .motion-still:nth-child(4) {
-      grid-column: span 7;
-    }
-    .motion-still:nth-child(5) {
-      grid-column: span 5;
-    }
-  }
-
-  .motion-still {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--bg-elevated);
-  }
-
-  .motion-still--lead {
-    aspect-ratio: 21 / 9;
-  }
-
-  .motion-still img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-
-  .motion-still:hover img {
-    transform: scale(1.04);
-  }
-</style>
