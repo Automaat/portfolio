@@ -1,28 +1,26 @@
 ---
 import Layout from './Layout.astro';
 import Hero from '../components/Hero.astro';
+import { formatDate, localePath, useTranslations, type Locale } from '../i18n';
 
 interface Props {
   title: string;
   date: string;
   description: string;
   image: string;
+  locale?: Locale;
 }
 
-const { title, date, description, image } = Astro.props;
-
-const formatDate = (dateStr: string) => {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-};
+const { title, date, description, image, locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
-<Layout title={title} description={description} image={image}>
+<Layout title={title} description={description} image={image} locale={locale}>
   <div class="-mt-16 desktop:-mt-20">
     <Hero
       image={image}
       alt={title}
-      eyebrow={`Journal · ${formatDate(date)}`}
+      eyebrow={`${t('blog.journal')} · ${formatDate(locale, date)}`}
       title={title}
       align="bottom-left"
       minHeight="min-h-[68vh]"
@@ -33,10 +31,11 @@ const formatDate = (dateStr: string) => {
     <div class="container-custom py-16 desktop:py-24">
       <div class="mb-10">
         <a
-          href="/blog"
+          href={localePath(locale, '/blog')}
           class="eyebrow inline-flex items-center gap-2 hover:opacity-70 transition-opacity"
         >
-          <span aria-hidden="true">←</span> Back to journal
+          <span aria-hidden="true">←</span>
+          {t('blog.back')}
         </a>
       </div>
 

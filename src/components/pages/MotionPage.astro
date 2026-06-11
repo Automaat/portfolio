@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import VideoFrame from '../VideoFrame.astro';
+import ContactBand from '../ContactBand.astro';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Motion | Marcin Skalski',
+    description:
+      'Motion direction and field-ready production for adventure, travel, and marine campaigns.',
+    eyebrow: 'Motion',
+    heading: 'Short-form motion built for outdoor brands, tourism, and expedition stories.',
+    intro:
+      'Reels, brand films, destination cuts, and hybrid stills/motion coverage. Lean kit, real access, and a delivery window that fits a single field shoot.',
+    featuredReel: 'Featured reel',
+    latestCut: 'Latest cut.',
+    channel: 'Channel →',
+    reelTitle: 'Showreel — Adventure, Travel & Marine',
+    reelCaption: 'Selected motion work, 2022–2024',
+    films: 'Films',
+    filmsHeading: 'Selected pieces from the field.',
+    band: 'Reels, cutdowns, or hybrid coverage in mind?',
+    filmEntries: [
+      { title: 'Patagonia — Wind, Granite, Ice', caption: 'Adventure short · 2024' },
+      { title: 'Iceland — Black Sand to Aurora', caption: 'Tourism story · 2023' },
+      { title: 'Norwegian Fjords — Bergen to Lofoten', caption: 'Marine feature · 2023' },
+      { title: 'Highlands — Storm Window', caption: 'Outdoor commission seed · 2022' },
+    ],
+  },
+  pl: {
+    title: 'Wideo | Marcin Skalski',
+    description:
+      'Reżyseria wideo i produkcja terenowa dla kampanii przygodowych, podróżniczych i morskich.',
+    eyebrow: 'Wideo',
+    heading: 'Krótkie formy wideo dla marek outdoorowych, turystyki i historii ekspedycyjnych.',
+    intro:
+      'Reele, filmy brandowe, cuty destynacji i hybrydowe pokrycie foto/wideo. Lekki sprzęt, prawdziwy dostęp i okno dostawy mieszczące się w jednym wyjeździe.',
+    featuredReel: 'Wyróżniony reel',
+    latestCut: 'Najnowszy cut.',
+    channel: 'Kanał →',
+    reelTitle: 'Showreel — przygoda, podróż, morze',
+    reelCaption: 'Wybrane prace wideo, 2022–2024',
+    films: 'Filmy',
+    filmsHeading: 'Wybrane materiały z terenu.',
+    band: 'Myślisz o reelach, cutdownach albo hybrydzie?',
+    filmEntries: [
+      { title: 'Patagonia — wiatr, granit, lód', caption: 'Krótki film przygodowy · 2024' },
+      { title: 'Islandia — od czarnego piasku po zorzę', caption: 'Historia turystyczna · 2023' },
+      { title: 'Norweskie fiordy — z Bergen na Lofoty', caption: 'Reportaż morski · 2023' },
+      { title: 'Highlandy — okno sztormowe', caption: 'Zalążek komisu outdoorowego · 2022' },
+    ],
+  },
+}[locale];
+
+const posters = [
+  '/images/trips/patagonia-thumb.jpg',
+  '/images/trips/iceland-thumb.jpg',
+  '/images/trips/norway-thumb.jpg',
+  '/images/trips/scotland-thumb.jpg',
+];
+
+const films = copy.filmEntries.map((f, i) => ({ ...f, poster: posters[i], videoId: '' }));
+
+const reel = {
+  title: copy.reelTitle,
+  caption: copy.reelCaption,
+  poster: '/images/hero-home-desktop.jpg',
+  videoId: '',
+};
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale}>
+  <section class="surface">
+    <div class="container-custom pt-20 pb-12 desktop:pt-28 desktop:pb-16 border-b rule-line">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1 class="mt-4 font-display text-[clamp(2.5rem,7vw,6rem)] leading-[1] max-w-5xl" data-reveal>
+        {copy.heading}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
+        {copy.intro}
+      </p>
+    </div>
+  </section>
+
+  <section class="surface">
+    <div class="container-custom py-12 desktop:py-20">
+      <div class="mb-8 flex items-end justify-between gap-6" data-reveal>
+        <div>
+          <p class="eyebrow">{copy.featuredReel}</p>
+          <h2 class="mt-3 font-display text-3xl desktop:text-4xl">{copy.latestCut}</h2>
+        </div>
+        <a
+          href="https://www.youtube.com/@marcinskalski2201"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[11px] uppercase font-mono tracking-[0.14em] underline underline-offset-8 hover:opacity-70"
+        >
+          {copy.channel}
+        </a>
+      </div>
+      <div data-reveal data-reveal-delay="100">
+        <VideoFrame
+          videoId={reel.videoId}
+          poster={reel.poster}
+          title={reel.title}
+          caption={reel.caption}
+          aspect="21/9"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="surface-soft">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="mb-12 flex items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <p class="eyebrow">{copy.films}</p>
+          <h2 class="mt-3 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+            {copy.filmsHeading}
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid gap-10 desktop:grid-cols-2 desktop:gap-x-8 desktop:gap-y-16">
+        {
+          films.map((f, i) => (
+            <div data-reveal data-reveal-delay={`${i * 80}`}>
+              <VideoFrame
+                videoId={f.videoId}
+                poster={f.poster}
+                title={f.title}
+                caption={f.caption}
+                aspect="16/9"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <ContactBand label={copy.band} locale={locale} />
+</Layout>

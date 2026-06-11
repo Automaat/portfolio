@@ -1,27 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import TripGrid from '../../components/TripGrid.astro';
+import ExpeditionsPage from '../../components/pages/ExpeditionsPage.astro';
 ---
 
-<Layout
-  title="Expeditions | Marcin Skalski"
-  description="Adventure photography expeditions across Patagonia, Iceland, the Dolomites, Norwegian fjords, and the Scottish Highlands."
->
-  <section class="surface">
-    <div class="container-custom pt-20 pb-8 desktop:pt-28 desktop:pb-12 border-b rule-line">
-      <p class="eyebrow">Expeditions</p>
-      <h1
-        class="mt-3 font-display text-[clamp(2.75rem,7vw,6rem)] leading-[1] max-w-4xl"
-        data-reveal
-      >
-        A field journal of routes, weather, and remote places.
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
-        Personal expeditions and self-initiated projects from coastline, alpine, and high latitude.
-        Each one a working library that carries forward into commercial briefs.
-      </p>
-    </div>
-  </section>
-
-  <TripGrid />
-</Layout>
+<ExpeditionsPage locale="en" />

@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContactForm from '../ContactForm.astro';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Contact | Marcin Skalski',
+    description:
+      'Start a photography or motion project with Marcin Skalski. Share location, timing, deliverables, and budget range.',
+    eyebrow: 'Contact',
+    heading: 'Start with the brief.',
+    intro:
+      'Best fit for adventure, travel, and marine projects needing stills, motion, or hybrid coverage. Send location, timing, deliverables, and a budget range.',
+    imgAlt: 'Norwegian fjord',
+    direct: 'Direct',
+    availability: 'Europe-based. Available worldwide.',
+    usefulDetail: 'Useful detail',
+    details: ['Project type', 'Location and dates', 'Needed outputs', 'Budget range'],
+    formEyebrow: 'Inquiry form',
+    formHeading: 'Enough detail to judge fit fast.',
+    formIntro: 'The more specific the brief, the faster I can respond with approach and next step.',
+  },
+  pl: {
+    title: 'Kontakt | Marcin Skalski',
+    description:
+      'Rozpocznij projekt foto lub wideo z Marcinem Skalskim. Podaj lokalizację, terminy, zakres materiałów i budżet.',
+    eyebrow: 'Kontakt',
+    heading: 'Zacznij od briefu.',
+    intro:
+      'Najlepszy fit: projekty przygodowe, podróżnicze i morskie — zdjęcia, wideo lub hybryda. Wyślij lokalizację, terminy, zakres materiałów i przedział budżetu.',
+    imgAlt: 'Norweski fiord',
+    direct: 'Bezpośrednio',
+    availability: 'Baza w Europie. Dostępność na całym świecie.',
+    usefulDetail: 'Przydatne informacje',
+    details: [
+      'Rodzaj projektu',
+      'Lokalizacja i terminy',
+      'Potrzebne materiały',
+      'Przedział budżetu',
+    ],
+    formEyebrow: 'Formularz zapytania',
+    formHeading: 'Tyle szczegółów, by szybko ocenić fit.',
+    formIntro: 'Im konkretniejszy brief, tym szybciej odpowiem z podejściem i kolejnym krokiem.',
+  },
+}[locale];
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale}>
+  <section class="surface">
+    <div class="container-custom pt-20 pb-12 desktop:pt-28 desktop:pb-16 border-b rule-line">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1 class="mt-4 font-display text-[clamp(2.5rem,7vw,6rem)] leading-[1] max-w-5xl" data-reveal>
+        {copy.heading}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
+        {copy.intro}
+      </p>
+    </div>
+  </section>
+
+  <section class="surface">
+    <div class="container-custom py-16 desktop:py-24">
+      <div class="grid gap-12 desktop:grid-cols-[0.7fr_1.3fr] desktop:gap-20">
+        <aside class="space-y-8" data-reveal>
+          <div class="overflow-hidden">
+            <img
+              src="/images/trips/norway-thumb.jpg"
+              alt={copy.imgAlt}
+              class="aspect-[4/5] w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="border-t rule-line pt-8">
+            <p class="eyebrow">{copy.direct}</p>
+            <a
+              href="mailto:marcin@skalski.com"
+              class="mt-4 block font-display text-2xl desktop:text-3xl leading-tight underline underline-offset-8 hover:opacity-70 transition-opacity"
+            >
+              marcin@skalski.com
+            </a>
+            <p class="mt-4 text-sm text-muted">{copy.availability}</p>
+          </div>
+
+          <div class="border-t rule-line pt-8">
+            <p class="eyebrow mb-4">{copy.usefulDetail}</p>
+            <ul class="space-y-2 text-sm">
+              {copy.details.map((d) => <li>{d}</li>)}
+            </ul>
+          </div>
+        </aside>
+
+        <div data-reveal data-reveal-delay="120">
+          <p class="eyebrow">{copy.formEyebrow}</p>
+          <h2 class="mt-3 font-display text-[clamp(2rem,4vw,3rem)] leading-[1.1] max-w-2xl">
+            {copy.formHeading}
+          </h2>
+          <p class="mt-4 text-muted max-w-xl">
+            {copy.formIntro}
+          </p>
+
+          <div class="mt-12">
+            <ContactForm locale={locale} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

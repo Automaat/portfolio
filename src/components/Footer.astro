@@ -1,8 +1,16 @@
 ---
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 const currentYear = new Date().getFullYear();
 
 const links = [
-  { href: 'mailto:marcin@skalski.com', label: 'Email', external: false },
+  { href: 'mailto:marcin@skalski.com', label: t('footer.email'), external: false },
   {
     href: 'https://www.instagram.com/marcinskalski_photo/',
     label: 'Instagram ↗',

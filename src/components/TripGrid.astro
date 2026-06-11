@@ -1,17 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
+import { entrySlug, localePath, tripTime, type Locale } from '../i18n';
 
 interface Props {
   limit?: number;
   showMeta?: boolean;
+  locale?: Locale;
 }
 
-const { limit, showMeta = true } = Astro.props;
+const { limit, showMeta = true, locale = 'en' } = Astro.props;
 
-const trips = await getCollection('trips');
-const sortedTrips = trips.sort((a, b) => {
-  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-});
+const trips = await getCollection('trips', ({ id }) => id.startsWith(`${locale}/`));
+const sortedTrips = trips.sort((a, b) => tripTime(b.data.date) - tripTime(a.data.date));
 
 const displayTrips = limit ? sortedTrips.slice(0, limit) : sortedTrips;
 ---
@@ -20,7 +20,7 @@ const displayTrips = limit ? sortedTrips.slice(0, limit) : sortedTrips;
   {
     displayTrips.map((trip, i) => (
       <a
-        href={`/trips/${trip.id}`}
+        href={localePath(locale, `/trips/${entrySlug(trip.id)}`)}
         class:list={['trip-card group', i % 5 === 0 && 'trip-card--lead']}
         data-reveal
         data-reveal-delay={`${i * 60}`}

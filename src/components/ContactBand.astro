@@ -1,9 +1,16 @@
 ---
+import { localePath, useTranslations, type Locale } from '../i18n';
+
 interface Props {
   label?: string;
+  locale?: Locale;
 }
 
-const { label = 'Have a project in mind?' } = Astro.props;
+const {
+  locale = 'en',
+  label = locale === 'pl' ? 'Masz projekt w głowie?' : 'Have a project in mind?',
+} = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <section class="surface border-t rule-line">
@@ -12,10 +19,10 @@ const { label = 'Have a project in mind?' } = Astro.props;
   >
     <p class="font-display text-2xl desktop:text-3xl leading-tight">{label}</p>
     <a
-      href="/contact"
+      href={localePath(locale, '/contact')}
       class="font-mono text-[11px] uppercase tracking-[0.14em] underline underline-offset-8 hover:opacity-70 transition-opacity shrink-0"
     >
-      Start a project →
+      {t('band.start')}
     </a>
   </div>
 </section>

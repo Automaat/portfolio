@@ -1,0 +1,238 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../Hero.astro';
+import Gallery from '../Gallery.astro';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Sailing & Skipper Services | Marcin Skalski',
+    description:
+      'Professional sailing and skippered charter services. Expeditions, instruction, and yacht charters with experienced skipper Marcin Skalski.',
+    eyebrow: 'Sailing & Skipper',
+    heading: 'Sailing services on the open water.',
+    sub: 'Skippered charter, expeditions, and instruction — built around real conditions.',
+    heroAlt: 'Sailing yacht on open water',
+    experience: 'Experience',
+    experienceHeading: 'Years of offshore miles. A bias for the practical.',
+    experienceP1:
+      'Years of navigating challenging waters across multiple continents, combining technical proficiency with respect for the ocean and a non-negotiable on safety.',
+    experienceP2:
+      'Coastal cruising, offshore expeditions, charter and instruction — accumulated miles in the conditions that matter most.',
+    certifications: 'Certifications',
+    credentials: [
+      'RYA Yachtmaster Ocean',
+      'STCW Basic Safety Training',
+      'Advanced First Aid at Sea',
+      'VHF Radio Operator License',
+      'Coastal Navigation & Meteorology',
+      '10,000+ Nautical Miles Logged',
+    ],
+    services: 'Services',
+    servicesHeading: 'What you can book.',
+    serviceEntries: [
+      {
+        title: 'Skippered charters',
+        description:
+          'Professional yacht charter with experienced skipper. Navigate challenging waters while you enjoy the journey.',
+      },
+      {
+        title: 'Sailing expeditions',
+        description:
+          'Multi-day sailing adventures to remote destinations with offshore-grade planning and support.',
+      },
+      {
+        title: 'Sailing instruction',
+        description:
+          'Personalised lessons across skill levels — basic navigation through advanced offshore technique.',
+      },
+    ],
+    vessel: 'The vessel',
+    vesselHeading: 'Equipped for comfort, safety, and performance.',
+    galleryAlt: 'Yacht',
+    nextStep: 'Next step',
+    ctaHeading: 'Ready to set sail?',
+    ctaText:
+      'Get in touch to discuss your sailing adventure, charter needs, or upcoming expeditions.',
+    ctaButton: 'Book your adventure',
+    yachtAlts: [
+      'Sailing yacht at sea',
+      'Yacht interior cabin',
+      'Sunset sailing',
+      'Yacht deck view',
+      'Navigation equipment',
+    ],
+  },
+  pl: {
+    title: 'Żeglarstwo i usługi skipperskie | Marcin Skalski',
+    description:
+      'Profesjonalne usługi żeglarskie i czartery ze skipperem. Ekspedycje, szkolenia i rejsy z doświadczonym skipperem Marcinem Skalskim.',
+    eyebrow: 'Żeglarstwo i skipper',
+    heading: 'Usługi żeglarskie na otwartej wodzie.',
+    sub: 'Czarter ze skipperem, ekspedycje i szkolenia — zbudowane wokół prawdziwych warunków.',
+    heroAlt: 'Jacht żaglowy na otwartej wodzie',
+    experience: 'Doświadczenie',
+    experienceHeading: 'Lata morskich mil. Nastawienie na praktykę.',
+    experienceP1:
+      'Lata żeglugi po wymagających wodach na kilku kontynentach — techniczna biegłość połączona z szacunkiem do oceanu i bezdyskusyjnym priorytetem bezpieczeństwa.',
+    experienceP2:
+      'Żegluga przybrzeżna, ekspedycje pełnomorskie, czartery i szkolenia — mile zebrane w warunkach, które liczą się najbardziej.',
+    certifications: 'Certyfikaty',
+    credentials: [
+      'RYA Yachtmaster Ocean',
+      'STCW Basic Safety Training',
+      'Zaawansowana pierwsza pomoc na morzu',
+      'Świadectwo operatora VHF',
+      'Nawigacja przybrzeżna i meteorologia',
+      'Ponad 10 000 mil morskich w logbooku',
+    ],
+    services: 'Usługi',
+    servicesHeading: 'Co możesz zarezerwować.',
+    serviceEntries: [
+      {
+        title: 'Czartery ze skipperem',
+        description:
+          'Profesjonalny czarter jachtu z doświadczonym skipperem. Trudne wody bierzemy na siebie — ty cieszysz się rejsem.',
+      },
+      {
+        title: 'Ekspedycje żeglarskie',
+        description:
+          'Wielodniowe przygody żeglarskie do odległych miejsc, z pełnomorskim planowaniem i wsparciem.',
+      },
+      {
+        title: 'Szkolenia żeglarskie',
+        description:
+          'Indywidualne zajęcia na każdym poziomie — od podstaw nawigacji po zaawansowaną technikę pełnomorską.',
+      },
+    ],
+    vessel: 'Jednostka',
+    vesselHeading: 'Wyposażona pod komfort, bezpieczeństwo i osiągi.',
+    galleryAlt: 'Jacht',
+    nextStep: 'Kolejny krok',
+    ctaHeading: 'Gotowy, by postawić żagle?',
+    ctaText:
+      'Odezwij się, by porozmawiać o przygodzie żeglarskiej, czarterze albo nadchodzących ekspedycjach.',
+    ctaButton: 'Zarezerwuj przygodę',
+    yachtAlts: [
+      'Jacht żaglowy na morzu',
+      'Kabina jachtu',
+      'Żegluga o zachodzie słońca',
+      'Pokład jachtu',
+      'Sprzęt nawigacyjny',
+    ],
+  },
+}[locale];
+
+const ratios = ['wide', 'portrait', 'landscape', 'square', 'tall'] as const;
+const yachtPhotos = ratios.map((ratio, i) => ({
+  src: `/images/yacht-${i + 1}.jpg`,
+  alt: copy.yachtAlts[i],
+  ratio,
+}));
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale}>
+  <div class="-mt-16 desktop:-mt-20">
+    <Hero
+      image="/images/hero-sailing.jpg"
+      alt={copy.heroAlt}
+      eyebrow={copy.eyebrow}
+      title={copy.heading}
+      subtitle={copy.sub}
+      align="bottom-left"
+      minHeight="min-h-[80vh]"
+    />
+  </div>
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="grid gap-12 desktop:grid-cols-[1fr_1fr] desktop:gap-20">
+        <div data-reveal>
+          <p class="eyebrow">{copy.experience}</p>
+          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+            {copy.experienceHeading}
+          </h2>
+          <div class="mt-8 space-y-5 text-lg text-muted leading-relaxed">
+            <p>{copy.experienceP1}</p>
+            <p>{copy.experienceP2}</p>
+          </div>
+        </div>
+
+        <div class="border-t rule-line" data-reveal data-reveal-delay="100">
+          <p class="eyebrow pt-6">{copy.certifications}</p>
+          <ul class="mt-4">
+            {copy.credentials.map((c) => <li class="border-b rule-line py-4 text-base">{c}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="surface-soft">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="max-w-2xl mb-12" data-reveal>
+        <p class="eyebrow">{copy.services}</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+          {copy.servicesHeading}
+        </h2>
+      </div>
+
+      <div class="grid gap-0 border-t rule-line">
+        {
+          copy.serviceEntries.map((s, i) => (
+            <div
+              class="border-b rule-line py-8 grid gap-4 desktop:grid-cols-[0.4fr_0.6fr] desktop:gap-12"
+              data-reveal
+              data-reveal-delay={`${i * 80}`}
+            >
+              <h3 class="font-display text-2xl desktop:text-3xl leading-[1.1]">
+                {String(i + 1).padStart(2, '0')} — {s.title}
+              </h3>
+              <p class="text-muted text-lg leading-relaxed">{s.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="max-w-2xl mb-12" data-reveal>
+        <p class="eyebrow">{copy.vessel}</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+          {copy.vesselHeading}
+        </h2>
+      </div>
+      <Gallery images={yachtPhotos} alt={copy.galleryAlt} />
+    </div>
+  </section>
+
+  <section class="surface-elevated">
+    <div
+      class="container-custom py-20 desktop:py-32 flex flex-col gap-8 desktop:flex-row desktop:items-end desktop:justify-between"
+    >
+      <div class="max-w-2xl" data-reveal>
+        <p class="eyebrow">{copy.nextStep}</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.02]">
+          {copy.ctaHeading}
+        </h2>
+        <p class="mt-6 text-lg text-muted">
+          {copy.ctaText}
+        </p>
+      </div>
+      <a
+        href={locale === 'pl' ? '/pl/contact' : '/contact'}
+        class="self-start inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3.5 text-[11px] font-semibold uppercase font-mono tracking-[0.14em] hover:opacity-85 transition-opacity"
+      >
+        {copy.ctaButton}
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -1,15 +1,20 @@
 ---
+import { altPath, localePath, useTranslations, type Locale } from '../i18n';
+
 interface Props {
   showLogo?: boolean;
+  locale?: Locale;
 }
 
-const { showLogo = true } = Astro.props;
+const { showLogo = true, locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+const alternate = altPath(Astro.url.pathname);
 
 const navLinks = [
-  { href: '/work', label: 'Work' },
-  { href: '/blog', label: 'Journal' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: localePath(locale, '/work'), label: t('nav.work') },
+  { href: localePath(locale, '/blog'), label: t('nav.journal') },
+  { href: localePath(locale, '/about'), label: t('nav.about') },
+  { href: localePath(locale, '/contact'), label: t('nav.contact') },
 ];
 ---
 
@@ -22,7 +27,7 @@ const navLinks = [
       {
         showLogo ? (
           <a
-            href="/"
+            href={localePath(locale, '/')}
             class="logo font-mono text-[11px] font-semibold tracking-[0.18em] uppercase text-[color:var(--text)]"
           >
             marcin skalski
@@ -65,6 +70,13 @@ const navLinks = [
         </ul>
 
         <div class="flex items-center gap-5 mt-6 desktop:mt-0">
+          <a
+            href={alternate.href}
+            class="font-mono text-[11px] tracking-[0.14em] uppercase text-[color:var(--text)] hover:opacity-70 transition-opacity"
+            aria-label={alternate.locale === 'pl' ? 'Wersja polska' : 'English version'}
+          >
+            {alternate.locale}
+          </a>
           <button
             id="theme-toggle"
             type="button"

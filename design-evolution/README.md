@@ -66,6 +66,14 @@ uses both hues in one scheme (pink paper / blue typography) and the slate-toned
 artwork harmonizes with both. Dark mode redone in the same family — indigo
 night with a pastel pink accent. `adopted-*` captures show the final palette.
 
+## 10-polish
+
+Full Polish localization. URL-prefix routing (`/pl/...`), `en`/`pl` content
+collection subfolders with translated trips and journal posts (same slugs both
+locales), shared UI dictionary (`src/i18n/`), page templates with colocated
+en/pl copy, localized layouts and contact form, EN/PL switcher in the header,
+`hreflang` alternates, locale-aware date formatting and trip-date sorting.
+
 ## 07-experiments
 
 Three throwaway prototype routes, each a different identity (user feedback:
