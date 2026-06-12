@@ -1,0 +1,822 @@
+---
+import world from '@svg-maps/world';
+import { usaMap as usa } from '../../data/us-states-map';
+import Layout from '../../layouts/Layout.astro';
+import { localePath, type Locale } from '../../i18n';
+import { visitedCountries, visitedUsStates } from '../../data/visited-countries';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Travel Map | Marcin Skalski',
+    description: 'World map of countries visited, with photographs linked to each one.',
+    eyebrow: 'Field log',
+    heading: 'Every country, mapped.',
+    sub: 'Highlighted countries are places the camera has been. Select one to see the frames it produced.',
+    statsCountries: 'Countries visited',
+    statsStates: 'US states',
+    statsTrips: 'Expeditions linked',
+    statsPhotos: 'Photographs',
+    mapAria: 'World map of visited countries',
+    usAria: 'Map of visited US states',
+    usEyebrow: 'In detail',
+    usHeading: 'The USA, state by state.',
+    usSub:
+      'Highlighted states are places the camera has been. They work the same as countries on the world map.',
+    viewDetails: 'view photos',
+    viewStates: 'view states',
+    detail: 'Selected place',
+    placeholder: 'Select a highlighted country or US state to see photos from that trip.',
+    viewTrip: 'View expedition →',
+    noPhotos: 'No photos linked yet.',
+    visitedEyebrow: 'Country index',
+    visitedHeading: 'Visited so far.',
+    legendVisited: 'Visited',
+    legendUnvisited: 'Not yet',
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
+    zoomReset: 'Reset view',
+    zoomHint: 'Ctrl + scroll to zoom, drag to pan',
+    attribution: 'World map by',
+  },
+  pl: {
+    title: 'Mapa podróży | Marcin Skalski',
+    description: 'Mapa świata z odwiedzonymi krajami i zdjęciami przypisanymi do każdego z nich.',
+    eyebrow: 'Dziennik terenowy',
+    heading: 'Każdy kraj, na mapie.',
+    sub: 'Podświetlone kraje to miejsca, w których był aparat. Wybierz jeden, aby zobaczyć kadry, które tam powstały.',
+    statsCountries: 'Odwiedzone kraje',
+    statsStates: 'Stany USA',
+    statsTrips: 'Powiązane wyprawy',
+    statsPhotos: 'Fotografie',
+    mapAria: 'Mapa świata z odwiedzonymi krajami',
+    usAria: 'Mapa odwiedzonych stanów USA',
+    usEyebrow: 'W szczegółach',
+    usHeading: 'USA, stan po stanie.',
+    usSub:
+      'Podświetlone stany to miejsca, w których był aparat. Działają tak samo jak kraje na mapie świata.',
+    viewDetails: 'zobacz zdjęcia',
+    viewStates: 'zobacz stany',
+    detail: 'Wybrane miejsce',
+    placeholder: 'Wybierz podświetlony kraj lub stan USA, aby zobaczyć zdjęcia z tej podróży.',
+    viewTrip: 'Zobacz wyprawę →',
+    noPhotos: 'Brak podpiętych zdjęć.',
+    visitedEyebrow: 'Indeks krajów',
+    visitedHeading: 'Odwiedzone do tej pory.',
+    legendVisited: 'Odwiedzone',
+    legendUnvisited: 'Jeszcze nie',
+    zoomIn: 'Przybliż',
+    zoomOut: 'Oddal',
+    zoomReset: 'Zresetuj widok',
+    zoomHint: 'Ctrl + scroll przybliża, przeciąganie przesuwa',
+    attribution: 'Mapa świata:',
+  },
+}[locale];
+
+const visitedByCode = new Map(visitedCountries.map((c) => [c.code, c]));
+const stateByCode = new Map(visitedUsStates.map((s) => [s.code, s]));
+const usTracked = visitedUsStates.length > 0;
+
+// Localized country names at build time; falls back to the package's English
+// name for non-ISO ids the ICU data does not know (e.g. disputed territories).
+const regionNames = new Intl.DisplayNames([locale], { type: 'region' });
+function countryName(id: string, fallback: string): string {
+  try {
+    return regionNames.of(id.toUpperCase()) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+// Intl has no subdivision names, so Polish state exonyms are kept by hand;
+// states not listed here read the same in both languages.
+const plStateNames: Record<string, string> = {
+  ca: 'Kalifornia',
+  dc: 'Dystrykt Kolumbii',
+  fl: 'Floryda',
+  hi: 'Hawaje',
+  la: 'Luizjana',
+  nc: 'Karolina Północna',
+  nd: 'Dakota Północna',
+  nm: 'Nowy Meksyk',
+  ny: 'Nowy Jork',
+  pa: 'Pensylwania',
+  sc: 'Karolina Południowa',
+  sd: 'Dakota Południowa',
+  tx: 'Teksas',
+  va: 'Wirginia',
+  wa: 'Waszyngton',
+  wv: 'Wirginia Zachodnia',
+};
+function stateName(id: string, fallback: string): string {
+  return locale === 'pl' ? (plStateNames[id] ?? fallback) : fallback;
+}
+
+const countries = world.locations.map((loc) => {
+  const visited = visitedByCode.has(loc.id) || (loc.id === 'us' && usTracked);
+  const drillDown = loc.id === 'us' && usTracked && !visitedByCode.has(loc.id);
+  return {
+    id: loc.id,
+    path: loc.path,
+    name: countryName(loc.id, loc.name),
+    visited,
+    action: drillDown ? copy.viewStates : copy.viewDetails,
+  };
+});
+
+const states = usa.locations.map((loc) => ({
+  id: `us-${loc.id}`,
+  code: loc.id,
+  path: loc.path,
+  name: stateName(loc.id, loc.name),
+  visited: stateByCode.has(loc.id),
+}));
+
+const visitedList = countries
+  .filter((c) => c.visited)
+  .map((c) => {
+    const data = visitedByCode.get(c.id);
+    return { ...c, trip: data?.trip, photos: data?.photos ?? [] };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name, locale));
+
+const visitedStatesList = states
+  .filter((s) => s.visited)
+  .map((s) => {
+    const data = stateByCode.get(s.code);
+    return { ...s, trip: data?.trip, photos: data?.photos ?? [] };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name, locale));
+
+const tripCount = new Set(
+  [...visitedList, ...visitedStatesList].flatMap((c) => (c.trip ? [c.trip] : []))
+).size;
+const photoCount = [...visitedList, ...visitedStatesList].reduce((n, c) => n + c.photos.length, 0);
+
+function plPlural(n: number, one: string, few: string, many: string): string {
+  if (n === 1) return one;
+  const last = n % 10;
+  const lastTwo = n % 100;
+  if (last >= 2 && last <= 4 && !(lastTwo >= 12 && lastTwo <= 14)) return few;
+  return many;
+}
+
+function photoLabel(n: number): string {
+  if (locale === 'pl') return `${n} ${plPlural(n, 'zdjęcie', 'zdjęcia', 'zdjęć')}`;
+  return n === 1 ? '1 photo' : `${n} photos`;
+}
+
+function stateLabel(n: number): string {
+  if (locale === 'pl') return `${n} ${plPlural(n, 'stan', 'stany', 'stanów')}`;
+  return n === 1 ? '1 state' : `${n} states`;
+}
+
+const countryRows = visitedList.map((c) => ({
+  id: c.id,
+  name: c.name,
+  meta:
+    c.id === 'us' && usTracked && !visitedByCode.has('us')
+      ? stateLabel(visitedStatesList.length)
+      : photoLabel(c.photos.length),
+}));
+
+const stateRows = visitedStatesList.map((s) => ({
+  id: s.id,
+  name: s.name,
+  meta: photoLabel(s.photos.length),
+}));
+
+const panelData = Object.fromEntries([
+  ...visitedList
+    .filter((c) => !(c.id === 'us' && !visitedByCode.has('us')))
+    .map((c) => [
+      c.id,
+      {
+        name: c.name,
+        photos: c.photos,
+        trip: c.trip ? localePath(locale, `/trips/${c.trip}`) : null,
+      },
+    ]),
+  ...visitedStatesList.map((s) => [
+    s.id,
+    {
+      name: `${s.name}, USA`,
+      photos: s.photos,
+      trip: s.trip ? localePath(locale, `/trips/${s.trip}`) : null,
+    },
+  ]),
+]);
+
+const stats = [
+  { value: visitedList.length, label: copy.statsCountries },
+  { value: visitedStatesList.length, label: copy.statsStates },
+  { value: tripCount, label: copy.statsTrips },
+  { value: photoCount, label: copy.statsPhotos },
+];
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale} noindex>
+  <section class="surface">
+    <div class="container-custom py-16 desktop:py-24">
+      <div class="max-w-3xl" data-reveal>
+        <p class="eyebrow">{copy.eyebrow}</p>
+        <h1 class="mt-4 font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.02]">
+          {copy.heading}
+        </h1>
+        <p class="mt-6 text-lg text-muted leading-relaxed">{copy.sub}</p>
+      </div>
+
+      <div
+        class="mt-14 grid grid-cols-2 tablet:grid-cols-4 gap-6 desktop:max-w-3xl"
+        data-reveal
+        data-reveal-delay="100"
+      >
+        {
+          stats.map((s) => (
+            <div class="border-t rule-line pt-4">
+              <p class="font-display text-3xl desktop:text-4xl">{s.value}</p>
+              <p class="label-mono text-muted mt-2">{s.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="surface border-t rule-line">
+    <div class="container-custom py-12 desktop:py-20">
+      <div class="map-wrap" data-reveal>
+        <svg viewBox={world.viewBox} role="img" aria-label={copy.mapAria} class="region-map js-map">
+          {
+            countries.map((c) =>
+              c.visited ? (
+                <path
+                  d={c.path}
+                  data-id={c.id}
+                  data-name={c.name}
+                  class="country country--visited"
+                  tabindex="0"
+                  role="button"
+                  aria-label={`${c.name} — ${c.action}`}
+                />
+              ) : (
+                <path
+                  d={c.path}
+                  data-id={c.id}
+                  data-name={c.name}
+                  class="country"
+                  aria-hidden="true"
+                />
+              )
+            )
+          }
+        </svg>
+        <div class="map-tooltip" hidden></div>
+        <div class="map-controls">
+          <button type="button" class="map-ctrl" data-zoom="in" aria-label={copy.zoomIn}>+</button>
+          <button type="button" class="map-ctrl" data-zoom="out" aria-label={copy.zoomOut}>−</button
+          >
+          <button type="button" class="map-ctrl" data-zoom="reset" aria-label={copy.zoomReset}>
+            ↺
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center gap-8">
+        <span class="flex items-center gap-3">
+          <span class="legend-swatch legend-swatch--visited" aria-hidden="true"></span>
+          <span class="label-mono text-muted">{copy.legendVisited}</span>
+        </span>
+        <span class="flex items-center gap-3">
+          <span class="legend-swatch" aria-hidden="true"></span>
+          <span class="label-mono text-muted">{copy.legendUnvisited}</span>
+        </span>
+        <span class="label-mono text-subtle ml-auto hidden tablet:block">{copy.zoomHint}</span>
+      </div>
+
+      <p class="mt-3 label-mono text-subtle">
+        {copy.attribution}
+        <a href="https://mapsvg.com/maps/world" rel="license noopener" class="underline">MapSVG</a>
+        —
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="surface border-t rule-line" id="usa-section">
+    <div class="container-custom py-16 desktop:py-24">
+      <div class="max-w-2xl mb-10" data-reveal>
+        <p class="eyebrow">{copy.usEyebrow}</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,4vw,3rem)] leading-[1.05]">
+          {copy.usHeading}
+        </h2>
+        <p class="mt-5 text-lg text-muted leading-relaxed">{copy.usSub}</p>
+      </div>
+
+      <div class="map-wrap desktop:max-w-4xl" data-reveal>
+        <svg viewBox={usa.viewBox} role="img" aria-label={copy.usAria} class="region-map js-map">
+          {
+            states.map((s) =>
+              s.visited ? (
+                <path
+                  d={s.path}
+                  data-id={s.id}
+                  data-name={s.name}
+                  class="country country--visited"
+                  tabindex="0"
+                  role="button"
+                  aria-label={`${s.name} — ${copy.viewDetails}`}
+                />
+              ) : (
+                <path
+                  d={s.path}
+                  data-id={s.id}
+                  data-name={s.name}
+                  class="country"
+                  aria-hidden="true"
+                />
+              )
+            )
+          }
+        </svg>
+        <div class="map-tooltip" hidden></div>
+        <div class="map-controls">
+          <button type="button" class="map-ctrl" data-zoom="in" aria-label={copy.zoomIn}>+</button>
+          <button type="button" class="map-ctrl" data-zoom="out" aria-label={copy.zoomOut}>−</button
+          >
+          <button type="button" class="map-ctrl" data-zoom="reset" aria-label={copy.zoomReset}>
+            ↺
+          </button>
+        </div>
+      </div>
+
+      {
+        stateRows.length > 0 && (
+          <div class="mt-12 border-t rule-line desktop:max-w-4xl">
+            {stateRows.map((s, i) => (
+              <button
+                type="button"
+                data-country-row={s.id}
+                class="w-full flex items-baseline justify-between gap-6 border-b rule-line py-5 text-left transition-opacity hover:opacity-70"
+                data-reveal
+                data-reveal-delay={`${i * 60}`}
+              >
+                <span class="font-display text-xl desktop:text-2xl">{s.name}</span>
+                <span class="label-mono text-muted shrink-0">{s.meta}</span>
+              </button>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="surface border-t rule-line">
+    <div class="container-custom py-16 desktop:py-24" id="country-panel">
+      <p class="eyebrow">{copy.detail}</p>
+      <p id="panel-placeholder" class="mt-4 text-lg text-muted">{copy.placeholder}</p>
+      <div id="panel-content" hidden>
+        <div class="flex flex-wrap items-baseline gap-x-8 gap-y-3 mt-4">
+          <h2 id="panel-name" class="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.05]">
+          </h2>
+          <a id="panel-trip" class="link-mono" href="#" hidden>{copy.viewTrip}</a>
+        </div>
+        <div id="panel-photos" class="mt-10 grid gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
+        </div>
+        <p id="panel-no-photos" class="mt-6 text-muted" hidden>{copy.noPhotos}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="surface border-t rule-line">
+    <div class="container-custom py-16 desktop:py-24">
+      <div class="max-w-2xl mb-10" data-reveal>
+        <p class="eyebrow">{copy.visitedEyebrow}</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,4vw,3rem)] leading-[1.05]">
+          {copy.visitedHeading}
+        </h2>
+      </div>
+      <div class="border-t rule-line">
+        {
+          countryRows.map((c, i) => (
+            <button
+              type="button"
+              data-country-row={c.id}
+              class="w-full flex items-baseline justify-between gap-6 border-b rule-line py-5 text-left transition-opacity hover:opacity-70"
+              data-reveal
+              data-reveal-delay={`${i * 60}`}
+            >
+              <span class="font-display text-xl desktop:text-2xl">{c.name}</span>
+              <span class="label-mono text-muted shrink-0">{c.meta}</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script
+  type="application/json"
+  id="map-data"
+  set:html={JSON.stringify(panelData).replace(/</g, '\\u003c')}
+/>
+
+<script>
+  interface PanelPhoto {
+    src: string;
+    alt: string;
+  }
+  interface PanelEntry {
+    name: string;
+    photos: PanelPhoto[];
+    trip: string | null;
+  }
+
+  const dataEl = document.getElementById('map-data');
+  const entries: Record<string, PanelEntry> = dataEl ? JSON.parse(dataEl.textContent || '{}') : {};
+
+  const usaSection = document.getElementById('usa-section');
+  const panel = document.getElementById('country-panel');
+  const placeholder = document.getElementById('panel-placeholder');
+  const content = document.getElementById('panel-content');
+  const nameEl = document.getElementById('panel-name');
+  const tripEl = document.getElementById('panel-trip') as HTMLAnchorElement | null;
+  const photosEl = document.getElementById('panel-photos');
+  const noPhotosEl = document.getElementById('panel-no-photos');
+
+  const scrollBehavior = (): ScrollBehavior =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+  function select(id: string): boolean {
+    const entry = entries[id];
+    if (!entry) {
+      // The US country shape drills down to the state map instead of a panel
+      if (id === 'us') {
+        usaSection?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+      }
+      return false;
+    }
+    if (!content || !placeholder || !nameEl || !photosEl) return false;
+
+    document
+      .querySelectorAll('.country--active')
+      .forEach((el) => el.classList.remove('country--active'));
+    document.querySelector(`path[data-id="${CSS.escape(id)}"]`)?.classList.add('country--active');
+
+    placeholder.hidden = true;
+    content.hidden = false;
+    nameEl.textContent = entry.name;
+
+    if (tripEl) {
+      if (entry.trip) {
+        tripEl.href = entry.trip;
+        tripEl.hidden = false;
+      } else {
+        tripEl.hidden = true;
+      }
+    }
+
+    photosEl.innerHTML = '';
+    if (entry.photos.length) {
+      if (noPhotosEl) noPhotosEl.hidden = true;
+      entry.photos.forEach((p) => {
+        const fig = document.createElement('figure');
+        fig.className = 'panel-photo';
+        const img = document.createElement('img');
+        img.src = p.src;
+        img.alt = p.alt;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        fig.appendChild(img);
+        photosEl.appendChild(fig);
+      });
+    } else if (noPhotosEl) {
+      noPhotosEl.hidden = false;
+    }
+    return true;
+  }
+
+  function selectAndReveal(id: string) {
+    if (select(id)) {
+      panel?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    }
+  }
+
+  function wireMap(svg: Element) {
+    const svgEl = svg as SVGSVGElement;
+    const wrap = svgEl.closest<HTMLElement>('.map-wrap');
+    const tooltip = wrap?.querySelector<HTMLElement>('.map-tooltip');
+
+    // Zoom & pan via the viewBox: vb is the visible window into the
+    // original [x0 y0 w0 h0] coordinate space.
+    const [x0, y0, w0, h0] = (svgEl.getAttribute('viewBox') || '0 0 100 100')
+      .split(/\s+/)
+      .map(Number);
+    const MAX_SCALE = 8;
+    const STEP = 1.6;
+    const vb = { x: x0, y: y0, w: w0, h: h0 };
+
+    const isZoomed = () => vb.w < w0 - 0.001;
+
+    function apply() {
+      svgEl.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+      const z = isZoomed();
+      wrap?.classList.toggle('is-zoomed', z);
+      // When zoomed, a single touch pans the map; otherwise it scrolls the page
+      svgEl.style.touchAction = z ? 'none' : 'pan-y';
+    }
+
+    function clampPos() {
+      vb.x = Math.min(Math.max(vb.x, x0), x0 + w0 - vb.w);
+      vb.y = Math.min(Math.max(vb.y, y0), y0 + h0 - vb.h);
+    }
+
+    function toSvgPoint(clientX: number, clientY: number) {
+      const r = svgEl.getBoundingClientRect();
+      return {
+        x: vb.x + ((clientX - r.left) / r.width) * vb.w,
+        y: vb.y + ((clientY - r.top) / r.height) * vb.h,
+      };
+    }
+
+    function zoomAt(factor: number, cx: number, cy: number) {
+      const newW = Math.min(w0, Math.max(w0 / MAX_SCALE, vb.w / factor));
+      const f = vb.w / newW;
+      vb.x = cx - (cx - vb.x) / f;
+      vb.y = cy - (cy - vb.y) / f;
+      vb.w = newW;
+      vb.h = newW * (h0 / w0);
+      clampPos();
+      apply();
+    }
+
+    function reset() {
+      vb.x = x0;
+      vb.y = y0;
+      vb.w = w0;
+      vb.h = h0;
+      apply();
+    }
+
+    wrap?.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cx = vb.x + vb.w / 2;
+        const cy = vb.y + vb.h / 2;
+        if (btn.dataset.zoom === 'in') zoomAt(STEP, cx, cy);
+        else if (btn.dataset.zoom === 'out') zoomAt(1 / STEP, cx, cy);
+        else reset();
+      });
+    });
+
+    svgEl.addEventListener(
+      'wheel',
+      (e) => {
+        // Ctrl/Cmd + wheel zooms (trackpad pinch arrives as ctrl+wheel);
+        // plain wheel keeps scrolling the page
+        if (!e.ctrlKey && !e.metaKey) return;
+        e.preventDefault();
+        const p = toSvgPoint(e.clientX, e.clientY);
+        zoomAt(Math.exp(-e.deltaY * 0.0015), p.x, p.y);
+      },
+      { passive: false }
+    );
+
+    const pointers = new Map<number, { x: number; y: number }>();
+    let moved = 0;
+    let wasPinch = false;
+
+    svgEl.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (pointers.size === 0) {
+        moved = 0;
+        wasPinch = false;
+      }
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 2) wasPinch = true;
+      if (isZoomed() || pointers.size === 2) {
+        for (const id of pointers.keys()) {
+          try {
+            svgEl.setPointerCapture(id);
+          } catch {
+            /* pointer already gone */
+          }
+        }
+      }
+    });
+
+    svgEl.addEventListener('pointermove', (e) => {
+      const prev = pointers.get(e.pointerId);
+
+      if (prev && pointers.size === 2) {
+        // Pinch: zoom around the midpoint by the change in finger distance
+        const [a, b] = [...pointers.values()];
+        const prevDist = Math.hypot(a.x - b.x, a.y - b.y);
+        pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        const [a2, b2] = [...pointers.values()];
+        const newDist = Math.hypot(a2.x - b2.x, a2.y - b2.y);
+        moved += Math.abs(newDist - prevDist);
+        if (prevDist > 0 && newDist > 0) {
+          const mid = toSvgPoint((a2.x + b2.x) / 2, (a2.y + b2.y) / 2);
+          zoomAt(newDist / prevDist, mid.x, mid.y);
+        }
+        if (tooltip) tooltip.hidden = true;
+        return;
+      }
+
+      if (prev && pointers.size === 1 && isZoomed()) {
+        // Drag to pan
+        const dx = e.clientX - prev.x;
+        const dy = e.clientY - prev.y;
+        moved += Math.abs(dx) + Math.abs(dy);
+        pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        if (moved > 4) wrap?.classList.add('is-panning');
+        const r = svgEl.getBoundingClientRect();
+        vb.x -= (dx / r.width) * vb.w;
+        vb.y -= (dy / r.height) * vb.h;
+        clampPos();
+        apply();
+        if (tooltip) tooltip.hidden = true;
+        return;
+      }
+
+      // Hover tooltip
+      if (!tooltip || !wrap) return;
+      const target = (e.target as Element).closest<SVGPathElement>('.country');
+      if (!target) {
+        tooltip.hidden = true;
+        return;
+      }
+      tooltip.textContent = target.dataset.name ?? '';
+      const rect = wrap.getBoundingClientRect();
+      tooltip.style.left = `${e.clientX - rect.left}px`;
+      tooltip.style.top = `${e.clientY - rect.top}px`;
+      tooltip.hidden = false;
+    });
+
+    function endPointer(e: PointerEvent, allowSelect: boolean) {
+      const wasDown = pointers.delete(e.pointerId);
+      if (pointers.size === 0) wrap?.classList.remove('is-panning');
+      if (!allowSelect || !wasDown || wasPinch || moved > 4) return;
+      // A tap/click: pointer capture can retarget e.target to the svg,
+      // so resolve the path under the pointer explicitly
+      const target = document
+        .elementFromPoint(e.clientX, e.clientY)
+        ?.closest<SVGPathElement>('.country--visited');
+      if (target?.dataset.id) selectAndReveal(target.dataset.id);
+    }
+
+    svgEl.addEventListener('pointerup', (e) => endPointer(e, true));
+    svgEl.addEventListener('pointercancel', (e) => endPointer(e, false));
+
+    svgEl.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (key !== 'Enter' && key !== ' ') return;
+      const target = (e.target as Element).closest<SVGPathElement>('.country--visited');
+      if (target?.dataset.id) {
+        e.preventDefault();
+        selectAndReveal(target.dataset.id);
+      }
+    });
+
+    svgEl.addEventListener('pointerleave', () => {
+      if (tooltip) tooltip.hidden = true;
+    });
+  }
+
+  document.querySelectorAll('svg.js-map').forEach(wireMap);
+
+  document.querySelectorAll<HTMLButtonElement>('[data-country-row]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.countryRow;
+      if (!id) return;
+      selectAndReveal(id);
+    });
+  });
+</script>
+
+<style>
+  .map-wrap {
+    position: relative;
+  }
+
+  .region-map {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+  }
+
+  .map-wrap.is-zoomed .region-map {
+    cursor: grab;
+  }
+
+  .map-wrap.is-panning .region-map {
+    cursor: grabbing;
+  }
+
+  .map-controls {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    z-index: 5;
+  }
+
+  .map-ctrl {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .map-ctrl:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .country {
+    fill: var(--bg-elevated);
+    stroke: var(--bg);
+    stroke-width: 0.4;
+    vector-effect: non-scaling-stroke;
+    transition: fill 0.2s ease;
+  }
+
+  .country--visited {
+    fill: var(--accent);
+    cursor: pointer;
+  }
+
+  .country--visited:hover,
+  .country--visited:focus-visible {
+    fill: var(--text);
+  }
+
+  .country--active {
+    fill: var(--text);
+  }
+
+  .map-tooltip {
+    position: absolute;
+    transform: translate(-50%, -150%);
+    background: var(--text);
+    color: var(--bg);
+    padding: 0.35rem 0.7rem;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    background: var(--bg-elevated);
+    display: inline-block;
+  }
+
+  .legend-swatch--visited {
+    background: var(--accent);
+  }
+
+  #panel-photos :global(.panel-photo) {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+
+  #panel-photos :global(.panel-photo img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  #panel-photos :global(.panel-photo:hover img) {
+    transform: scale(1.04);
+  }
+</style>
