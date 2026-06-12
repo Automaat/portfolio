@@ -18,10 +18,7 @@ const t = useTranslations(locale);
     class="container-custom py-16 desktop:py-24 flex flex-col tablet:flex-row tablet:items-baseline tablet:justify-between gap-5"
   >
     <p class="font-display text-2xl desktop:text-3xl leading-tight">{label}</p>
-    <a
-      href={localePath(locale, '/contact')}
-      class="font-mono text-[11px] uppercase tracking-[0.14em] underline underline-offset-8 hover:opacity-70 transition-opacity shrink-0"
-    >
+    <a href={localePath(locale, '/contact')} class="link-mono shrink-0">
       {t('band.start')}
     </a>
   </div>

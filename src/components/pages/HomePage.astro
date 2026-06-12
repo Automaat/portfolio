@@ -21,6 +21,8 @@ const copy = {
     years: '2022–2024',
     showreelTitle: 'Showreel — Motion',
     showreelMeta: 'Selected motion work · 2022–24',
+    streetTitle: 'Street',
+    streetMeta: 'Personal work · 2022–25',
     newProjects: 'New projects',
     contactLine:
       'Europe-based, available worldwide. Send location, timing, and deliverables — I’ll reply with fit and next step.',
@@ -37,6 +39,8 @@ const copy = {
     years: '2022–2024',
     showreelTitle: 'Showreel — wideo',
     showreelMeta: 'Wybrane prace wideo · 2022–24',
+    streetTitle: 'Street',
+    streetMeta: 'Praca własna · 2022–25',
     newProjects: 'Nowe projekty',
     contactLine:
       'Baza w Europie, dostępność na całym świecie. Wyślij lokalizację, terminy i zakres materiałów — odpowiem, czy to dobry fit i co dalej.',
@@ -64,6 +68,13 @@ const rows = [
     title: copy.showreelTitle,
     meta: copy.showreelMeta,
     index: String(tiles.length + 1).padStart(2, '0'),
+  },
+  {
+    href: localePath(locale, '/street'),
+    image: '/images/street/street-02.jpg',
+    title: copy.streetTitle,
+    meta: copy.streetMeta,
+    index: String(tiles.length + 2).padStart(2, '0'),
   },
 ].map((row) => ({ ...row, year: row.meta.match(/\d{4}(–\d{2,4})?/)?.[0] ?? '' }));
 ---
@@ -95,10 +106,12 @@ const rows = [
       {
         rows.map((row) => (
           <a class="row group" href={row.href} data-image={row.image} data-reveal>
-            <span class="row-aux">{row.index}</span>
+            <span class="label-mono text-muted">{row.index}</span>
             <span class="row-title font-display">{row.title}</span>
-            <span class="row-aux hidden tablet:block">{row.meta.replace(/\s*·\s*[^·]*$/, '')}</span>
-            <span class="row-aux text-right">{row.year}</span>
+            <span class="label-mono text-muted hidden tablet:block">
+              {row.meta.replace(/\s*·\s*[^·]*$/, '')}
+            </span>
+            <span class="label-mono text-muted text-right">{row.year}</span>
           </a>
         ))
       }
@@ -229,14 +242,6 @@ const rows = [
   .row:hover {
     padding-left: 1.5rem;
     opacity: 1;
-  }
-
-  .row-aux {
-    font-family: theme('fontFamily.mono');
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-muted);
   }
 
   .row-title {

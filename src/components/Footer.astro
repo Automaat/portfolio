@@ -1,5 +1,5 @@
 ---
-import { useTranslations, type Locale } from '../i18n';
+import { localePath, useTranslations, type Locale } from '../i18n';
 
 interface Props {
   locale?: Locale;
@@ -10,6 +10,7 @@ const t = useTranslations(locale);
 const currentYear = new Date().getFullYear();
 
 const links = [
+  { href: localePath(locale, '/street'), label: 'Street', external: false },
   { href: 'mailto:marcin@skalski.com', label: t('footer.email'), external: false },
   {
     href: 'https://www.instagram.com/marcinskalski_photo/',
@@ -26,7 +27,7 @@ const links = [
   >
     <p class="text-xs text-subtle">&copy; {currentYear} Marcin Skalski</p>
 
-    <div class="flex flex-wrap gap-x-7 gap-y-3 font-mono text-[11px] uppercase tracking-[0.14em]">
+    <div class="flex flex-wrap gap-x-7 gap-y-3 label-mono">
       {
         links.map((link) => (
           <a

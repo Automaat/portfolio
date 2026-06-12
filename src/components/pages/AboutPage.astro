@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Hero from '../Hero.astro';
 import ContactBand from '../ContactBand.astro';
-import type { Locale } from '../../i18n';
+import { localePath, type Locale } from '../../i18n';
 
 interface Props {
   locale: Locale;
@@ -27,6 +27,7 @@ const copy = {
     profileP2:
       'A sailing background helps on assignments where timing, weather, water access, and onboard movement are part of the brief. On land, the same approach carries into expedition routes, destination campaigns, and outdoor product stories.',
     profileP3: 'Strong imagery, useful deliverables, and a process that holds up in the field.',
+    streetLine: 'Between assignments: street photography →',
     profileImgAlt: 'Patagonia mountain landscape',
     strengths: 'Strengths',
     strengthsHeading: 'Why buyers bring me into remote assignments.',
@@ -65,6 +66,7 @@ const copy = {
     profileP2:
       'Żeglarskie doświadczenie pomaga przy zleceniach, w których timing, pogoda, dostęp od wody i ruch na pokładzie są częścią briefu. Na lądzie to samo podejście działa na trasach ekspedycyjnych, w kampaniach destynacji i historiach produktów outdoorowych.',
     profileP3: 'Mocne kadry, użyteczne materiały i proces, który nie sypie się w terenie.',
+    streetLine: 'Między zleceniami: fotografia uliczna →',
     profileImgAlt: 'Górski krajobraz Patagonii',
     strengths: 'Mocne strony',
     strengthsHeading: 'Dlaczego klienci zabierają mnie na odległe zlecenia.',
@@ -129,6 +131,9 @@ const copy = {
             <p>{copy.profileP2}</p>
             <p class="text-[color:var(--text)]">{copy.profileP3}</p>
           </div>
+          <a href={localePath(locale, '/street')} class="mt-8 inline-block link-mono">
+            {copy.streetLine}
+          </a>
         </div>
       </div>
     </div>

@@ -74,6 +74,19 @@ locales), shared UI dictionary (`src/i18n/`), page templates with colocated
 en/pl copy, localized layouts and contact form, EN/PL switcher in the header,
 `hreflang` alternates, locale-aware date formatting and trip-date sorting.
 
+## 11-street
+
+Street photography section — personal, non-commercial work, deliberately kept
+out of the commercial funnel. `/street` + `/pl/street` share the site palette
+(a monochrome variant was tried and reverted — all pages keep one look): no
+briefs, no CTAs, just an offset stream of frames with mono captions
+(city · year). Shared label/link/button styles extracted to global classes
+(`label-mono`, `link-mono`, `btn-solid`, `btn-outline`). Entry points: a
+labeled `07 — Street · Personal work` row on the home index, a quiet link on
+About, and a footer link — not in the main nav. Ten generated noir city
+placeholders (building silhouettes, lit windows, rain, fog, grain) sized for
+real frames to drop in at `public/images/street/`.
+
 ## 07-experiments
 
 Three throwaway prototype routes, each a different identity (user feedback:

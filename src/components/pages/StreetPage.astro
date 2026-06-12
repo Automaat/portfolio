@@ -1,0 +1,169 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { localePath, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Street | Marcin Skalski',
+    description:
+      'Street photography — personal work made between assignments. Cities, weather, and light, with no brief attached.',
+    eyebrow: 'Street · Personal work',
+    heading: 'Cities, between assignments.',
+    intro:
+      'No briefs, no deliverables. Frames made for their own sake — the same documentary instinct, pointed at streets, harbours, and weather over the rooftops.',
+    note: 'Ongoing · A rotating selection, newest first.',
+    backToWork: 'Commercial work →',
+    frameAlt: 'Street photograph',
+  },
+  pl: {
+    title: 'Street | Marcin Skalski',
+    description:
+      'Fotografia uliczna — praca własna powstająca między zleceniami. Miasta, pogoda i światło, bez żadnego briefu.',
+    eyebrow: 'Street · Praca własna',
+    heading: 'Miasta, pomiędzy zleceniami.',
+    intro:
+      'Bez briefów, bez materiałów do oddania. Kadry robione dla samych kadrów — ten sam dokumentalny instynkt, skierowany na ulice, porty i pogodę nad dachami.',
+    note: 'W toku · Zmienna selekcja, od najnowszych.',
+    backToWork: 'Prace komercyjne →',
+    frameAlt: 'Fotografia uliczna',
+  },
+}[locale];
+
+const cities = {
+  en: [
+    'Gdańsk',
+    'Lisbon',
+    'Marseille',
+    'Hamburg',
+    'Porto',
+    'Naples',
+    'Warsaw',
+    'Bergen',
+    'Valletta',
+    'Genoa',
+  ],
+  pl: [
+    'Gdańsk',
+    'Lizbona',
+    'Marsylia',
+    'Hamburg',
+    'Porto',
+    'Neapol',
+    'Warszawa',
+    'Bergen',
+    'Valletta',
+    'Genua',
+  ],
+}[locale];
+
+const years = ['2025', '2024', '2024', '2023', '2023', '2022', '2025', '2023', '2022', '2024'];
+const layouts = [
+  'f-full',
+  'f-narrow f-left',
+  'f-wide f-right',
+  'f-narrow f-right',
+  'f-mid f-left',
+  'f-full',
+  'f-narrow f-left',
+  'f-wide f-right',
+  'f-mid f-right',
+  'f-full',
+];
+
+const frames = layouts.map((layout, i) => ({
+  src: `/images/street/street-${String(i + 1).padStart(2, '0')}.jpg`,
+  city: cities[i],
+  year: years[i],
+  index: String(i + 1).padStart(2, '0'),
+  layout,
+}));
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale}>
+  <section class="surface">
+    <div class="container-custom pt-20 pb-12 desktop:pt-28 desktop:pb-16 border-b rule-line">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1 class="mt-4 font-display text-[clamp(2.5rem,7vw,6rem)] leading-[1] max-w-5xl" data-reveal>
+        {copy.heading}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
+        {copy.intro}
+      </p>
+      <p class="mt-8 eyebrow" data-reveal data-reveal-delay="180">{copy.note}</p>
+    </div>
+  </section>
+
+  <section class="surface">
+    <div class="container-custom py-16 desktop:py-24 flex flex-col gap-y-16 desktop:gap-y-24">
+      {
+        frames.map((f) => (
+          <figure class:list={['frame', f.layout]} data-reveal>
+            <img
+              src={f.src}
+              alt={`${copy.frameAlt} — ${f.city}, ${f.year}`}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="label-mono text-muted">
+              <span>
+                {f.index} — {f.city}
+              </span>
+              <span class="text-subtle">{f.year}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="surface border-t rule-line">
+    <div class="container-custom py-14 desktop:py-20 flex justify-end">
+      <a href={localePath(locale, '/work')} class="link-mono">
+        {copy.backToWork}
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .frame {
+    width: 100%;
+  }
+
+  .frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .frame figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.9rem;
+  }
+
+  @media (min-width: 1025px) {
+    .f-wide {
+      width: 78%;
+    }
+    .f-mid {
+      width: 58%;
+    }
+    .f-narrow {
+      width: 46%;
+    }
+    .f-left {
+      align-self: flex-start;
+    }
+    .f-right {
+      align-self: flex-end;
+    }
+  }
+</style>
