@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TripGrid from '../TripGrid.astro';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Expeditions | Marcin Skalski',
+    description:
+      'Adventure photography expeditions across Patagonia, Iceland, the Dolomites, Norwegian fjords, and the Scottish Highlands.',
+    eyebrow: 'Expeditions',
+    heading: 'A field journal of routes, weather, and remote places.',
+    intro:
+      'Personal expeditions and self-initiated projects from coastline, alpine, and high latitude. Each one a working library that carries forward into commercial briefs.',
+  },
+  pl: {
+    title: 'Ekspedycje | Marcin Skalski',
+    description:
+      'Wyprawy fotograficzne przez Patagonię, Islandię, Dolomity, norweskie fiordy i szkockie Highlandy.',
+    eyebrow: 'Ekspedycje',
+    heading: 'Dziennik terenowy tras, pogody i odległych miejsc.',
+    intro:
+      'Osobiste wyprawy i własne projekty — wybrzeże, góry, wysokie szerokości. Każda z nich to robocza biblioteka, która pracuje dalej w komercyjnych briefach.',
+  },
+}[locale];
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale}>
+  <section class="surface">
+    <div class="container-custom pt-20 pb-8 desktop:pt-28 desktop:pb-12 border-b rule-line">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1
+        class="mt-3 font-display text-[clamp(2.75rem,7vw,6rem)] leading-[1] max-w-4xl"
+        data-reveal
+      >
+        {copy.heading}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted" data-reveal data-reveal-delay="120">
+        {copy.intro}
+      </p>
+    </div>
+  </section>
+
+  <TripGrid locale={locale} />
+</Layout>

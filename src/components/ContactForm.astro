@@ -1,5 +1,29 @@
 ---
 // ContactForm.astro - Contact form with Netlify Forms integration
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+
+const projectTypes = [
+  { value: 'adventure-campaign', label: t('form.type.adventure') },
+  { value: 'destination-tourism', label: t('form.type.tourism') },
+  { value: 'marine-sailing', label: t('form.type.marine') },
+  { value: 'motion-only', label: t('form.type.motion') },
+  { value: 'hybrid-photo-video', label: t('form.type.hybrid') },
+  { value: 'other', label: t('form.type.other') },
+];
+
+const budgets = [
+  { value: 'under-3k', label: t('form.budget.under3k') },
+  { value: '3k-7k', label: t('form.budget.3k7k') },
+  { value: '7k-15k', label: t('form.budget.7k15k') },
+  { value: '15k-plus', label: t('form.budget.15kPlus') },
+];
 ---
 
 <form
@@ -8,6 +32,10 @@
   data-netlify="true"
   data-netlify-honeypot="bot-field"
   class="contact-form"
+  data-msg-success={t('form.success')}
+  data-msg-error={t('form.error')}
+  data-msg-sending={t('form.sending')}
+  data-msg-submit={t('form.submit')}
 >
   <input type="hidden" name="form-name" value="contact" />
 
@@ -19,98 +47,96 @@
   </p>
 
   <div class="form-group">
-    <label for="name" class="form-label">Name</label>
-    <input type="text" id="name" name="name" required class="form-input" placeholder="Your name" />
+    <label for="name" class="form-label">{t('form.name')}</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      class="form-input"
+      placeholder={t('form.namePlaceholder')}
+    />
   </div>
 
   <div class="form-group">
-    <label for="email" class="form-label">Email</label>
+    <label for="email" class="form-label">{t('form.email')}</label>
     <input
       type="email"
       id="email"
       name="email"
       required
       class="form-input"
-      placeholder="your@email.com"
+      placeholder={t('form.emailPlaceholder')}
     />
   </div>
 
   <div class="form-grid">
     <div class="form-group">
-      <label for="project-type" class="form-label">Project Type</label>
+      <label for="project-type" class="form-label">{t('form.projectType')}</label>
       <select id="project-type" name="projectType" required class="form-input form-select">
-        <option value="">Select project type</option>
-        <option value="adventure-campaign">Adventure campaign</option>
-        <option value="destination-tourism">Destination / tourism</option>
-        <option value="marine-sailing">Marine / sailing</option>
-        <option value="motion-only">Motion only</option>
-        <option value="hybrid-photo-video">Hybrid photo + video</option>
-        <option value="other">Other</option>
+        <option value="">{t('form.projectTypePlaceholder')}</option>
+        {projectTypes.map((o) => <option value={o.value}>{o.label}</option>)}
       </select>
     </div>
 
     <div class="form-group">
-      <label for="budget" class="form-label">Budget Range</label>
+      <label for="budget" class="form-label">{t('form.budget')}</label>
       <select id="budget" name="budget" required class="form-input form-select">
-        <option value="">Select budget range</option>
-        <option value="under-3k">Under EUR 3k</option>
-        <option value="3k-7k">EUR 3k to 7k</option>
-        <option value="7k-15k">EUR 7k to 15k</option>
-        <option value="15k-plus">EUR 15k+</option>
+        <option value="">{t('form.budgetPlaceholder')}</option>
+        {budgets.map((o) => <option value={o.value}>{o.label}</option>)}
       </select>
     </div>
   </div>
 
   <div class="form-grid">
     <div class="form-group">
-      <label for="location" class="form-label">Location</label>
+      <label for="location" class="form-label">{t('form.location')}</label>
       <input
         type="text"
         id="location"
         name="location"
         required
         class="form-input"
-        placeholder="Country, region, or route"
+        placeholder={t('form.locationPlaceholder')}
       />
     </div>
 
     <div class="form-group">
-      <label for="timeline" class="form-label">Timeline</label>
+      <label for="timeline" class="form-label">{t('form.timeline')}</label>
       <input
         type="text"
         id="timeline"
         name="timeline"
         required
         class="form-input"
-        placeholder="Shoot window or delivery deadline"
+        placeholder={t('form.timelinePlaceholder')}
       />
     </div>
   </div>
 
   <div class="form-group">
-    <label for="deliverables" class="form-label">Deliverables</label>
+    <label for="deliverables" class="form-label">{t('form.deliverables')}</label>
     <textarea
       id="deliverables"
       name="deliverables"
       required
       rows="4"
       class="form-input form-textarea"
-      placeholder="Stills, reel, drone, social cutdowns, content library, usage needs..."
-    ></textarea>
+      placeholder={t('form.deliverablesPlaceholder')}></textarea>
   </div>
 
   <div class="form-group">
-    <label for="message" class="form-label">Message</label>
+    <label for="message" class="form-label">{t('form.message')}</label>
     <textarea
       id="message"
       name="message"
       required
       rows="6"
       class="form-input form-textarea"
-      placeholder="Context, goals, references, crew size, or anything else useful..."></textarea>
+      placeholder={t('form.messagePlaceholder')}></textarea>
   </div>
 
-  <button type="submit" class="form-submit"> Send Message </button>
+  <button type="submit" class="form-submit">{t('form.submit')}</button>
 
   <div class="form-message" id="form-message"></div>
 </form>
@@ -118,7 +144,6 @@
 <style>
   .contact-form {
     max-width: 600px;
-    margin: 0 auto;
   }
 
   .hidden {
@@ -126,96 +151,117 @@
   }
 
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .form-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0 2.5rem;
   }
 
   .form-label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
+    margin-bottom: 0.65rem;
+    font-size: 11px;
     font-weight: 500;
-    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: var(--text-muted);
   }
 
   .form-input {
     width: 100%;
-    padding: 0.875rem 1.25rem;
+    padding: 0.75rem 0;
     font-size: 0.9375rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 9999px;
-    background: #ffffff;
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    font-family: inherit;
+    color: var(--text);
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    border-radius: 0;
+    background: transparent;
+    transition: border-color 0.25s ease;
+  }
+
+  .form-input::placeholder {
+    color: var(--text-subtle);
   }
 
   .form-input:focus {
     outline: none;
-    border-color: #4d6198;
-    box-shadow: 0 0 0 3px rgba(77, 97, 152, 0.1);
+    border-bottom-color: var(--text);
   }
 
   .form-textarea {
-    border-radius: 1.5rem;
     resize: vertical;
-    min-height: 120px;
+    min-height: 110px;
+    line-height: 1.6;
   }
 
   .form-select {
     appearance: none;
+    cursor: pointer;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+      linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+    background-position:
+      calc(100% - 14px) 50%,
+      calc(100% - 8px) 50%;
+    background-size:
+      6px 6px,
+      6px 6px;
+    background-repeat: no-repeat;
+  }
+
+  .form-select option {
+    background: var(--bg);
+    color: var(--text);
   }
 
   .form-submit {
-    width: 100%;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #ffffff;
-    background: #32373c;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.75rem;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: var(--bg);
+    background: var(--text);
     border: none;
-    border-radius: 9999px;
+    border-radius: 0;
     cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      transform 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
   .form-submit:hover {
-    background: #000000;
-    transform: translateY(-2px);
+    opacity: 0.85;
   }
 
-  .form-submit:active {
-    transform: translateY(0);
+  .form-submit:disabled {
+    opacity: 0.5;
+    cursor: wait;
   }
 
   .form-message {
-    margin-top: 1rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1rem 0;
     font-size: 0.9375rem;
     display: none;
   }
 
   .form-message.success {
     display: block;
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    color: var(--text);
+    border-top: 1px solid var(--rule);
   }
 
   .form-message.error {
     display: block;
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    color: #c0564f;
+    border-top: 1px solid #c0564f;
   }
 
   @media (max-width: 736px) {
@@ -237,6 +283,13 @@
   const messageDiv = document.getElementById('form-message') as HTMLDivElement;
 
   if (form) {
+    const msg = {
+      success: form.dataset.msgSuccess ?? 'Thank you! Your message has been sent successfully.',
+      error: form.dataset.msgError ?? 'Sorry, there was an error sending your message.',
+      sending: form.dataset.msgSending ?? 'Sending...',
+      submit: form.dataset.msgSubmit ?? 'Send Message',
+    };
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -246,7 +299,7 @@
       // Disable submit button during submission
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
+        submitButton.textContent = msg.sending;
       }
 
       try {
@@ -261,21 +314,20 @@
         });
 
         if (response.ok) {
-          messageDiv.textContent = 'Thank you! Your message has been sent successfully.';
+          messageDiv.textContent = msg.success;
           messageDiv.className = 'form-message success';
           form.reset();
         } else {
           throw new Error('Form submission failed');
         }
       } catch {
-        messageDiv.textContent =
-          'Sorry, there was an error sending your message. Please try again.';
+        messageDiv.textContent = msg.error;
         messageDiv.className = 'form-message error';
       } finally {
         // Re-enable submit button
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = 'Send Message';
+          submitButton.textContent = msg.submit;
         }
       }
     });

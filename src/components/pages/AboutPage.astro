@@ -1,0 +1,171 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../Hero.astro';
+import ContactBand from '../ContactBand.astro';
+import { localePath, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'About | Marcin Skalski',
+    description:
+      'Adventure, travel, and marine photographer plus filmmaker based in Europe and available for remote assignments.',
+    eyebrow: 'About',
+    heading: 'Photographer and filmmaker for remote places, weather, and movement.',
+    sub: 'I work across adventure, travel, and marine assignments with a bias toward real conditions, practical access, and clean delivery.',
+    heroAlt: 'View from inside a sailboat showing rigging and equipment',
+    profile: 'Profile',
+    profileHeading:
+      'Europe-based. Available for destination, expedition, and marine work worldwide.',
+    profileP1:
+      'My work sits where landscape, access, and story meet. Stills and motion for teams that need visual coverage in demanding locations, without turning the production into a heavy operation.',
+    profileP2:
+      'A sailing background helps on assignments where timing, weather, water access, and onboard movement are part of the brief. On land, the same approach carries into expedition routes, destination campaigns, and outdoor product stories.',
+    profileP3: 'Strong imagery, useful deliverables, and a process that holds up in the field.',
+    streetLine: 'Between assignments: street photography →',
+    profileImgAlt: 'Patagonia mountain landscape',
+    strengths: 'Strengths',
+    strengthsHeading: 'Why buyers bring me into remote assignments.',
+    strengthEntries: [
+      {
+        title: 'Adventure + marine range',
+        description:
+          'Useful when a project spans coastline, weather, boats, landscapes, and people in motion.',
+      },
+      {
+        title: 'Field logistics mindset',
+        description:
+          'Built around lightweight production, location planning, shifting conditions, and practical access.',
+      },
+      {
+        title: 'Stills + motion in one shoot',
+        description:
+          'One production window can feed campaign selects, social assets, and short-form video.',
+      },
+    ],
+    band: 'Have a destination, expedition, or marine brief?',
+  },
+  pl: {
+    title: 'O mnie | Marcin Skalski',
+    description:
+      'Fotograf i filmowiec — przygoda, podróże i morze. Baza w Europie, dostępność na całym świecie.',
+    eyebrow: 'O mnie',
+    heading: 'Fotograf i filmowiec od odległych miejsc, pogody i ruchu.',
+    sub: 'Pracuję przy zleceniach przygodowych, podróżniczych i morskich — z naciskiem na prawdziwe warunki, praktyczny dostęp i czystą dostawę materiałów.',
+    heroAlt: 'Widok z wnętrza jachtu — takielunek i osprzęt',
+    profile: 'Profil',
+    profileHeading:
+      'Baza w Europie. Dostępny do pracy przy destynacjach, ekspedycjach i na wodzie — na całym świecie.',
+    profileP1:
+      'Moja praca dzieje się tam, gdzie spotykają się krajobraz, dostęp i historia. Zdjęcia i wideo dla zespołów, które potrzebują materiału z wymagających lokalizacji — bez zamieniania produkcji w ciężką operację.',
+    profileP2:
+      'Żeglarskie doświadczenie pomaga przy zleceniach, w których timing, pogoda, dostęp od wody i ruch na pokładzie są częścią briefu. Na lądzie to samo podejście działa na trasach ekspedycyjnych, w kampaniach destynacji i historiach produktów outdoorowych.',
+    profileP3: 'Mocne kadry, użyteczne materiały i proces, który nie sypie się w terenie.',
+    streetLine: 'Między zleceniami: fotografia uliczna →',
+    profileImgAlt: 'Górski krajobraz Patagonii',
+    strengths: 'Mocne strony',
+    strengthsHeading: 'Dlaczego klienci zabierają mnie na odległe zlecenia.',
+    strengthEntries: [
+      {
+        title: 'Zasięg: przygoda + morze',
+        description:
+          'Przydatne, gdy projekt obejmuje wybrzeże, pogodę, łodzie, krajobrazy i ludzi w ruchu.',
+      },
+      {
+        title: 'Logistyka terenowa w DNA',
+        description:
+          'Lekka produkcja, planowanie lokalizacji, zmienne warunki i praktyczny dostęp.',
+      },
+      {
+        title: 'Foto + wideo w jednej sesji',
+        description:
+          'Jedno okno produkcyjne karmi selekty kampanijne, materiały social i krótkie formy wideo.',
+      },
+    ],
+    band: 'Masz brief — destynacja, ekspedycja albo morze?',
+  },
+}[locale];
+---
+
+<Layout title={copy.title} description={copy.description} locale={locale}>
+  <div class="-mt-16 desktop:-mt-20">
+    <Hero
+      image="/images/hero-home-desktop.jpg"
+      imageWebp="/images/hero-home-desktop.webp"
+      imageMobile="/images/hero-home-mobile.jpg"
+      imageMobileWebp="/images/hero-home-mobile.webp"
+      alt={copy.heroAlt}
+      eyebrow={copy.eyebrow}
+      title={copy.heading}
+      subtitle={copy.sub}
+      align="bottom-left"
+      minHeight="min-h-[78vh]"
+    />
+  </div>
+
+  <section class="surface">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="grid gap-12 desktop:grid-cols-[0.95fr_1.05fr] desktop:gap-20 items-start">
+        <div class="overflow-hidden" data-reveal>
+          <img
+            src="/images/trips/patagonia-thumb.jpg"
+            alt={copy.profileImgAlt}
+            class="w-full h-auto aspect-[4/5] object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div data-reveal data-reveal-delay="120">
+          <p class="eyebrow">{copy.profile}</p>
+          <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+            {copy.profileHeading}
+          </h2>
+          <div class="mt-8 space-y-6 text-lg leading-relaxed text-muted">
+            <p>{copy.profileP1}</p>
+            <p>{copy.profileP2}</p>
+            <p class="text-[color:var(--text)]">{copy.profileP3}</p>
+          </div>
+          <a href={localePath(locale, '/street')} class="mt-8 inline-block link-mono">
+            {copy.streetLine}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="surface border-t rule-line">
+    <div class="container-custom py-20 desktop:py-32">
+      <div class="max-w-2xl mb-14" data-reveal>
+        <p class="eyebrow">{copy.strengths}</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+          {copy.strengthsHeading}
+        </h2>
+      </div>
+
+      <div class="grid gap-0 border-t rule-line">
+        {
+          copy.strengthEntries.map((item, i) => (
+            <div
+              class="border-b rule-line py-8 grid gap-4 desktop:grid-cols-[0.4fr_0.6fr] desktop:gap-12"
+              data-reveal
+              data-reveal-delay={`${i * 100}`}
+            >
+              <h3 class="font-display text-2xl desktop:text-3xl leading-[1.1]">
+                {String(i + 1).padStart(2, '0')} — {item.title}
+              </h3>
+              <p class="text-muted text-lg leading-relaxed">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <ContactBand label={copy.band} locale={locale} />
+</Layout>

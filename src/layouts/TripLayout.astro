@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import Hero from '../components/Hero.astro';
 import Gallery from '../components/Gallery.astro';
+import { localePath, useTranslations, type Locale } from '../i18n';
 
 interface Props {
   title: string;
@@ -16,6 +17,7 @@ interface Props {
   brief?: string;
   deliverables?: string[];
   outcome?: string;
+  locale?: Locale;
 }
 
 const {
@@ -31,14 +33,17 @@ const {
   brief,
   deliverables,
   outcome,
+  locale = 'en',
 } = Astro.props;
 
+const t = useTranslations(locale);
+
 const meta = [
-  client && { label: 'Client', value: client },
-  format && { label: 'Format', value: format },
-  role && { label: 'Role', value: role },
-  { label: 'Location', value: location },
-  { label: 'Year', value: date },
+  client && { label: t('trip.client'), value: client },
+  format && { label: t('trip.format'), value: format },
+  role && { label: t('trip.role'), value: role },
+  { label: t('trip.location'), value: location },
+  { label: t('trip.year'), value: date },
 ].filter(Boolean) as { label: string; value: string }[];
 
 // Split gallery to interleave a hero frame mid-story
@@ -46,7 +51,12 @@ const lead = images[0];
 const rest = images.slice(1);
 ---
 
-<Layout title={`${title} — Marcin Skalski`} description={description} image={thumbnail}>
+<Layout
+  title={`${title} — Marcin Skalski`}
+  description={description}
+  image={thumbnail}
+  locale={locale}
+>
   <div class="-mt-16 desktop:-mt-20">
     <Hero
       image={thumbnail}
@@ -63,10 +73,11 @@ const rest = images.slice(1);
     <div class="container-custom py-20 desktop:py-28">
       <div class="mb-10">
         <a
-          href="/work"
+          href={localePath(locale, '/work')}
           class="eyebrow inline-flex items-center gap-2 hover:opacity-70 transition-opacity"
         >
-          <span aria-hidden="true">←</span> Back to work
+          <span aria-hidden="true">←</span>
+          {t('trip.back')}
         </a>
       </div>
 
@@ -74,7 +85,7 @@ const rest = images.slice(1);
         class="grid gap-12 desktop:grid-cols-[0.9fr_1.1fr] desktop:gap-20 border-t border-b rule-line py-12 desktop:py-16"
       >
         <div data-reveal>
-          <p class="eyebrow mb-6">Project</p>
+          <p class="eyebrow mb-6">{t('trip.project')}</p>
           <h2 class="font-display text-3xl desktop:text-4xl leading-[1.05]">
             {brief ?? description}
           </h2>
@@ -92,7 +103,7 @@ const rest = images.slice(1);
           {
             deliverables && deliverables.length > 0 && (
               <div class="col-span-2">
-                <dt class="eyebrow mb-2">Deliverables</dt>
+                <dt class="eyebrow mb-2">{t('trip.deliverables')}</dt>
                 <dd>
                   <ul class="space-y-1.5">
                     {deliverables.map((d) => (
@@ -136,12 +147,12 @@ const rest = images.slice(1);
 
   {
     rest.length > 0 && (
-      <section class="surface-soft">
+      <section class="surface border-t rule-line">
         <div class="container-custom py-20 desktop:py-28">
           <div class="mb-10 flex items-end justify-between">
             <div>
-              <p class="eyebrow">Selected frames</p>
-              <h2 class="mt-3 font-display text-2xl desktop:text-3xl">From the field</h2>
+              <p class="eyebrow">{t('trip.selectedFrames')}</p>
+              <h2 class="mt-3 font-display text-2xl desktop:text-3xl">{t('trip.fromTheField')}</h2>
             </div>
           </div>
           <Gallery images={rest} alt={title} />
@@ -155,7 +166,7 @@ const rest = images.slice(1);
       <section class="surface">
         <div class="container-custom py-20 desktop:py-28" data-reveal>
           <div class="grid gap-10 desktop:grid-cols-[0.9fr_1.1fr] desktop:gap-20 border-t rule-line pt-12 desktop:pt-16">
-            <p class="eyebrow">Outcome</p>
+            <p class="eyebrow">{t('trip.outcome')}</p>
             <p class="font-display text-2xl desktop:text-3xl leading-[1.2] text-[color:var(--text)]">
               {outcome}
             </p>
@@ -165,28 +176,22 @@ const rest = images.slice(1);
     )
   }
 
-  <section class="surface-elevated">
+  <section class="surface border-t rule-line">
     <div
       class="container-custom py-16 desktop:py-24 flex flex-col gap-6 desktop:flex-row desktop:items-end desktop:justify-between"
     >
       <div class="max-w-2xl">
-        <p class="eyebrow">Next step</p>
+        <p class="eyebrow">{t('trip.nextStep')}</p>
         <h2 class="mt-3 font-display text-3xl desktop:text-4xl">
-          Have a similar route, brief, or destination in mind?
+          {t('trip.similar')}
         </h2>
       </div>
       <div class="flex flex-col gap-4 tablet:flex-row">
-        <a
-          href="/contact"
-          class="inline-flex items-center justify-center bg-[color:var(--text)] text-[color:var(--bg)] px-7 py-3 text-[11px] font-medium uppercase tracking-[0.24em] hover:opacity-85 transition-opacity"
-        >
-          Start a project
+        <a href={localePath(locale, '/contact')} class="btn-solid">
+          {t('trip.start')}
         </a>
-        <a
-          href="/work"
-          class="inline-flex items-center justify-center border border-[color:var(--text)] text-[color:var(--text)] px-7 py-3 text-[11px] font-medium uppercase tracking-[0.24em] hover:bg-[color:var(--text)] hover:text-[color:var(--bg)] transition-colors"
-        >
-          See more work
+        <a href={localePath(locale, '/work')} class="btn-outline">
+          {t('trip.more')}
         </a>
       </div>
     </div>

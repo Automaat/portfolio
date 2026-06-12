@@ -1,0 +1,25 @@
+---
+import { localePath, useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  label?: string;
+  locale?: Locale;
+}
+
+const {
+  locale = 'en',
+  label = locale === 'pl' ? 'Masz projekt w głowie?' : 'Have a project in mind?',
+} = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="surface border-t rule-line">
+  <div
+    class="container-custom py-16 desktop:py-24 flex flex-col tablet:flex-row tablet:items-baseline tablet:justify-between gap-5"
+  >
+    <p class="font-display text-2xl desktop:text-3xl leading-tight">{label}</p>
+    <a href={localePath(locale, '/contact')} class="link-mono shrink-0">
+      {t('band.start')}
+    </a>
+  </div>
+</section>

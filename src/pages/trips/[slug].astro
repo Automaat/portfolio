@@ -1,11 +1,12 @@
 ---
 import { getCollection, render } from 'astro:content';
 import TripLayout from '../../layouts/TripLayout.astro';
+import { entrySlug } from '../../i18n';
 
 export async function getStaticPaths() {
-  const trips = await getCollection('trips');
+  const trips = await getCollection('trips', ({ id }) => id.startsWith('en/'));
   return trips.map((trip) => ({
-    params: { slug: trip.id },
+    params: { slug: entrySlug(trip.id) },
     props: { trip },
   }));
 }
@@ -27,6 +28,7 @@ const { Content } = await render(trip);
   brief={trip.data.brief}
   deliverables={trip.data.deliverables}
   outcome={trip.data.outcome}
+  locale="en"
 >
   <Content />
 </TripLayout>

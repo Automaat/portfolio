@@ -11,25 +11,25 @@
   }
 
   :root {
-    --bg: #ffffff;
-    --bg-soft: #f7f6f3;
-    --bg-elevated: #ecebe6;
-    --text: #0a0a0a;
-    --text-muted: #6d6a60;
-    --text-subtle: #a9a69a;
-    --rule: #d8d6cd;
-    --accent: #4d6198;
+    --bg: #f6e7ea;
+    --bg-soft: #eef0f7;
+    --bg-elevated: #e3e7f2;
+    --text: #232c44;
+    --text-muted: #6a7393;
+    --text-subtle: #9aa2bd;
+    --rule: #e2cfd6;
+    --accent: #4f6fae;
   }
 
   .dark {
-    --bg: #0a0a0a;
-    --bg-soft: #141413;
-    --bg-elevated: #1d1c1a;
-    --text: #f7f6f3;
-    --text-muted: #a9a69a;
-    --text-subtle: #6d6a60;
-    --rule: #26241f;
-    --accent: #a4aec9;
+    --bg: #14161f;
+    --bg-soft: #191c27;
+    --bg-elevated: #20242f;
+    --text: #eef0f7;
+    --text-muted: #a4abc4;
+    --text-subtle: #6a7393;
+    --rule: #2a2e3d;
+    --accent: #e8aebc;
   }
 
   html {
@@ -99,13 +99,13 @@
   }
 
   ::selection {
-    background: #0a0a0a;
-    color: #f7f6f3;
+    background: #232c44;
+    color: #f6e7ea;
   }
 
   .dark ::selection {
-    background: #f7f6f3;
-    color: #0a0a0a;
+    background: #f6e7ea;
+    color: #232c44;
   }
 }
 
@@ -132,7 +132,40 @@
   }
 
   .eyebrow {
-    @apply font-sans text-[11px] font-medium uppercase tracking-eyebrow text-[color:var(--text-muted)];
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[color:var(--text-muted)];
+  }
+
+  .label-mono {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em];
+  }
+
+  .link-mono {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em] underline underline-offset-8 transition-opacity;
+  }
+
+  .link-mono:hover {
+    opacity: 0.7;
+  }
+
+  .btn-solid {
+    @apply inline-flex items-center justify-center px-7 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] transition-opacity;
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .btn-solid:hover {
+    opacity: 0.85;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-7 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors;
+    border: 1px solid var(--text);
+    color: var(--text);
+  }
+
+  .btn-outline:hover {
+    background: var(--text);
+    color: var(--bg);
   }
 
   .surface {
