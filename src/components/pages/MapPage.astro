@@ -1,6 +1,6 @@
 ---
 import world from '@svg-maps/world';
-import usa from '@svg-maps/usa';
+import { usaMap as usa } from '../../data/us-states-map';
 import Layout from '../../layouts/Layout.astro';
 import { localePath, type Locale } from '../../i18n';
 import { visitedCountries, visitedUsStates } from '../../data/visited-countries';
@@ -42,6 +42,7 @@ const copy = {
     zoomOut: 'Zoom out',
     zoomReset: 'Reset view',
     zoomHint: 'Ctrl + scroll to zoom, drag to pan',
+    attribution: 'World map by',
   },
   pl: {
     title: 'Mapa podróży | Marcin Skalski',
@@ -73,6 +74,7 @@ const copy = {
     zoomOut: 'Oddal',
     zoomReset: 'Zresetuj widok',
     zoomHint: 'Ctrl + scroll przybliża, przeciąganie przesuwa',
+    attribution: 'Mapa świata:',
   },
 }[locale];
 
@@ -296,6 +298,13 @@ const stats = [
         </span>
         <span class="label-mono text-subtle ml-auto hidden tablet:block">{copy.zoomHint}</span>
       </div>
+
+      <p class="mt-3 label-mono text-subtle">
+        {copy.attribution}
+        <a href="https://mapsvg.com/maps/world" rel="license noopener" class="underline">MapSVG</a>
+        —
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a>
+      </p>
     </div>
   </section>
 
@@ -412,7 +421,11 @@ const stats = [
   </section>
 </Layout>
 
-<script type="application/json" id="map-data" set:html={JSON.stringify(panelData)} />
+<script
+  type="application/json"
+  id="map-data"
+  set:html={JSON.stringify(panelData).replace(/</g, '\\u003c')}
+/>
 
 <script>
   interface PanelPhoto {
@@ -454,7 +467,7 @@ const stats = [
     document
       .querySelectorAll('.country--active')
       .forEach((el) => el.classList.remove('country--active'));
-    document.querySelector(`path[data-id="${id}"]`)?.classList.add('country--active');
+    document.querySelector(`path[data-id="${CSS.escape(id)}"]`)?.classList.add('country--active');
 
     placeholder.hidden = true;
     content.hidden = false;
