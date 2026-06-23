@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import netlify from '@astrojs/netlify';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://mskalski.netlify.app',
@@ -8,5 +9,8 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'pl'],
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
 });
