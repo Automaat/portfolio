@@ -26,7 +26,7 @@ const copy = {
     newProjects: 'New projects',
     contactLine:
       'Europe-based, available worldwide. Send location, timing, and deliverables — I’ll reply with fit and next step.',
-    breakAlt: 'Sailboat on calm open water at dusk',
+    breakAlt: 'Person standing on a rocky moraine facing a glacier under an overcast sky',
   },
   pl: {
     title: 'Marcin Skalski | Fotografia przygodowa, podróżnicza i morska',
@@ -44,7 +44,7 @@ const copy = {
     newProjects: 'Nowe projekty',
     contactLine:
       'Baza w Europie, dostępność na całym świecie. Wyślij lokalizację, terminy i zakres materiałów — odpowiem, czy to dobry fit i co dalej.',
-    breakAlt: 'Żaglówka na spokojnej wodzie o zmierzchu',
+    breakAlt: 'Osoba stojąca na kamienistej morenie naprzeciw lodowca pod zachmurzonym niebem',
   },
 }[locale];
 
@@ -125,13 +125,16 @@ const rows = [
   </div>
 
   <section class="mt-[12vh] h-[72vh]">
-    <img
-      src="/images/hero-sailing.jpg"
-      alt={copy.breakAlt}
-      class="h-full w-full object-cover"
-      loading="lazy"
-      decoding="async"
-    />
+    <picture class="block h-full w-full">
+      <source srcset="/images/hero-sailing.webp" type="image/webp" />
+      <img
+        src="/images/hero-sailing.jpg"
+        alt={copy.breakAlt}
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
   </section>
 
   <section class="container-custom py-[12vh]">

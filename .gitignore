@@ -32,3 +32,6 @@ pnpm-debug.log*
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Photo source exports (staging, not for repo)
+import-photo/
